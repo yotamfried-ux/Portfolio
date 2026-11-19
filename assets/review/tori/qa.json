@@ -1,0 +1,100 @@
+{
+  "checks": {
+    "single_silent_h264_track": true,
+    "square_pixels_yuv420p": true,
+    "dimensions": true,
+    "frame_rate_and_count": true,
+    "duration_and_start": true,
+    "faststart": true,
+    "full_decode": true,
+    "no_near_solid_or_dark_frames": true
+  },
+  "sha256": "328a8d74df2ad08e09c05c826f2f2769a2bda70324a4e8a9bc665a5a618a27f8",
+  "bytes": 528341,
+  "ffprobe": {
+    "codec_type": "video",
+    "codec_name": "h264",
+    "profile": "High",
+    "width": 1920,
+    "height": 1080,
+    "pix_fmt": "yuv420p",
+    "sample_aspect_ratio": "1:1",
+    "avg_frame_rate": "25/1",
+    "r_frame_rate": "25/1",
+    "nb_read_frames": "450",
+    "duration": "18.000000"
+  },
+  "mp4_boxes": [
+    "ftyp",
+    "moov",
+    "free",
+    "mdat"
+  ],
+  "blank_frame_indices": [],
+  "largest_luma_changes": [
+    {
+      "frame": 358,
+      "time": 14.32,
+      "mean_delta": 25.077
+    },
+    {
+      "frame": 362,
+      "time": 14.48,
+      "mean_delta": 24.961
+    },
+    {
+      "frame": 361,
+      "time": 14.44,
+      "mean_delta": 24.902
+    },
+    {
+      "frame": 54,
+      "time": 2.16,
+      "mean_delta": 24.868
+    },
+    {
+      "frame": 51,
+      "time": 2.04,
+      "mean_delta": 24.763
+    },
+    {
+      "frame": 50,
+      "time": 2.0,
+      "mean_delta": 24.757
+    },
+    {
+      "frame": 359,
+      "time": 14.36,
+      "mean_delta": 24.717
+    },
+    {
+      "frame": 53,
+      "time": 2.12,
+      "mean_delta": 24.549
+    },
+    {
+      "frame": 360,
+      "time": 14.4,
+      "mean_delta": 24.542
+    },
+    {
+      "frame": 52,
+      "time": 2.08,
+      "mean_delta": 24.367
+    },
+    {
+      "frame": 125,
+      "time": 5.0,
+      "mean_delta": 8.434
+    },
+    {
+      "frame": 208,
+      "time": 8.32,
+      "mean_delta": 7.633
+    }
+  ],
+  "poster_seconds": 6.64,
+  "poster_sha256": "04ee897186a3c01cf40238160203de2091f3d3d35a2e1086262ad81b9598c661",
+  "poster_bytes": 41528,
+  "ffmpeg": "ffmpeg version 7.1.5-0+deb13u1 Copyright (c) 2000-2026 the FFmpeg developers"
+}

@@ -1,0 +1,184 @@
+{
+  "fps": 25,
+  "frames": 450,
+  "title_frames": 0,
+  "shots": [
+    {
+      "id": "mobile-time",
+      "role": "hook",
+      "source": "booking-mobile.mp4",
+      "in": 2.6,
+      "out": 3.36,
+      "layout": "phone",
+      "score": 10,
+      "note": "Loaded time grid opens on the product, then 09:30 is selected. Ends before the contact form.",
+      "start_frame": 0,
+      "end_frame": 50,
+      "dissolve": false
+    },
+    {
+      "id": "date",
+      "role": "booking",
+      "source": "booking-desktop.mp4",
+      "in": 1.56,
+      "out": 3.56,
+      "crop": [
+        352,
+        0,
+        1216,
+        684
+      ],
+      "score": 9,
+      "note": "Date lights up and desktop time choices appear. Stops before the contact form.",
+      "start_frame": 50,
+      "end_frame": 125,
+      "dissolve": true
+    },
+    {
+      "id": "calendar-arrival",
+      "role": "calendar",
+      "source": "calendar-owner.mp4",
+      "in": 0.52,
+      "out": 2.92,
+      "crop": [
+        240,
+        84,
+        1440,
+        810
+      ],
+      "score": 10,
+      "note": "Owner day list resolves from zero to one and shows the 09:00 booking.",
+      "start_frame": 125,
+      "end_frame": 208,
+      "dissolve": false
+    },
+    {
+      "id": "sunday-hours",
+      "role": "settings",
+      "source": "availability-settings.mp4",
+      "in": 0.82,
+      "out": 1.56,
+      "crop": [
+        496,
+        106,
+        928,
+        522
+      ],
+      "score": 10,
+      "note": "Sunday close changes from 18:00 to 12:00 while heading and row are in view.",
+      "start_frame": 208,
+      "end_frame": 282,
+      "dissolve": false
+    },
+    {
+      "id": "public-slots",
+      "role": "slots",
+      "source": "availability-settings.mp4",
+      "in": 6.76,
+      "out": 8.84,
+      "crop": [
+        352,
+        0,
+        1216,
+        684
+      ],
+      "score": 10,
+      "note": "Public booking now shows a 09:00–12:00 availability bar and no afternoon choices.",
+      "start_frame": 282,
+      "end_frame": 358,
+      "dissolve": false
+    },
+    {
+      "id": "mobile-confirmed",
+      "role": "payoff",
+      "source": "booking-mobile.mp4",
+      "in": 5.32,
+      "out": 7.56,
+      "layout": "phone",
+      "score": 10,
+      "note": "Actual confirmed appointment in the same device composition as the opening. No sent notifications are demonstrated.",
+      "start_frame": 358,
+      "end_frame": 450,
+      "dissolve": true
+    }
+  ],
+  "alternates": [
+    {
+      "id": "listing",
+      "role": "booking",
+      "source": "booking-desktop.mp4",
+      "in": 0.4,
+      "out": 1.22,
+      "crop": [
+        352,
+        0,
+        1216,
+        684
+      ],
+      "score": 5,
+      "note": "Visible service selection and check; limited progression before date."
+    },
+    {
+      "id": "saved-toast",
+      "role": "settings",
+      "source": "availability-settings.mp4",
+      "in": 1.84,
+      "out": 3.28,
+      "crop": [
+        496,
+        0,
+        928,
+        522
+      ],
+      "score": 6,
+      "note": "Save toast confirms persistence but the scroll has moved Sunday off-screen."
+    },
+    {
+      "id": "desktop-confirmed",
+      "role": "payoff",
+      "source": "confirmation-preview.mp4",
+      "in": 0.16,
+      "out": 2.56,
+      "crop": [
+        480,
+        0,
+        960,
+        540
+      ],
+      "score": 6,
+      "note": "Readable alternate confirmation, but repeats mobile payoff and makes the loop geometry jump."
+    }
+  ],
+  "sources": {
+    "booking-desktop.mp4": {
+      "sha256": "218150bb8d670bb4171e7d059c75805158e8b3ab7205d263f22bc17c54025bf4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 7.84
+    },
+    "calendar-owner.mp4": {
+      "sha256": "ece028f7a4a94c0564e998af0b05a6911639f98ad61db3fdd6496e425da9a89e",
+      "width": 1920,
+      "height": 1080,
+      "duration": 5.04
+    },
+    "availability-settings.mp4": {
+      "sha256": "4a1e4300867f0951dc49e97e86f24182f421fee111176b6cef3708bad7767527",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9.12
+    },
+    "confirmation-preview.mp4": {
+      "sha256": "c232446a6fa3f44b8fccea2f9e91d086c6d88c0b192d134c8518274afc94d88f",
+      "width": 1920,
+      "height": 1080,
+      "duration": 2.76
+    },
+    "booking-mobile.mp4": {
+      "sha256": "bb5c9bf905276809bfb3f73ca7ab498c2dceb465145e07a5e419ed346d07943c",
+      "width": 390,
+      "height": 844,
+      "duration": 7.72
+    }
+  }
+}

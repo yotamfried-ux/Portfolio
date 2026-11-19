@@ -1,0 +1,37 @@
+{
+  "project": "Tori",
+  "source_manifest": "manifest.json",
+  "output": "tori-showcase-16x9.mp4",
+  "resolution": [1920, 1080],
+  "fps": 25,
+  "duration": 18,
+  "font": "DejaVu Sans",
+  "matte": "#11191d",
+  "accent": "#0a6b5e",
+  "brand_mark": "tori-mark.svg",
+  "title_card": false,
+  "roles": [
+    {"id": "hook", "after": [], "seconds": 2.0},
+    {"id": "booking", "after": ["hook"], "seconds": 3.0, "dissolve": true},
+    {"id": "calendar", "after": ["booking"], "seconds": 3.3},
+    {"id": "settings", "after": ["calendar"], "seconds": 3.0},
+    {"id": "slots", "after": ["settings"], "seconds": 3.0},
+    {"id": "payoff", "after": ["slots"], "seconds": 3.7, "dissolve": true}
+  ],
+  "poster_role": "calendar",
+  "candidates": [
+    {"id": "listing", "role": "booking", "source": "booking-desktop.mp4", "in": 0.40, "out": 1.22, "crop": [352, 0, 1216, 684], "score": 5, "note": "Visible service selection and check; limited progression before date."},
+    {"id": "date", "role": "booking", "source": "booking-desktop.mp4", "in": 1.56, "out": 3.56, "crop": [352, 0, 1216, 684], "score": 9, "note": "Date lights up and desktop time choices appear. Stops before the contact form."},
+    {"id": "calendar-arrival", "role": "calendar", "source": "calendar-owner.mp4", "in": 0.52, "out": 2.92, "crop": [240, 84, 1440, 810], "score": 10, "note": "Owner day list resolves from zero to one and shows the 09:00 booking."},
+    {"id": "sunday-hours", "role": "settings", "source": "availability-settings.mp4", "in": 0.82, "out": 1.56, "crop": [496, 106, 928, 522], "score": 10, "note": "Sunday close changes from 18:00 to 12:00 while heading and row are in view."},
+    {"id": "saved-toast", "role": "settings", "source": "availability-settings.mp4", "in": 1.84, "out": 3.28, "crop": [496, 0, 928, 522], "score": 6, "note": "Save toast confirms persistence but the scroll has moved Sunday off-screen."},
+    {"id": "public-slots", "role": "slots", "source": "availability-settings.mp4", "in": 6.76, "out": 8.84, "crop": [352, 0, 1216, 684], "score": 10, "note": "Public booking now shows a 09:00–12:00 availability bar and no afternoon choices."},
+    {"id": "mobile-time", "role": "hook", "source": "booking-mobile.mp4", "in": 2.60, "out": 3.36, "layout": "phone", "score": 10, "note": "Loaded time grid opens on the product, then 09:30 is selected. Ends before the contact form."},
+    {"id": "mobile-confirmed", "role": "payoff", "source": "booking-mobile.mp4", "in": 5.32, "out": 7.56, "layout": "phone", "score": 10, "note": "Actual confirmed appointment in the same device composition as the opening. No sent notifications are demonstrated."},
+    {"id": "desktop-confirmed", "role": "payoff", "source": "confirmation-preview.mp4", "in": 0.16, "out": 2.56, "crop": [480, 0, 960, 540], "score": 6, "note": "Readable alternate confirmation, but repeats mobile payoff and makes the loop geometry jump."}
+  ],
+  "captions": {
+    "en": {"hook": "On mobile, a customer selects an available time.", "booking": "On desktop, the booking calendar opens available times for the selected day.", "calendar": "The booking appears in the business calendar.", "settings": "The owner changes Sunday’s closing time to noon.", "slots": "The public slot list reflects the shorter hours.", "payoff": "Tori confirms a demo appointment on screen."},
+    "he": {"hook": "בנייד בוחרים שעה פנויה.", "booking": "במחשב מוצגות השעות הפנויות ביום שנבחר.", "calendar": "התור מופיע ביומן העסק.", "settings": "בעל העסק משנה את שעת הסגירה ביום ראשון ל־12:00.", "slots": "רשימת התורים הפנויים משקפת את השעות המעודכנות.", "payoff": "תורי מציגה אישור לתור לדוגמה על המסך."}
+  }
+}
