@@ -14,8 +14,8 @@ export function MediaFrame({ media, locale, mode = 'preview', hero = false, capt
     <div className="media-surface">
       {media.poster ? <Image src={media.poster} fill alt={media.alt[locale]}
         preload={hero} sizes={hero ? '100vw' : '(max-width: 760px) 100vw, 65vw'} />
-        : <div role="img" aria-label={media.alt[locale]}><Artwork kind={media.fallback} /></div>}
-      {video && <Video asset={video} poster={media.poster} mode={mode} locale={locale} />}
+        : <div className="media-artwork" role="img" aria-label={media.alt[locale]}><Artwork kind={media.fallback} /></div>}
+      {video && <Video key={video.src} asset={video} poster={media.poster} mode={mode} locale={locale} />}
     </div>
     {caption && <figcaption className="media-caption">
       {video
