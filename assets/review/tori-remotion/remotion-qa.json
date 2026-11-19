@@ -1,0 +1,97 @@
+{
+  "checks": {
+    "single_silent_h264_track": true,
+    "square_pixels_yuv420p": true,
+    "dimensions": true,
+    "frame_rate_and_count": true,
+    "duration_and_start": true,
+    "faststart": true,
+    "full_decode": true,
+    "no_near_solid_or_dark_frames": true
+  },
+  "sha256": "5910e8ef1b96b7e502cffbae771f1baeb0a2d73e553a4d827b2269da99eb0094",
+  "bytes": 738708,
+  "ffprobe": {
+    "codec_type": "video",
+    "codec_name": "h264",
+    "profile": "High",
+    "width": 1280,
+    "height": 720,
+    "pix_fmt": "yuv420p",
+    "sample_aspect_ratio": "1:1",
+    "avg_frame_rate": "25/1",
+    "r_frame_rate": "25/1",
+    "nb_read_frames": "125",
+    "duration": "5.000000",
+    "color_range": "tv"
+  },
+  "mp4_boxes": [
+    "ftyp",
+    "moov",
+    "free",
+    "mdat"
+  ],
+  "blank_frame_indices": [],
+  "largest_luma_changes": [
+    {
+      "frame": 4,
+      "time": 0.16,
+      "mean_delta": 6.941
+    },
+    {
+      "frame": 3,
+      "time": 0.12,
+      "mean_delta": 6.914
+    },
+    {
+      "frame": 2,
+      "time": 0.08,
+      "mean_delta": 6.813
+    },
+    {
+      "frame": 5,
+      "time": 0.2,
+      "mean_delta": 6.162
+    },
+    {
+      "frame": 1,
+      "time": 0.04,
+      "mean_delta": 6.139
+    },
+    {
+      "frame": 36,
+      "time": 1.44,
+      "mean_delta": 5.567
+    },
+    {
+      "frame": 73,
+      "time": 2.92,
+      "mean_delta": 5.405
+    },
+    {
+      "frame": 6,
+      "time": 0.24,
+      "mean_delta": 5.33
+    },
+    {
+      "frame": 74,
+      "time": 2.96,
+      "mean_delta": 5.202
+    },
+    {
+      "frame": 75,
+      "time": 3.0,
+      "mean_delta": 5.185
+    },
+    {
+      "frame": 72,
+      "time": 2.88,
+      "mean_delta": 4.843
+    },
+    {
+      "frame": 76,
+      "time": 3.04,
+      "mean_delta": 4.672
+    }
+  ]
+}

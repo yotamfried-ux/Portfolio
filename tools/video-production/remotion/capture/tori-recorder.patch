@@ -1,0 +1,164 @@
+diff --git a/scripts/recording/capture.sh b/scripts/recording/capture.sh
+index 89a76f9..fadf422 100644
+--- a/scripts/recording/capture.sh
++++ b/scripts/recording/capture.sh
+@@ -41,7 +41,7 @@ export APP_URL=http://127.0.0.1:3175
+ export NEXT_PUBLIC_APP_URL="$APP_URL"
+ mkdir -p "$TORI_CAPTURE_DIR/webm" "$TORI_CAPTURE_DIR/mp4"
+
+-npm run build
++npm run build -- --webpack
+ npx --no-install playwright test --config playwright.recording.config.ts
+
+ for name in booking-desktop calendar-owner availability-settings confirmation-preview booking-mobile; do
+diff --git a/tests/recording/tori.spec.ts b/tests/recording/tori.spec.ts
+index 684d6e1..b0c7194 100644
+--- a/tests/recording/tori.spec.ts
++++ b/tests/recording/tori.spec.ts
+@@ -1,5 +1,5 @@
+ import { devices, expect, test, type Browser, type BrowserContext, type Locator, type Page } from "@playwright/test";
+-import { mkdir } from "node:fs/promises";
++import { mkdir, writeFile } from "node:fs/promises";
+ import { join } from "node:path";
+ import { admin, firstDayWithSlots, loginAs, makeBusiness, todayLocal, type TestBusiness } from "../e2e/helpers/business";
+ import { acceptedStorageState } from "../e2e/helpers/terms";
+@@ -8,6 +8,14 @@ const origin = "http://127.0.0.1:3175";
+ const outputDirectory = process.env.TORI_CAPTURE_DIR;
+ const localDatabase = new Set(["http://127.0.0.1:54321", "http://localhost:54321"]);
+ const customer = "נועה לביא";
++type Event = { label: string; second: number; box?: {x:number;y:number;width:number;height:number} };
++const recordings = new Map<Page,{started:number; events:Event[]}>();
++async function mark(page: Page, label: string, locator?: Locator) {
++  const record = recordings.get(page);
++  if (!record) return;
++  const box = locator ? await locator.boundingBox() : undefined;
++  record.events.push({label, second: (performance.now() - record.started)/1000, ...(box ? {box} : {})});
++}
+
+ test.beforeAll(() => {
+   if (
+@@ -18,22 +26,32 @@ test.beforeAll(() => {
+   ) throw new Error("Use scripts/recording/capture.sh with a local Supabase stack.");
+ });
+
+-function hold(milliseconds = 900) {
++function hold(milliseconds = 420) {
+   // Editorial dwell time. Assertions and locator waits handle application readiness.
+   return new Promise<void>(resolve => setTimeout(resolve, milliseconds));
+ }
+
+ async function click(locator: Locator) {
+-  await hold(550);
++  const box = await locator.boundingBox();
++  if (box && recordings.has(locator.page())) {
++    const x = box.x + box.width/2, y = box.y + box.height/2;
++    await locator.page().mouse.move(Math.max(1,x-45), Math.max(1,y-16));
++    await locator.page().mouse.move(x,y,{steps:8});
++  }
++  await hold(270);
+   await locator.click();
+ }
+
+ async function choose(page: Page, testId: string) {
+-  await click(page.locator("label").filter({ has: page.getByTestId(testId) }));
++  const label = page.locator("label").filter({ has: page.getByTestId(testId) });
++  const event = testId.split("-")[0];
++  await mark(page, event + "-before", label);
++  await click(label);
++  await mark(page, event + "-after", label);
+ }
+
+ async function newContext(browser: Browser, sequence: number, name?: string, mobile = false) {
+-  const viewport = mobile ? { width: 390, height: 844 } : { width: 1920, height: 1080 };
++  const viewport = mobile ? { width: 390, height: 844 } : { width: 1280, height: 820 };
+   const context = await browser.newContext({
+     ...(mobile ? devices["Pixel 7"] : {}),
+     viewport,
+@@ -58,18 +76,24 @@ async function scene(browser: Browser, sequence: number, name: string, run: (pag
+   const context = await newContext(browser, sequence, name, mobile);
+   const page = await context.newPage();
+   const video = page.video()!;
++  recordings.set(page, {started:performance.now(),events:[]});
+   const errors: string[] = [];
+   page.on("pageerror", error => errors.push(error.message));
+   try {
+     await run(page, context);
+     expect(errors).toEqual([]);
+     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+-    await hold(2400);
++    await hold(950);
+   } finally {
+     await context.close();
+   }
+   await mkdir(join(outputDirectory!, "webm"), { recursive: true });
+   await video.saveAs(join(outputDirectory!, "webm", name + ".webm"));
++  const capture = recordings.get(page)!;
++  await mkdir(join(outputDirectory!, "events"), {recursive:true});
++  await writeFile(join(outputDirectory!, "events", name + ".json"),
++    JSON.stringify({scene:name,viewport:page.viewportSize(),events:capture.events},null,2) + "\n");
++  recordings.delete(page);
+ }
+
+ async function pickTime(page: Page, business: TestBusiness, date: string) {
+@@ -87,9 +111,9 @@ async function book(page: Page, business: TestBusiness, date: string, time: stri
+   await choose(page, `time-${time}`);
+   await click(page.getByTestId("continue"));
+   await page.getByLabel("שם מלא").fill(mobile ? "אורי רז" : customer);
+-  await hold(420);
++  await hold(80);
+   await page.getByLabel("טלפון נייד").fill(mobile ? "050-5550102" : "050-5550101");
+-  await hold(420);
++  await hold(80);
+   await page.getByLabel("אימייל").fill(mobile ? "mobile@example.com" : "booking@example.com");
+   const response = page.waitForResponse(r => r.request().method() === "POST" &&
+     new URL(r.url()).pathname === `/api/public/${business.slug}/bookings`);
+@@ -98,6 +122,7 @@ async function book(page: Page, business: TestBusiness, date: string, time: stri
+   expect(created.status()).toBe(201);
+   const { booking } = await created.json();
+   await expect(page.getByTestId("done-status")).toHaveText("מאושר");
++  await mark(page, "booking-confirmed", page.getByTestId("done-status"));
+   const saved = await business.db.from("appointments").select("id,status,reference").eq("id", booking.id).single();
+   expect(saved.error).toBeNull();
+   expect(saved.data).toEqual({ id: booking.id, status: "confirmed", reference: booking.reference });
+@@ -143,6 +168,7 @@ test("record five isolated Tori scenes using the real booking, calendar and hour
+       await expect(row).toContainText(times[0]);
+       await expect(row).toHaveAttribute("data-status", "confirmed");
+       await row.scrollIntoViewIfNeeded();
++      await mark(page, "calendar-confirmed-row", row);
+     });
+   });
+
+@@ -170,18 +196,23 @@ test("record five isolated Tori scenes using the real booking, calendar and hour
+       await context.addCookies(cookies);
+       await page.goto("/settings/hours");
+       await expect(page.getByRole("heading", { level: 1 })).toHaveText("שעות פעילות");
+-      await hold(1200);
++      await hold(420);
+       const closing = page.getByTestId("manual-to-0-0");
+       await closing.scrollIntoViewIfNeeded();
++      await mark(page, "closing-before", closing);
+       await closing.fill("12:00");
++      await mark(page, "closing-after", closing);
+       await click(page.getByTestId("save-hours"));
+-      await expect(page.getByRole("status").filter({ hasText: "השעות נשמרו." })).toBeVisible();
++      const saved = page.getByRole("status").filter({ hasText: "השעות נשמרו." });
++      await expect(saved).toBeVisible();
++      await mark(page, "hours-saved", saved);
+       await expect.poll(async () => (await slots()).length).toBeLessThan(before.length);
+       expect((await slots()).every(slot => slot.time < "12:00")).toBe(true);
+-      await hold(1300);
++      await hold(540);
+       await pickTime(page, hoursBusiness, sunday);
+       await expect(page.getByTestId("time-12:00")).toHaveCount(0);
+       await expect(page.getByTestId("time-09:00")).toBeAttached();
++      await mark(page, "reduced-slots", page.getByTestId("time-09:00").locator(".."));
+     });
+   });
+
+@@ -192,5 +223,6 @@ test("record five isolated Tori scenes using the real booking, calendar and hour
+       await expect(page.getByTestId("manage-status")).toHaveText("מאושר");
+       await expect(page.getByTestId("manage-reference")).toContainText(appointment.reference);
+       await expect(page.getByTestId("manage-panel")).toContainText("סטודיו אלון");
++      await mark(page, "manage-confirmed", page.getByTestId("manage-status"));
+     });
+   });

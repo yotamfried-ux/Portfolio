@@ -1,0 +1,24 @@
+[
+  {
+    "name": "desktop",
+    "viewport": 1000,
+    "cardWidth": 586,
+    "cardHeight": 272.546875,
+    "reducedMotion": false,
+    "autoplay": false,
+    "objectFit": "cover",
+    "mp4RequestsAfterClick": 1,
+    "reviewedAt": 11.1
+  },
+  {
+    "name": "mobile",
+    "viewport": 390,
+    "cardWidth": 350,
+    "cardHeight": 184.203125,
+    "reducedMotion": true,
+    "autoplay": false,
+    "objectFit": "cover",
+    "mp4RequestsAfterClick": 1,
+    "reviewedAt": 11.1
+  }
+]

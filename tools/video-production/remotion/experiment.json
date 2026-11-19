@@ -1,0 +1,11 @@
+{
+  "project": "Tori",
+  "fps": 25,
+  "width": 1280,
+  "height": 720,
+  "shots": [
+    {"id":"pick","source":"booking-desktop.mp4","in":2.96,"out":3.60,"frames":42,"crop":[352,0,1216,684],"focus":[1260,376],"zoom":1.34},
+    {"id":"confirm","source":"booking-desktop.mp4","in":5.60,"out":6.52,"frames":25,"crop":[352,0,1216,684],"focus":[960,235],"zoom":1.17},
+    {"id":"calendar","source":"calendar-owner.mp4","in":0.56,"out":2.84,"frames":58,"crop":[240,84,1440,810],"focus":[1320,346],"zoom":1.30}
+  ]
+}
