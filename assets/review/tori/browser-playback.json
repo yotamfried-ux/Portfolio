@@ -1,0 +1,12 @@
+{
+  "chromium": "156.0.8078.79",
+  "duration": 18,
+  "width": 1920,
+  "height": 1080,
+  "ended": true,
+  "firstPresented": 0.04,
+  "lastPresented": 17.96,
+  "presentedCallbacks": 449,
+  "totalVideoFrames": 450,
+  "droppedVideoFrames": 0
+}

@@ -1,0 +1,5 @@
+{"tools":["analyze_video","analyze_videos","get_frame_at","get_frame_burst","get_transcript","get_metadata","get_frames","analyze_moment"]}
+{"label":"overview","images":5,"descriptions":[{"frameCount":5,"mode":"dense","warnings":["Removed 3 duplicate frames"]}]}
+{"label":"exact","images":1,"descriptions":[{"frameCount":1,"timestamp":"0:03.000","warnings":[]}]}
+{"label":"burst","images":6,"descriptions":[{"frameCount":6,"from":"0:02.400","to":"0:03.120","warnings":[],"frames":[{"time":"0:02.4","timingOrigin":"source-pts"},{"time":"0:02.52","timingOrigin":"source-pts"},{"time":"0:02.64","timingOrigin":"source-pts"},{"time":"0:02.76","timingOrigin":"source-pts"},{"time":"0:02.88","timingOrigin":"source-pts"},{"time":"0:03","timingOrigin":"source-pts"}]}]}
+{"label":"exact-repeat","images":1,"descriptions":[{"frameCount":1,"timestamp":"0:03.000","warnings":[]}]}
