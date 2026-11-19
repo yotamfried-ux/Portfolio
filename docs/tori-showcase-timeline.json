@@ -1,0 +1,13 @@
+{
+  "canvas": [1280, 720],
+  "fps": 25,
+  "dissolve_seconds": 0.12,
+  "shots": [
+    { "id": "booking", "source": "booking-desktop.mp4", "start": 0.00, "length": 4.56, "crop": [1160, 580, 380, 0], "frame": [90, 100, 1100, 550], "branding": "header" },
+    { "id": "owner-calendar", "source": "calendar-owner.mp4", "start": 0.76, "length": 3.80, "crop": [1390, 695, 265, 48], "frame": [90, 100, 1100, 550], "branding": "header" },
+    { "id": "hours", "source": "availability-settings.mp4", "start": 0.72, "length": 3.16, "crop": [940, 470, 490, 74], "frame": [90, 100, 1100, 550], "branding": "header" },
+    { "id": "updated-slots", "source": "availability-settings.mp4", "start": 6.84, "length": 2.16, "crop": [1000, 500, 460, 16], "frame": [90, 100, 1100, 550], "branding": "header" },
+    { "id": "mobile", "source": "booking-mobile.mp4", "start": 3.36, "length": 3.76, "frame": [714, 41, 294, 636], "branding": "lockup" },
+    { "id": "confirmation", "source": "confirmation-preview.mp4", "start": 0.08, "length": 2.48, "crop": [560, 718, 680, 0], "frame": [606, 69, 452, 580], "branding": "lockup" }
+  ]
+}

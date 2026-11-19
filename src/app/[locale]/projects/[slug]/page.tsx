@@ -36,7 +36,7 @@ export default async function CaseStudy({ params }: Props) {
         <p className="project-status">{t[project.status]}</p>
         <a href="#interactive-demo" className="text-link case-demo-link">{t.openLab}<Arrow diagonal /></a>
       </div>
-      <MediaFrame media={project.media} locale={locale} mode="demo" />
+      <MediaFrame media={project.media} locale={locale} liveAppUrl={project.liveAppUrl} mode="demo" />
       <div className="case-details">
         <section><h2>{t.problem}</h2><p>{project.problem[locale]}</p></section>
         <section><h2>{t.role}</h2><p>{project.role[locale]}</p></section>

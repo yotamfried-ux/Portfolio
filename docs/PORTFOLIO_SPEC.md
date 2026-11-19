@@ -37,7 +37,7 @@ Professional training: **Data Analyst professional training certificate, Technio
 ## 5. Video-first architecture, **video production is phase 2**
 **User decision: build and deploy the complete site first; add videos later.** Do not block initial release on video production or purchase third-party subscriptions.
 - Video slots in hero, project previews and detailed case studies; meaningful posters and text fallbacks.
-- Phase 2 target assets: one 15–25s hero showreel; five 6–12s silent looping previews; five 45–90s full demos. Durations are editorial targets, not hard constraints.
+- Phase 2 target assets: a 15–25s hero showreel, 6–12s silent previews, and 45–90s full demos where appropriate. Tori uses one 15–20s product showcase on both its card and case study, with a direct link to the verified production landing page beneath the video. See the [Tori showcase plan](TORI_SHOWCASE.md).
 - Media manifest per project: `poster`, optional `previewVideo`, optional `demoVideo`, captions/transcript, attribution, `isIllustration` flag, optional aspect ratio. Missing videos must never produce broken UI.
 - Preview videos muted, `playsInline`, lazy loaded and played only when relevant; no forced autoplay with sound; user controls for long-form demos; accessible pause, captions and reduced motion. Optimize assets for performance and CDN delivery.
 - Production plan: ChatGPT for scripts/storyboards, existing Google AI Pro tools (Flow/Vids/Nano Banana) for optional cinematic illustrations, actual screen recordings and project footage for functional demonstrations. No claim that Google is connected or that generated footage is genuine execution.

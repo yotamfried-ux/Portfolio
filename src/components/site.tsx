@@ -65,7 +65,7 @@ export function ProjectGrid({ locale, standalone = false }: { locale: Locale; st
     </fieldset>}
     <div className="project-grid">
       {projects.map((project, i) => <article className={i === 0 ? 'project-card project-lead' : 'project-card'} data-discipline={project.discipline} key={project.slug}>
-        <MediaFrame media={project.media} locale={locale} />
+        <MediaFrame media={project.media} locale={locale} liveAppUrl={project.liveAppUrl} />
         <div className="project-copy">
           <p className="eyebrow">{project.category[locale]}</p>
           <Heading className="project-title"><Link href={href(locale, `/projects/${project.slug}`)}>{project.title[locale]}<Arrow diagonal /></Link></Heading>

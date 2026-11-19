@@ -22,8 +22,8 @@ test('approved projects appear once, in order, with bilingual content', () => {
   assert.equal(projectBySlug('unknown'), undefined)
 })
 
-test('Phase 1 media has posters or CSS art with no video request', () => {
-  for (const media of [heroMedia, ...projects.map(project => project.media)]) {
+test('projects without footage have posters or CSS art with no video request', () => {
+  for (const media of [heroMedia, ...projects.filter(project => project.slug !== 'tori').map(project => project.media)]) {
     assert.ok(media.poster || media.fallback)
     assert.equal(media.isIllustration, true)
     if (media.poster) assert.ok(existsSync(`public${media.poster}`))
@@ -34,6 +34,18 @@ test('Phase 1 media has posters or CSS art with no video request', () => {
       assert.ok(html.includes(media.attribution.he))
       assert.doesNotMatch(html, /<video|<source/)
     }
+  }
+})
+
+test('Tori shares one authentic showcase, a poster, captions and the public app link', () => {
+  const project = projectBySlug('tori')!
+  const { media } = project
+  assert.equal(project.liveAppUrl, 'https://turim.d2ryf.com/')
+  assert.equal(media.previewVideo?.src, media.demoVideo?.src)
+  assert.equal(media.previewVideo?.autoPlayPreview, false)
+  assert.equal(media.demoVideo?.isIllustration, false)
+  for (const path of [media.poster, media.demoVideo?.src, media.demoVideo?.captions.en, media.demoVideo?.captions.he]) {
+    assert.ok(path && existsSync(`public${path}`), path)
   }
 })
 

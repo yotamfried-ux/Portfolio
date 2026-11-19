@@ -1,7 +1,7 @@
 import type { Bilingual } from './locale'
 
 type Illustration = 'sport' | 'booking' | 'agent' | 'churn' | 'etl'
-type Video = { src: string; captions?: Bilingual; transcript?: Bilingual; attribution: Bilingual; isIllustration: boolean }
+type Video = { src: string; autoPlayPreview?: boolean; captions?: Bilingual; transcript?: Bilingual; attribution: Bilingual; isIllustration: boolean }
 
 export type Media = {
   poster?: string
@@ -21,6 +21,13 @@ export const heroMedia: Media = {
   isIllustration: true,
 }
 
+const toriShowcase: Video = {
+  src: '/media/tori/showcase.mp4',
+  autoPlayPreview: false,
+  attribution: { en: 'Recorded with demo data', he: 'הוקלט עם נתוני הדגמה' },
+  isIllustration: false,
+}
+
 export const projectMedia = {
   sportreel: {
     poster: '/media/sportreel.webp', fallback: 'sport',
@@ -28,8 +35,18 @@ export const projectMedia = {
     attribution: heroMedia.attribution, isIllustration: true,
   },
   tori: {
-    fallback: 'booking', alt: { en: 'An illustrated calendar with available booking times', he: 'איור של יומן עם שעות פנויות לקביעת תורים' },
-    attribution: { en: 'Booking flow illustration', he: 'המחשה של תהליך קביעת תור' }, isIllustration: true,
+    poster: '/media/tori/poster.webp', aspectRatio: '16 / 9',
+    alt: { en: 'Tori’s business calendar with a sample appointment', he: 'יומן העסק בתורי ובו תור לדוגמה' },
+    attribution: toriShowcase.attribution, isIllustration: false,
+    previewVideo: toriShowcase,
+    demoVideo: {
+      ...toriShowcase,
+      captions: { en: '/media/tori/showcase.en.vtt', he: '/media/tori/showcase.he.vtt' },
+      transcript: {
+        en: 'The Tori showcase opens with a customer choosing a service, day, and time. The business calendar shows the new booking. The owner shortens working hours, and the available times update. A mobile customer completes a booking, and the last shot shows the appointment details beside the Tori logo.',
+        he: 'הסרטון של תורי נפתח בבחירת שירות, יום ושעה. התור החדש מופיע ביומן העסק. בעל העסק מקצר את שעות הפעילות והשעות הפנויות מתעדכנות. לאחר מכן רואים קביעת תור בנייד, ובסיום מופיעים פרטי התור לצד הלוגו של תורי.',
+      },
+    },
   },
   'ai-agent-system': {
     fallback: 'agent', alt: { en: 'A diagram of connected steps in an agent workflow', he: 'תרשים של שלבים מחוברים בתהליך העבודה של הסוכנים' },
