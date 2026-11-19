@@ -1,0 +1,101 @@
+import AxeBuilder from '@axe-core/playwright'
+import { expect, test } from '@playwright/test'
+
+test('home, project list, and about show the five approved projects and training', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', error => errors.push(error.message))
+  await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Software for aworld in motion.')
+  await expect(page.getByRole('link', { name: 'SportReel' })).toBeVisible()
+  await expect(page.locator('video')).toHaveCount(0)
+  await page.keyboard.press('Tab')
+  await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('main')).toBeFocused()
+  await page.getByRole('link', { name: 'Explore the work' }).click()
+  await expect(page).toHaveURL(/\/projects$/)
+  await expect(page.getByRole('heading', { level: 2 }).allTextContents()).resolves.toEqual([
+    'SportReel', 'Tori', 'AI Agent System', 'Customer Churn Prediction', 'ETL Pipeline', 'Let’s talk.',
+  ])
+  await page.getByRole('link', { name: 'About', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Data Analyst professional training certificate' })).toBeVisible()
+  await expect(page.locator('body')).not.toContainText('github.com')
+  expect(errors).toEqual([])
+})
+
+test('all five interactive case studies work', async ({ page }) => {
+  await page.goto('/projects/sportreel')
+  const comparison = page.getByRole('slider', { name: 'Compare framing' })
+  await comparison.focus()
+  await page.keyboard.press('End')
+  await expect(comparison).toHaveValue('100')
+  await expect(page.locator('.compare-divider')).toHaveCSS('left', /px/)
+  await page.getByRole('link', { name: 'Next project Tori' }).click()
+  await page.getByRole('button', { name: 'Check availability' }).click()
+  await page.getByRole('button', { name: '11:00' }).click()
+  await page.getByRole('button', { name: 'Review the booking' }).click()
+  await expect(page.getByText('Example appointment time 11:00')).toBeVisible()
+  await page.getByRole('link', { name: 'Next project AI Agent System' }).click()
+  await page.getByRole('button', { name: 'Validate' }).click()
+  await expect(page.getByRole('button', { name: 'Validate' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByText('Check workflow structure and collect the result for review.').first()).toBeVisible()
+  await page.getByRole('link', { name: 'Next project Customer Churn Prediction' }).click()
+  const threshold = page.getByRole('slider', { name: /Flagging threshold/ })
+  await threshold.focus()
+  await page.keyboard.press('Home')
+  await expect(page.getByRole('status').filter({ hasText: '5 of 5 sample accounts flagged' })).toBeVisible()
+  await page.getByRole('link', { name: 'Next project ETL Pipeline' }).click()
+  await page.getByRole('button', { name: 'Transform' }).click()
+  await expect(page.getByRole('cell', { name: 'Rejected' })).toBeVisible()
+  await page.getByRole('button', { name: 'Load' }).click()
+  await expect(page.getByRole('cell', { name: 'Rejected' })).toHaveCount(0)
+  await expect(page.getByRole('cell', { name: 'Loaded' })).toHaveCount(2)
+})
+
+test('Hebrew keeps the case study route, direction, and localized interactive labels', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/projects/tori')
+  await page.getByRole('link', { name: 'עברית' }).click()
+  await expect(page).toHaveURL(/\/he\/projects\/tori$/)
+  await expect(page.locator('html')).toHaveAttribute('lang', 'he')
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl')
+  await page.getByRole('button', { name: 'בדיקת זמינות' }).click()
+  await expect(page.getByRole('group', { name: 'שעות לדוגמה' })).toBeVisible()
+  await expect(page.locator('.lab-active > *').first()).toHaveCSS('animation-name', 'none')
+  expect(await page.locator('body').evaluate(body => body.scrollWidth <= window.innerWidth)).toBe(true)
+  await page.getByRole('link', { name: 'English' }).click()
+  await expect(page).toHaveURL(/\/projects\/tori$/)
+  await expect(page.locator('html')).toHaveAttribute('dir', 'ltr')
+})
+
+test('contact validates locally and prepares a draft without leaking entries into the URL', async ({ page }) => {
+  await page.goto('/contact')
+  await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Sample Visitor')
+  await page.getByRole('textbox', { name: 'Email' }).fill('not-an-email')
+  await page.getByRole('textbox', { name: 'Message', exact: true }).fill('Project enquiry')
+  await page.getByRole('button', { name: 'Prepare draft' }).click()
+  await expect(page.getByRole('textbox', { name: 'Message draft' })).toHaveCount(0)
+  await page.getByRole('textbox', { name: 'Email' }).fill('visitor@example.com')
+  await page.getByRole('button', { name: 'Prepare draft' }).click()
+  await expect(page.getByRole('textbox', { name: 'Message draft' })).toHaveValue('Project enquiry\n\nSample Visitor\nvisitor@example.com')
+  await expect(page).toHaveURL(/\/contact$/)
+})
+
+test('critical English and Hebrew pages pass automated WCAG checks', async ({ page }) => {
+  for (const path of ['/', '/he', '/projects', '/projects/sportreel', '/he/projects/customer-churn-prediction', '/contact']) {
+    await page.goto(path)
+    await page.locator('h1').waitFor()
+    const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()
+    expect(violations.map(({ id, nodes }) => ({ id, nodes: nodes.map(node => node.target) })), path).toEqual([])
+  }
+})
+
+test('canonical metadata, sitemap, image, and localized missing route resolve', async ({ page, request }) => {
+  await page.goto('/projects/sportreel')
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://portfolio.d2ryf.com/projects/sportreel')
+  await expect(page.locator('link[hreflang="he"]')).toHaveAttribute('href', 'https://portfolio.d2ryf.com/he/projects/sportreel')
+  expect((await request.get('/media/social-he.jpg')).ok()).toBe(true)
+  expect(await (await request.get('/sitemap.xml')).text()).toContain('/he/projects/etl-pipeline')
+  expect((await page.goto('/he/projects/unknown'))?.status()).toBe(404)
+  await expect(page.getByRole('heading', { name: 'העמוד לא נמצא.' })).toBeVisible()
+})
