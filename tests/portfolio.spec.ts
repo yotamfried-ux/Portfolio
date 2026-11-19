@@ -18,9 +18,22 @@ test('home, project list, and about show the five approved projects and training
     'SportReel', 'Tori', 'AI Agent System', 'Customer Churn Prediction', 'ETL Pipeline', 'Let’s talk.',
   ])
   await page.getByRole('link', { name: 'About', exact: true }).click()
-  await expect(page.getByRole('heading', { name: 'Data Analyst professional training certificate' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Technion Certified Big Data Analyst' })).toBeVisible()
   await expect(page.locator('body')).not.toContainText('github.com')
   expect(errors).toEqual([])
+})
+
+test('Technion certificate is readable and can be opened full size', async ({ page }) => {
+  await page.goto('/he/about#technion-certificate')
+  const section = page.getByRole('region', { name: 'תעודת הכשרה מקצועית בניתוח ביג דאטה' })
+  await expect(section.getByText('הכשרה מקצועית בת 200 שעות', { exact: false })).toBeVisible()
+  await expect(section.locator('time')).toHaveAttribute('datetime', '2026-01-21')
+  await expect(section.getByRole('img')).toBeVisible()
+  await expect.poll(() => section.getByRole('img').evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0)
+  const fullSize = section.getByRole('link', { name: 'הצגת התעודה בגודל מלא' })
+  await fullSize.click()
+  await expect(page).toHaveURL(/\/credentials\/technion-big-data-analyst\.webp$/)
+  await expect.poll(() => page.locator('img').evaluate((image: HTMLImageElement) => image.naturalHeight)).toBe(1800)
 })
 
 test('all five interactive case studies work', async ({ page }) => {

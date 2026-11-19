@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { href, labels, type Locale } from '@/lib/locale'
@@ -80,11 +81,22 @@ export function Capabilities({ locale }: { locale: Locale }) {
   </section>
 }
 
+const certificateImage = '/credentials/technion-big-data-analyst.webp'
+
 export function Certificate({ locale }: { locale: Locale }) {
   const t = labels[locale]
-  return <section className="credential">
-    <div className="credential-icon" aria-hidden="true"><i /></div>
-    <div><p className="eyebrow">{t.education}</p><h2>{t.certificate}</h2><p>{t.technion} <span aria-hidden="true">·</span> {t.certDetail}</p></div>
+  return <section className="credential" id="technion-certificate" aria-labelledby="technion-certificate-title">
+    <div className="credential-copy">
+      <p className="eyebrow">{t.education}</p>
+      <h2 id="technion-certificate-title">{t.certificate}</h2>
+      {locale === 'he' && <p lang="en"><bdi>Technion Certified Big Data Analyst</bdi></p>}
+      <p>{t.certIssuer}</p>
+      <p className="credential-detail">{t.certTraining} <span aria-hidden="true">·</span> <time dateTime="2026-01-21">{t.certDate}</time></p>
+    </div>
+    <figure className="credential-view">
+      <Image src={certificateImage} width={1272} height={1800} sizes="(max-width: 700px) 260px, 220px" alt={t.certImage} />
+      <figcaption><a className="text-link" href={certificateImage}>{t.certView}<Arrow diagonal /></a></figcaption>
+    </figure>
   </section>
 }
 
