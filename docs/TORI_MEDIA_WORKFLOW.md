@@ -43,7 +43,7 @@ The state directory contains generated local credentials and should stay outside
 
 ## Inventory and review the masters
 
-Copy the five MP4 files from the capture output into `assets/source/tori/` in the private Portfolio checkout. Generate the machine-readable manifest using the full Git SHA of the Tori checkout used to record.
+Use Python 3.11 or later for the verifier and sync workflow. Copy the five MP4 files from the capture output into `assets/source/tori/` in the private Portfolio checkout. Generate the machine-readable manifest using the full Git SHA of the Tori checkout used to record.
 
 ```sh
 git lfs install
@@ -53,7 +53,7 @@ python3 scripts/tori-media.py
 git lfs fsck
 ```
 
-Review the beginning, several points in the middle, and the ending of each clip in a player. Check UI text, credentials, address bars, and accidental notifications. After pushing, fetch the branch in a fresh checkout with Git LFS, materialize the files with `git lfs pull`, and run `python3 scripts/tori-media.py` again. The verifier checks resolution, duration, pixel format, H.264, faststart, full decode, and hashes against the manifest.
+Review the beginning, several points in the middle, and the ending of each clip in a player. Check UI text, credentials, address bars, and accidental notifications. If the scene starts with a blank frame or an internal address, trim those frames from the original WebM and re-encode with the same FFmpeg settings in the capture script. Regenerate the manifest and update the README table after trimming. After pushing, fetch the branch in a fresh checkout, run `git lfs install --local` and `git lfs pull`, then run `python3 scripts/tori-media.py` again. The verifier checks resolution, duration, pixel format, H.264, faststart, full decode, and hashes against the manifest.
 
 ## Sync private editing copies to Google Drive
 
