@@ -13,7 +13,7 @@ export function href(locale: Locale, path = '') {
 export const labels = {
   en: {
     name: 'Yotam Friedman', work: 'Work', about: 'About', contact: 'Contact', allWork: 'All projects',
-    skip: 'Skip to content', nav: 'Main navigation', language: 'עברית', caseStudy: 'View case study',
+    skip: 'Skip to content', nav: 'Main navigation', language: 'עברית', caseStudy: 'View case study', liveApp: 'View Live App',
     selected: 'Selected work', lab: 'Interactive lab', openLab: 'Try the interactive demo', illustrative: 'Illustrative demo', illustrativeOverview: 'Illustrative overview',
     pending: 'Case study in preparation', verified: 'Implementation reviewed',
     problem: 'The problem', role: 'Project focus', solution: 'The approach', architecture: 'System overview',
@@ -30,7 +30,7 @@ export const labels = {
   },
   he: {
     name: 'יותם פרידמן', work: 'עבודות', about: 'עליי', contact: 'יצירת קשר', allWork: 'כל הפרויקטים',
-    skip: 'דילוג לתוכן הראשי', nav: 'ניווט ראשי', language: 'English', caseStudy: 'למקרה הבוחן',
+    skip: 'דילוג לתוכן הראשי', nav: 'ניווט ראשי', language: 'English', caseStudy: 'למקרה הבוחן', liveApp: 'לצפייה במערכת',
     selected: 'עבודות נבחרות', lab: 'מעבדה אינטראקטיבית', openLab: 'להדגמה האינטראקטיבית', illustrative: 'המחשה', illustrativeOverview: 'תהליך להמחשה',
     pending: 'מקרה הבוחן בהכנה', verified: 'המימוש נבדק בקוד המקור',
     problem: 'הבעיה', role: 'מוקד הפרויקט', solution: 'הגישה', architecture: 'סקירת המערכת',

@@ -37,7 +37,7 @@ export function Video({ asset, poster, mode, locale }: {
     }
   }, [])
 
-  const wantsPreview = previewPreference === 'play' || (previewPreference === 'automatic' && !reduced)
+  const wantsPreview = previewPreference === 'play' || (previewPreference === 'automatic' && asset.autoPlayPreview !== false && !reduced)
   const showPreview = preview && visible && wantsPreview
   const mounted = !failed && (preview ? showPreview : demoRequested)
 

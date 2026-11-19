@@ -50,6 +50,48 @@ test('Technion certificate is readable and can be opened full size', async ({ pa
   await expect.poll(() => page.locator('img').evaluate((image: HTMLImageElement) => image.naturalHeight)).toBe(1800)
 })
 
+test('Tori card and case study expose the showcase and the localized live app link', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  const videoRequests: string[] = []
+  page.on('request', request => {
+    if (request.url().endsWith('/media/tori/showcase.mp4')) videoRequests.push(request.url())
+  })
+  await page.goto('/projects')
+  const card = page.locator('article').filter({ has: page.getByRole('heading', { name: 'Tori', exact: true }) })
+  const figure = card.locator('figure')
+  const link = figure.getByRole('link', { name: 'View Live App' })
+  await expect(link).toHaveAttribute('href', 'https://turim.d2ryf.com/')
+  await expect(figure.getByRole('img')).toBeVisible()
+  await expect(figure.locator('video')).toHaveCount(0)
+  expect(videoRequests).toHaveLength(0)
+  await figure.getByRole('button', { name: 'Play video' }).click()
+  await expect.poll(() => figure.locator('video').evaluate((video: HTMLVideoElement) => video.currentTime)).toBeGreaterThan(0)
+  await figure.getByRole('button', { name: 'Pause video' }).click()
+  await expect(figure.locator('video')).toHaveCount(0)
+  await expect(figure.getByRole('img')).toBeVisible()
+
+  await page.goto('/he/projects/tori')
+  const showcase = page.locator('.case-study > figure')
+  await expect(showcase.getByRole('link', { name: 'לצפייה במערכת' })).toHaveAttribute('href', 'https://turim.d2ryf.com/')
+  await expect(showcase.locator('video')).toHaveCount(0)
+  await showcase.getByRole('button', { name: 'ניגון הסרטון' }).click()
+  const player = showcase.locator('video')
+  await expect(player).toHaveAttribute('controls', '')
+  await expect(player.locator('track')).toHaveAttribute('srclang', 'he')
+  await expect.poll(() => player.evaluate((video: HTMLVideoElement) => video.duration)).toBeGreaterThanOrEqual(15)
+  await expect.poll(() => player.evaluate((video: HTMLVideoElement) => video.currentTime)).toBeGreaterThan(0)
+})
+
+test('Tori retains the poster and live action if the showcase fails to load', async ({ page }) => {
+  await page.route('**/media/tori/showcase.mp4', route => route.abort())
+  await page.goto('/projects/tori')
+  const showcase = page.locator('.case-study > figure')
+  await showcase.getByRole('button', { name: 'Play video' }).click()
+  await expect(showcase.getByRole('status')).toHaveText('The video couldn’t load.')
+  await expect(showcase.getByRole('img')).toBeVisible()
+  await expect(showcase.getByRole('link', { name: 'View Live App' })).toBeVisible()
+})
+
 test('all five interactive case studies work', async ({ page }) => {
   await page.goto('/projects/sportreel')
   const comparison = page.getByRole('slider', { name: 'Compare the wide and cropped views' })
