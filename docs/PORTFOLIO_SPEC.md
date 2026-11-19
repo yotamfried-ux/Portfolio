@@ -73,3 +73,23 @@ Definition of Done for Phase 1: all routes render; EN/HE + RTL work; five approv
 - Do not assume any current app or video files exist; inspect first.
 - Prefer real proof over simulated claims; explicitly label illustrative demos.
 - Ask for credentials, domain ownership, contact destination and missing assets only when needed; never invent them.
+
+## 10. Reuse Engineering-OS UI/UX knowledge before implementing UI
+**User-approved reuse:** The separate private repository `yotamfried-ux/Engineering-OS` contains curated UI/UX patterns, premium motion guidance, skills and reference resources. It is a **knowledge library, not an application runtime**. Use it to accelerate design and implementation, not to copy proprietary assets blindly or install everything.
+
+Read, in this order, the smallest relevant set of existing sources:
+1. `Engineering-OS/docs/ui-ux/EXPERIENCE-ROUTING.md` — select the landing-page, new-screen, interaction/motion and UX quality routes.
+2. `Engineering-OS/docs/product-experience/README.md` and `docs/product-experience/premium-motion-and-design-systems.md` — premium visual direction, responsive motion and design systems.
+3. `Engineering-OS/patterns/ui/README.md` — semantic design tokens, reusable component architecture, accessibility.
+4. `Engineering-OS/external-skills/ui-ux-pro-max/README.md` — inspect skill documentation and adoption prerequisites; **do not assume the skill is installed or runnable**.
+5. `Engineering-OS/docs/ui-ux/MOTION-AND-INTERACTIONS.md`, `SCREEN-CONTENT-PLAYBOOK.md`, `PRODUCT-EXPERIENCE-QUALITY-GATE.md` — relevant to hero, interactive case studies, CTAs and validation.
+6. `Engineering-OS/docs/product-experience/ui-library-candidates-2026.md` — evaluate candidate UI/motion libraries; verify current upstream, license and bundle/performance cost before adoption.
+7. `Engineering-OS/capability-registry/ROUTING-MAP.md` and `docs/reference-repositories/` — discover additional references only when needed.
+
+Execution rules:
+- Inspect and reuse existing patterns/components **when technically compatible**, adapting them to this portfolio's Next.js/TypeScript/Tailwind architecture; never assume examples are production-ready.
+- Prefer documented, tested, accessible primitives and a coherent token system over generating generic template UI.
+- Verify exact source paths, upstream license, version and dependencies; avoid broad installs and needless clones. On a persistent workspace, reuse an existing Engineering-OS checkout and update it with `git pull --ff-only`; on an ephemeral environment, obtain only required references.
+- If access to the private Engineering-OS repository is unavailable in Codex, report the blocker and proceed using the approved design specification; **do not claim reuse happened**.
+- Deliver a short `docs/ENGINEERING_OS_REUSE.md` evidence table mapping source path → adopted pattern/tool → implementation location → verification, and note any rejected options.
+- Follow the already-approved A+B direction; do not restart aesthetic selection or add a blocking design approval gate.
