@@ -1,3 +1,5 @@
 assets/source/tori/*.mp4 filter=lfs diff=lfs merge=lfs -text
 
 assets/review/*/*.mp4 filter=lfs diff=lfs merge=lfs -text
+
+assets/source/tori-remotion/*.mp4 filter=lfs diff=lfs merge=lfs -text

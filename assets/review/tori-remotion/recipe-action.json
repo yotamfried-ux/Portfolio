@@ -1,0 +1,173 @@
+{
+  "brand": {
+    "name": "Tori",
+    "accent": "#0a6b5e",
+    "backdrop": "#10191c",
+    "mark": "tori-mark.svg"
+  },
+  "fps": 25,
+  "width": 1280,
+  "height": 720,
+  "theme": "action",
+  "shots": [
+    {
+      "id": "time-selection",
+      "scene": "booking-desktop",
+      "event": "time-after",
+      "role": "pick",
+      "in": 3.68,
+      "out": 4.32,
+      "crop": [
+        200,
+        0,
+        980,
+        552
+      ],
+      "focus": [
+        796,
+        297
+      ],
+      "zoom": 1.27,
+      "action_score": 10,
+      "cinema_score": 10,
+      "label": "Booking",
+      "caption": "The customer selects an available appointment time.",
+      "evidence": "Loaded grid is visible from the start. 09:00 becomes green. The cut ends before the customer form.",
+      "file": "time-selection.mp4",
+      "frames": 55,
+      "width": 1280,
+      "height": 820,
+      "timeline_in": 0.0,
+      "timeline_out": 2.2,
+      "alternatives": []
+    },
+    {
+      "id": "confirmed",
+      "scene": "booking-desktop",
+      "event": "booking-confirmed",
+      "role": "confirm",
+      "in": 5.28,
+      "out": 5.96,
+      "crop": [
+        212,
+        0,
+        856,
+        482
+      ],
+      "focus": [
+        640,
+        230
+      ],
+      "zoom": 1.06,
+      "action_score": 10,
+      "cinema_score": 10,
+      "label": "Confirmed",
+      "caption": "Tori displays an in-app booking confirmation.",
+      "evidence": "Same fixture as the owner calendar. Uses the real on-screen confirmation and omits contact form and notification delivery.",
+      "file": "confirmed.mp4",
+      "frames": 41,
+      "width": 1280,
+      "height": 820,
+      "timeline_in": 2.2,
+      "timeline_out": 3.84,
+      "alternatives": [
+        "manage-confirmation"
+      ]
+    },
+    {
+      "id": "owner-calendar",
+      "scene": "calendar-owner",
+      "event": "calendar-confirmed-row",
+      "role": "calendar",
+      "in": 2.12,
+      "out": 3.48,
+      "crop": [
+        64,
+        24,
+        1200,
+        676
+      ],
+      "focus": [
+        834,
+        335
+      ],
+      "zoom": 1.15,
+      "action_score": 10,
+      "cinema_score": 10,
+      "label": "Calendar",
+      "caption": "The same appointment appears in the business calendar.",
+      "evidence": "The day count changes from zero to one and the confirmed 09:00 row appears. Startup view is excluded.",
+      "file": "owner-calendar.mp4",
+      "frames": 73,
+      "width": 1280,
+      "height": 820,
+      "timeline_in": 3.84,
+      "timeline_out": 6.76,
+      "alternatives": []
+    },
+    {
+      "id": "hours-edit",
+      "scene": "availability-settings",
+      "event": "closing-after",
+      "role": "settings",
+      "in": 1.12,
+      "out": 1.88,
+      "crop": [
+        242,
+        58,
+        790,
+        444
+      ],
+      "focus": [
+        665,
+        270
+      ],
+      "zoom": 1.06,
+      "action_score": 10,
+      "cinema_score": 10,
+      "label": "Availability",
+      "caption": "The owner changes Sunday’s closing time to noon.",
+      "evidence": "The displayed 18:00 setting becomes 12:00. The affected interval bar stays visible.",
+      "file": "hours-edit.mp4",
+      "frames": 74,
+      "width": 1280,
+      "height": 820,
+      "timeline_in": 6.76,
+      "timeline_out": 9.72,
+      "alternatives": [
+        "saved-hours"
+      ]
+    },
+    {
+      "id": "fewer-slots",
+      "scene": "availability-settings",
+      "event": "reduced-slots",
+      "role": "slots",
+      "in": 5.8,
+      "out": 6.44,
+      "crop": [
+        270,
+        74,
+        850,
+        478
+      ],
+      "focus": [
+        778,
+        294
+      ],
+      "zoom": 1.1,
+      "action_score": 10,
+      "cinema_score": 10,
+      "label": "Availability",
+      "caption": "The revised hours leave only morning times available.",
+      "evidence": "Eligible morning slots and 09:00–12:00 are stable after the request finishes. Independent owner-hours fixture.",
+      "file": "fewer-slots.mp4",
+      "frames": 67,
+      "width": 1280,
+      "height": 820,
+      "timeline_in": 9.72,
+      "timeline_out": 12.4,
+      "alternatives": []
+    }
+  ]
+}

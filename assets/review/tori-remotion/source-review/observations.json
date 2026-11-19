@@ -1,0 +1,300 @@
+[
+  {
+    "id": "service-selection",
+    "scene": "booking-desktop",
+    "event": "service-after",
+    "role": "service",
+    "in": 1.08,
+    "out": 1.92,
+    "crop": [
+      200,
+      0,
+      980,
+      552
+    ],
+    "focus": [
+      801,
+      240
+    ],
+    "zoom": 1.17,
+    "action_score": 4,
+    "cinema_score": 8,
+    "label": "Booking",
+    "caption": "The customer chooses a service.",
+    "evidence": "Selected service gains a teal background and the booking summary updates.",
+    "event_second": 1.522911377,
+    "box": {
+      "x": 556.578125,
+      "y": 240,
+      "width": 506.421875,
+      "height": 78.59375
+    },
+    "file": "service-selection.mp4",
+    "source_sha256": "39b60c1a5a5c5cd8c04e1f14fdc73db4f1ea930d0f8ebef3df947c9f14285208"
+  },
+  {
+    "id": "time-selection",
+    "scene": "booking-desktop",
+    "event": "time-after",
+    "role": "pick",
+    "in": 3.68,
+    "out": 4.32,
+    "crop": [
+      200,
+      0,
+      980,
+      552
+    ],
+    "focus": [
+      796,
+      297
+    ],
+    "zoom": 1.27,
+    "action_score": 10,
+    "cinema_score": 10,
+    "label": "Booking",
+    "caption": "The customer selects an available appointment time.",
+    "evidence": "Loaded grid is visible from the start. 09:00 becomes green. The cut ends before the customer form.",
+    "event_second": 3.9596948119999995,
+    "box": {
+      "x": 944.40625,
+      "y": 397,
+      "width": 119.59375,
+      "height": 46
+    },
+    "file": "time-selection.mp4",
+    "source_sha256": "39b60c1a5a5c5cd8c04e1f14fdc73db4f1ea930d0f8ebef3df947c9f14285208"
+  },
+  {
+    "id": "confirmed",
+    "scene": "booking-desktop",
+    "event": "booking-confirmed",
+    "role": "confirm",
+    "in": 5.28,
+    "out": 5.96,
+    "crop": [
+      212,
+      0,
+      856,
+      482
+    ],
+    "focus": [
+      640,
+      230
+    ],
+    "zoom": 1.06,
+    "action_score": 10,
+    "cinema_score": 10,
+    "label": "Confirmed",
+    "caption": "Tori displays an in-app booking confirmation.",
+    "evidence": "Same fixture as the owner calendar. Uses the real on-screen confirmation and omits contact form and notification delivery.",
+    "event_second": 5.24015562,
+    "box": {
+      "x": 417,
+      "y": 506.5625,
+      "width": 48.21875,
+      "height": 25.59375
+    },
+    "file": "confirmed.mp4",
+    "source_sha256": "39b60c1a5a5c5cd8c04e1f14fdc73db4f1ea930d0f8ebef3df947c9f14285208"
+  },
+  {
+    "id": "manage-confirmation",
+    "scene": "confirmation-preview",
+    "event": "manage-confirmed",
+    "role": "confirm",
+    "in": 0.6,
+    "out": 1.64,
+    "crop": [
+      212,
+      0,
+      856,
+      482
+    ],
+    "focus": [
+      640,
+      230
+    ],
+    "zoom": 1.07,
+    "action_score": 4,
+    "cinema_score": 4,
+    "label": "Confirmed",
+    "caption": "Tori displays the appointment detail page.",
+    "evidence": "Settled manage page repeats the mobile/desktop confirmation story. Preserved as a reviewed alternative.",
+    "event_second": 0.772178490000002,
+    "box": {
+      "x": 417,
+      "y": 389.96875,
+      "width": 48.21875,
+      "height": 25.59375
+    },
+    "file": "manage-confirmation.mp4",
+    "source_sha256": "6878c601f9d9c6a17b65331b8083467363bef31caeada06b361e0875769b7f3c"
+  },
+  {
+    "id": "owner-calendar",
+    "scene": "calendar-owner",
+    "event": "calendar-confirmed-row",
+    "role": "calendar",
+    "in": 2.12,
+    "out": 3.48,
+    "crop": [
+      64,
+      24,
+      1200,
+      676
+    ],
+    "focus": [
+      834,
+      335
+    ],
+    "zoom": 1.15,
+    "action_score": 10,
+    "cinema_score": 10,
+    "label": "Calendar",
+    "caption": "The same appointment appears in the business calendar.",
+    "evidence": "The day count changes from zero to one and the confirmed 09:00 row appears. Startup view is excluded.",
+    "event_second": 2.5986966639999993,
+    "box": {
+      "x": 481,
+      "y": 489.59375,
+      "width": 766,
+      "height": 70.59375
+    },
+    "file": "owner-calendar.mp4",
+    "source_sha256": "255050be579bf8dbd801cbaed2b973135a5fe995932ce9298ab7de4da916aea9"
+  },
+  {
+    "id": "hours-edit",
+    "scene": "availability-settings",
+    "event": "closing-after",
+    "role": "settings",
+    "in": 1.12,
+    "out": 1.88,
+    "crop": [
+      242,
+      58,
+      790,
+      444
+    ],
+    "focus": [
+      665,
+      270
+    ],
+    "zoom": 1.06,
+    "action_score": 10,
+    "cinema_score": 10,
+    "label": "Availability",
+    "caption": "The owner changes Sunday’s closing time to noon.",
+    "evidence": "The displayed 18:00 setting becomes 12:00. The affected interval bar stays visible.",
+    "event_second": 1.573773921,
+    "box": {
+      "x": 317,
+      "y": 336.59375,
+      "width": 88,
+      "height": 44
+    },
+    "file": "hours-edit.mp4",
+    "source_sha256": "280f0906246839105d0e538cabfadbd56d9f610e37313f7f294a51bd6be307f6"
+  },
+  {
+    "id": "saved-hours",
+    "scene": "availability-settings",
+    "event": "hours-saved",
+    "role": "settings",
+    "in": 2.4,
+    "out": 3.0,
+    "crop": [
+      242,
+      0,
+      790,
+      444
+    ],
+    "focus": [
+      638,
+      212
+    ],
+    "zoom": 1.05,
+    "action_score": 5,
+    "cinema_score": 5,
+    "label": "Availability",
+    "caption": "Tori confirms that the business hours were saved.",
+    "evidence": "The genuine save toast validates the change. The 12:00 field is off screen, so this is an alternate.",
+    "event_second": 2.369099310999998,
+    "box": {
+      "x": 1280,
+      "y": 1828.46875,
+      "width": 1,
+      "height": 1
+    },
+    "file": "saved-hours.mp4",
+    "source_sha256": "280f0906246839105d0e538cabfadbd56d9f610e37313f7f294a51bd6be307f6"
+  },
+  {
+    "id": "fewer-slots",
+    "scene": "availability-settings",
+    "event": "reduced-slots",
+    "role": "slots",
+    "in": 5.8,
+    "out": 6.44,
+    "crop": [
+      270,
+      74,
+      850,
+      478
+    ],
+    "focus": [
+      778,
+      294
+    ],
+    "zoom": 1.1,
+    "action_score": 10,
+    "cinema_score": 10,
+    "label": "Availability",
+    "caption": "The revised hours leave only morning times available.",
+    "evidence": "Eligible morning slots and 09:00–12:00 are stable after the request finishes. Independent owner-hours fixture.",
+    "event_second": 5.6748790950000005,
+    "box": {
+      "x": 944.40625,
+      "y": 397,
+      "width": 119.59375,
+      "height": 46
+    },
+    "file": "fewer-slots.mp4",
+    "source_sha256": "280f0906246839105d0e538cabfadbd56d9f610e37313f7f294a51bd6be307f6"
+  },
+  {
+    "id": "mobile-booking",
+    "scene": "booking-mobile",
+    "event": "time-after",
+    "role": "mobile",
+    "in": 2.6,
+    "out": 3.32,
+    "crop": [
+      0,
+      0,
+      390,
+      844
+    ],
+    "focus": [
+      195,
+      415
+    ],
+    "zoom": 1.0,
+    "phone": true,
+    "action_score": 0,
+    "cinema_score": 10,
+    "label": "Also on mobile",
+    "caption": "A separate mobile session shows appointment selection.",
+    "evidence": "Independent fixture shows the responsive grid and a green selection before contact details open.",
+    "event_second": 3.241551674999999,
+    "box": {
+      "x": 261.34375,
+      "y": 397,
+      "width": 112.65625,
+      "height": 46
+    },
+    "file": "mobile-booking.mp4",
+    "source_sha256": "45091b00b026ddec94459bb41a1fde15001d5445e9f221f76329bb7e919c540c"
+  }
+]
