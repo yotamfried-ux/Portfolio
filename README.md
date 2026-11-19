@@ -24,9 +24,9 @@ Playwright runs against the production build. Set `PLAYWRIGHT_CHROMIUM_PATH` to 
 
 ## Deployment and contact
 
-Create or import `portfolio` under the Vercel team `yotamfried-7101's projects`. Select Next.js, repository root, and `main` as the production branch. Use Vercel's Git integration for branch and pull request previews. The Vercel connector reported `403 forbidden` when creating the project directly and through Git import. The team needs to grant project creation or a team member with that permission needs to import it. Keep the GitHub repository private.
+The Vercel project `portfolio` is linked to this private GitHub repository under `yotamfried-7101's projects`. It uses the Next.js preset, repository root, and `main` as its production branch. Push changes to the feature branch for Git-integrated previews and use the branch's deployment link to review the latest build.
 
-The Namecheap `portfolio` CNAME resolves to `cname.vercel-dns.com.` Vercel's domain configuration check reported no conflict and recommended that same value. Domain attachment and certificate verification require the Vercel project. Attach `portfolio.d2ryf.com` to the production environment and verify it in that project. Publish from `main` after owner approval. Preview responses and robots settings discourage indexing.
+The Namecheap `portfolio` CNAME resolves to `cname.vercel-dns.com.` Vercel's domain configuration check reported no conflict and recommended that same value. Vercel can assign `portfolio.d2ryf.com` to the review branch for a stable preview URL. Verify the domain and TLS in the project. Switch the domain to the production branch after owner approval. Preview responses and robots settings discourage indexing.
 
 `SITE_URL` sets the canonical root, which defaults to `https://portfolio.d2ryf.com`. Set `PUBLIC_CONTACT_EMAIL` only after the owner approves a public address. Rebuild after changing either value. The visitor composes a draft in the browser and sends from their email app. The website stores no submissions and exposes no mail-sending endpoint. Without an approved address, the draft can be copied locally.
 
