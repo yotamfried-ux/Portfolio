@@ -34,6 +34,7 @@ export default async function CaseStudy({ params }: Props) {
         <h1>{project.title[locale]}</h1>
         <p>{project.summary[locale]}</p>
         <p className="project-status">{t[project.status]}</p>
+        <a href="#interactive-demo" className="text-link case-demo-link">{t.openLab}<Arrow diagonal /></a>
       </div>
       <MediaFrame media={project.media} locale={locale} mode="demo" />
       <div className="case-details">
@@ -42,7 +43,7 @@ export default async function CaseStudy({ params }: Props) {
         <section><h2>{t.solution}</h2><p>{project.solution[locale]}</p></section>
         <section><h2>{t.challenges}</h2><p>{project.challenges[locale]}</p></section>
       </div>
-      <section className="case-lab"><h2>{t.lab}</h2><Lab project={{ slug: project.slug, steps: project.steps }} locale={locale} /></section>
+      <section className="case-lab" id="interactive-demo" tabIndex={-1}><h2>{t.lab}</h2><Lab project={{ slug: project.slug, steps: project.steps }} locale={locale} /></section>
       <section className="architecture">
         <div className="section-head"><h2>{t.architecture}</h2><p className="project-status">{t.illustrativeOverview}</p></div>
         <ol>{project.steps.map(step => <li key={step.title.en}><h3>{step.title[locale]}</h3><p>{step.detail[locale]}</p></li>)}</ol>

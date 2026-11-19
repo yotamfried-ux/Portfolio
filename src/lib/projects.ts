@@ -6,6 +6,7 @@ type Project = {
   slug: keyof typeof projectMedia
   title: Bilingual
   category: Bilingual
+  discipline: 'ai' | 'full-stack' | 'data'
   summary: Bilingual
   status: 'verified' | 'pending'
   demoStatus: 'illustrative'
@@ -28,6 +29,7 @@ const step = (en: string, he: string, detailEn: string, detailHe: string): Step 
 export const projects: Project[] = [
   {
     slug: 'sportreel', title: b('SportReel', 'SportReel'), category: b('Computer vision · Video', 'ראייה ממוחשבת · וידאו'),
+    discipline: 'ai',
     summary: b('Turn wide drone footage into sports clips that keep the athlete in focus.', 'מצילומי רחפן רחבים לקליפים שבהם הספורטאי במרכז.'),
     status: 'verified', demoStatus: 'illustrative',
     problem: b('In wide drone shots, the athlete can be hard to spot. A focused highlight reel needs to keep the athlete in frame and capture the right moments.', 'בצילומי רחפן רחבים לפעמים קשה להבחין בספורטאי. כדי ליצור סרטון רגעי שיא צריך להבליט אותו בפריים ולבחור את הרגעים המתאימים.'),
@@ -39,6 +41,7 @@ export const projects: Project[] = [
     stack: ['Python', 'FFmpeg'], media: projectMedia.sportreel,
     steps: [
       step('Source frame', 'תמונת מקור', 'Begin with a wide shot of the athlete and the surrounding terrain.', 'מתחילים בתמונה רחבה שבה רואים את הספורטאי ואת השטח שסביבו.'),
+      step('Detection and tracking', 'זיהוי ומעקב', 'Locate the athlete in successive frames and follow their movement.', 'מזהים את הספורטאי בתמונות עוקבות ועוקבים אחר תנועתו.'),
       step('Subject framing', 'מסגור הספורטאי', 'Crop the frame around the cyclist. This comparison uses an AI-generated image.', 'חותכים את התמונה כדי להבליט את רוכב האופניים. תמונת ההשוואה נוצרה בבינה מלאכותית.'),
       step('Clip selection', 'בחירת קליפים', 'Choose the start and end of each clip around a key moment.', 'בוחרים נקודת התחלה וסיום לכל קליפ לפי הרגע שרוצים להציג.'),
       step('Reel export', 'ייצוא הסרטון', 'Put the clips in sequence and record the edit decisions.', 'מסדרים את הקליפים ברצף ומתעדים את החלטות העריכה.'),
@@ -46,6 +49,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'tori', title: b('Tori', 'תורי'), category: b('Full stack · Scheduling', 'פיתוח מקצה לקצה · תורים'),
+    discipline: 'full-stack',
     summary: b('Customers book available appointments. Businesses manage those bookings in a calendar.', 'לקוחות קובעים תורים בשעות פנויות ובעלי עסקים מנהלים את התורים ביומן.'),
     status: 'verified', demoStatus: 'illustrative',
     problem: b('Customers need to see which times are available. Businesses need an up-to-date view of the appointments customers have booked.', 'לקוחות צריכים לדעת אילו שעות פנויות, ובעלי עסקים צריכים יומן שמשקף את התורים שנקבעו בפועל.'),
@@ -64,6 +68,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'ai-agent-system', title: b('AI Agent System', 'מערכת סוכני בינה מלאכותית'), category: b('AI · Orchestration', 'בינה מלאכותית · תזמור'),
+    discipline: 'ai',
     summary: b('Experiments in assigning software tasks to AI agents, checking their work, and reviewing the results.', 'ניסויים בחלוקת משימות תוכנה בין סוכני בינה מלאכותית, בבדיקת עבודתם ובסקירת התוצאות.'),
     status: 'verified', demoStatus: 'illustrative',
     problem: b('When agents work in stages, each needs to know what it receives, what it hands off, and when the result is ready for review.', 'כשסוכנים עובדים בשלבים, צריך להגדיר מה כל סוכן מקבל, מה הוא מעביר הלאה ומתי התוצאה מוכנה לבדיקה.'),
@@ -82,6 +87,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'customer-churn-prediction', title: b('Customer Churn Prediction', 'חיזוי נטישת לקוחות'),
+    discipline: 'data',
     category: b('Machine learning', 'למידת מכונה'),
     summary: b('Explore how a risk threshold changes which customer accounts are flagged for review.', 'הדגמה של השפעת סף הסיכון על בחירת חשבונות הלקוחות לבדיקה.'),
     status: 'pending', demoStatus: 'illustrative',
@@ -100,6 +106,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'etl-pipeline', title: b('ETL Pipeline', 'תהליך ETL'), category: b('Data engineering', 'הנדסת נתונים'),
+    discipline: 'data',
     summary: b('An interactive example of extracting, cleaning, and loading data.', 'דוגמה אינטראקטיבית לחילוץ נתונים, ניקוי שלהם וטעינתם ליעד.'),
     status: 'pending', demoStatus: 'illustrative',
     problem: b('Raw records can arrive in different formats or with missing values. They need to be checked and standardized before other teams can use them.', 'רשומות גולמיות עלולות להגיע בפורמטים שונים או עם ערכים חסרים. צריך לבדוק אותן ולהאחיד את הפורמט לפני שצוותים אחרים יוכלו להשתמש בהן.'),

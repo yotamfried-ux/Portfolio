@@ -3,8 +3,9 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { flaggedCount, sampleScores, etlRows } from '@/lib/demo'
-import { labels, type Locale } from '@/lib/locale'
+import { labels, type Bilingual, type Locale } from '@/lib/locale'
 import type { projectBySlug } from '@/lib/projects'
+import { Arrow } from './arrow'
 
 type Project = NonNullable<ReturnType<typeof projectBySlug>>
 type LabProject = Pick<Project, 'slug' | 'steps'>
@@ -35,12 +36,22 @@ function ChurnDemo({ locale }: { locale: Locale }) {
       <input id="threshold" type="range" min={0} max={100} value={threshold} onChange={event => setThreshold(event.target.valueAsNumber)} />
       <p role="status">{he ? `${flaggedCount(threshold)} מתוך 5 חשבונות מסומנים לבדיקה` : `${flaggedCount(threshold)} of 5 sample accounts flagged for review`}</p>
     </div>
-    <ul className="chart-bars" dir="ltr" aria-label={he ? 'ציוני סיכון סינתטיים' : 'Synthetic risk scores'}>
-      {sampleScores.map((score, index) => <li key={score} data-flagged={score >= threshold}>
-        <span>{score}</span><i aria-hidden="true" style={{ height: `${score}%` }} /><small>A0{index + 1}</small>
-        <span className="sr-only">{score >= threshold ? (he ? 'מסומן לבדיקה' : 'Flagged for review') : (he ? 'מתחת לסף' : 'Below threshold')}</span>
-      </li>)}
-    </ul>
+    <figure className="risk-chart">
+      <div className="chart-plot" dir="ltr">
+        <span className="chart-threshold" aria-hidden="true" style={{ insetBlockEnd: `${threshold}%` }} />
+        <ul className="chart-bars" aria-label={he ? 'ציוני סיכון סינתטיים' : 'Synthetic risk scores'}>
+          {sampleScores.map((score, index) => <li key={score} data-flagged={score >= threshold}>
+            <div className="chart-bar" style={{ height: `${score}%` }}><span>{score}</span></div>
+            <small>A0{index + 1}</small>
+            <span className="sr-only">{score >= threshold ? (he ? 'מסומן לבדיקה' : 'Flagged for review') : (he ? 'מתחת לסף' : 'Below threshold')}</span>
+          </li>)}
+        </ul>
+      </div>
+      <figcaption className="chart-key">
+        <span>{he ? 'סף לבדיקה' : 'Review threshold'}</span>
+        <span>{he ? 'מסומן לבדיקה' : 'Flagged for review'}</span>
+      </figcaption>
+    </figure>
   </div>
 }
 
@@ -49,6 +60,8 @@ function BookingDemo({ stage, time, setTime, locale }: {
 }) {
   const he = locale === 'he'
   const service = he ? 'פגישת ייעוץ לדוגמה' : 'Sample consultation'
+  const duration = he ? '30 דקות' : '30 minutes'
+  const calendar = he ? 'יומן העסק לדוגמה' : 'Sample business calendar'
   return <div className="booking-demo">
     <p className="eyebrow">{he ? 'קביעת תור לדוגמה' : 'Booking example'}</p>
     <h3>{service}</h3>
@@ -56,8 +69,24 @@ function BookingDemo({ stage, time, setTime, locale }: {
     {stage === 1 && <div className="sample-times" role="group" aria-label={he ? 'שעות פנויות לדוגמה' : 'Example time slots'}>
       {['09:30', '11:00', '14:30'].map(option => <button type="button" key={option} aria-pressed={option === time} onClick={() => setTime(option)}>{option}</button>)}
     </div>}
-    {stage === 2 && <p>{he ? 'השעה שנבחרה' : 'Selected time'} <strong>{time}</strong></p>}
-    {stage === 3 && <p>{he ? 'שעת התור ביומן לדוגמה' : 'Appointment time in the sample calendar'} <strong>{time}</strong></p>}
+    {stage === 2 && <dl className="sample-details">
+      <div><dt>{he ? 'השעה שנבחרה' : 'Selected time'}</dt><dd><bdi>{time}</bdi></dd></div>
+      <div><dt>{he ? 'משך הפגישה' : 'Duration'}</dt><dd>{duration}</dd></div>
+    </dl>}
+    {stage === 3 && <div className="booking-outcome">
+      <section className="sample-calendar" aria-label={calendar}>
+        <h4>{calendar}</h4>
+        <dl>
+          <dt><bdi>{time}</bdi></dt>
+          <dd>{service} <span>{duration}</span></dd>
+        </dl>
+      </section>
+      <section className="sample-reminder">
+        <h4>{he ? 'תזכורת לדוגמה' : 'Sample reminder'}</h4>
+        <p>{he ? 'תזכורת: פגישת הייעוץ שלך בשעה' : 'Reminder: your consultation is at'} <bdi>{time}</bdi>.</p>
+      </section>
+      <p className="booking-note">{he ? 'בהדגמה לא נקבע תור ולא נשלחת הודעה.' : 'The walkthrough does not book an appointment or send a reminder.'}</p>
+    </div>}
   </div>
 }
 
@@ -73,25 +102,58 @@ function EtlDemo({ stage, locale }: { stage: number; locale: Locale }) {
   </table>
 }
 
+const agentArtifacts: { input: Bilingual; output: Bilingual }[] = [
+  { input: { en: 'A request to improve an error message', he: 'בקשה לשיפור הודעת שגיאה' },
+    output: { en: 'A task description and criteria for review', he: 'תיאור המשימה וקריטריונים לבדיקה' } },
+  { input: { en: 'The task description and review criteria', he: 'תיאור המשימה והקריטריונים לבדיקה' },
+    output: { en: 'A task assigned to an agent that drafts copy', he: 'משימה שהוקצתה לסוכן שמנסח את ההודעה' } },
+  { input: { en: 'The proposed copy and the workflow definition', he: 'הנוסח המוצע והגדרת תהליך העבודה' },
+    output: { en: 'A result for review with the validation checks recorded', he: 'תוצאה לסקירה הכוללת תיעוד של בדיקות האימות' } },
+  { input: { en: 'The proposed change and the recorded checks', he: 'השינוי המוצע ותיעוד הבדיקות' },
+    output: { en: 'A reviewer’s decision to approve or request changes', he: 'החלטה של הסוקר לאשר או לבקש שינויים' } },
+]
+
+function AgentDemo({ stage, locale }: { stage: number; locale: Locale }) {
+  const he = locale === 'he'
+  const artifact = agentArtifacts[stage]
+  return <dl className="sample-details">
+    <div><dt>{he ? 'קלט לדוגמה' : 'Sample input'}</dt><dd>{artifact.input[locale]}</dd></div>
+    <div><dt>{he ? 'תוצר לדוגמה' : 'Sample output'}</dt><dd>{artifact.output[locale]}</dd></div>
+  </dl>
+}
+
 export function Lab({ project, locale }: { project: LabProject; locale: Locale }) {
   const [stage, setStage] = useState(0)
   const [time, setTime] = useState('09:30')
   const he = locale === 'he'
   const sport = project.slug === 'sportreel'
   const churn = project.slug === 'customer-churn-prediction'
+  const agent = project.slug === 'ai-agent-system'
+  const etl = project.slug === 'etl-pipeline'
+  const flowLabel = agent
+    ? (he ? 'תרשים תהליך עבודה עם סוכנים' : 'Agent workflow diagram')
+    : etl ? (he ? 'שלבי תהליך ה־ETL' : 'ETL pipeline stages') : (he ? 'שלבי קביעת התור' : 'Booking walkthrough stages')
   return <div className="lab-shell">
     <div className="lab-heading"><p className="eyebrow"><i aria-hidden="true" />{labels[locale].illustrative}</p>
       {churn && <p>{he ? 'נתונים סינתטיים בלבד' : 'Synthetic data only'}</p>}
     </div>
     {sport ? <SportComparison locale={locale} /> : churn ? <ChurnDemo locale={locale} /> : <>
-      <div className="step-controls" role="group" aria-label={he ? 'שלבי ההדגמה' : 'Demo stages'}>
-        {project.steps.map((step, i) => <button key={step.title.en} type="button" aria-pressed={i === stage} onClick={() => setStage(i)}><span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{step.title[locale]}</button>)}
-      </div>
-      <div className="lab-active" aria-live="polite">
+      <ol className="lab-flow" role="list" aria-label={flowLabel}>
+        {project.steps.map((step, i) => <li key={step.title.en}>
+          <button type="button" aria-pressed={i === stage} aria-controls="lab-stage" onClick={() => setStage(i)}>
+            <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{step.title[locale]}
+          </button>
+          {i < project.steps.length - 1 && <Arrow />}
+        </li>)}
+      </ol>
+      <div className="lab-active" id="lab-stage">
+        <div role="status">
+          <h3>{project.steps[stage].title[locale]}</h3>
+          <p>{project.steps[stage].detail[locale]}</p>
+        </div>
         {project.slug === 'tori' && <BookingDemo stage={stage} time={time} setTime={setTime} locale={locale} />}
-        {project.slug === 'etl-pipeline' && <EtlDemo stage={stage} locale={locale} />}
-        {project.slug === 'ai-agent-system' && <h3>{project.steps[stage].title[locale]}</h3>}
-        <p>{project.steps[stage].detail[locale]}</p>
+        {etl && <EtlDemo stage={stage} locale={locale} />}
+        {agent && <AgentDemo stage={stage} locale={locale} />}
       </div>
     </>}
   </div>

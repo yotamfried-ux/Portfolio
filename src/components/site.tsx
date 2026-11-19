@@ -5,9 +5,9 @@ import { href, labels, type Locale } from '@/lib/locale'
 import { projects } from '@/lib/projects'
 import { MediaFrame } from './media'
 
-export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
-  return <span className={diagonal ? 'arrow arrow-diagonal' : 'arrow'} aria-hidden="true" />
-}
+import { Arrow } from './arrow'
+
+export { Arrow } from './arrow'
 
 export function Action({ to, children, secondary = false }: { to: string; children: ReactNode; secondary?: boolean }) {
   return <Link href={to} className={secondary ? 'button button-secondary' : 'button button-primary'}>{children}<Arrow diagonal /></Link>
@@ -49,16 +49,31 @@ export function Site({ locale, path = '', children }: { locale: Locale; path?: s
 export function ProjectGrid({ locale, standalone = false }: { locale: Locale; standalone?: boolean }) {
   const t = labels[locale]
   const Heading = standalone ? 'h2' : 'h3'
-  return <div className="project-grid">
-    {projects.map((project, i) => <article className={i === 0 ? 'project-card project-lead' : 'project-card'} key={project.slug}>
-      <MediaFrame media={project.media} locale={locale} />
-      <div className="project-copy">
-        <p className="eyebrow">{project.category[locale]}</p>
-        <Heading className="project-title"><Link href={href(locale, `/projects/${project.slug}`)}>{project.title[locale]}<Arrow diagonal /></Link></Heading>
-        <p>{project.summary[locale]}</p>
-        {project.status === 'pending' && <p className="project-status">{t.pending}</p>}
-      </div>
-    </article>)}
+  const filters = [
+    { value: 'all', en: 'All', he: 'הכול' },
+    { value: 'ai', en: 'AI', he: 'בינה מלאכותית' },
+    { value: 'full-stack', en: 'Full stack', he: 'פיתוח מקצה לקצה' },
+    { value: 'data', en: 'Data', he: 'נתונים' },
+  ]
+  return <div className="project-browser">
+    {standalone && <fieldset className="project-filters">
+      <legend className="sr-only">{locale === 'he' ? 'סינון פרויקטים לפי תחום' : 'Filter projects by discipline'}</legend>
+      {filters.map(filter => <label key={filter.value}>
+        <input className="sr-only" type="radio" name="project-discipline" value={filter.value} defaultChecked={filter.value === 'all'} />
+        <span>{filter[locale]}</span>
+      </label>)}
+    </fieldset>}
+    <div className="project-grid">
+      {projects.map((project, i) => <article className={i === 0 ? 'project-card project-lead' : 'project-card'} data-discipline={project.discipline} key={project.slug}>
+        <MediaFrame media={project.media} locale={locale} />
+        <div className="project-copy">
+          <p className="eyebrow">{project.category[locale]}</p>
+          <Heading className="project-title"><Link href={href(locale, `/projects/${project.slug}`)}>{project.title[locale]}<Arrow diagonal /></Link></Heading>
+          <p>{project.summary[locale]}</p>
+          {project.status === 'pending' && <p className="project-status">{t.pending}</p>}
+        </div>
+      </article>)}
+    </div>
   </div>
 }
 

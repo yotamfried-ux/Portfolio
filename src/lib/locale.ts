@@ -14,7 +14,7 @@ export const labels = {
   en: {
     name: 'Yotam Friedman', work: 'Work', about: 'About', contact: 'Contact', allWork: 'All projects',
     skip: 'Skip to content', nav: 'Main navigation', language: 'עברית', caseStudy: 'View case study',
-    selected: 'Selected work', lab: 'Interactive lab', illustrative: 'Illustrative demo', illustrativeOverview: 'Illustrative overview',
+    selected: 'Selected work', lab: 'Interactive lab', openLab: 'Try the interactive demo', illustrative: 'Illustrative demo', illustrativeOverview: 'Illustrative overview',
     pending: 'Case study in preparation', verified: 'Implementation reviewed',
     problem: 'The problem', role: 'Project focus', solution: 'The approach', architecture: 'System overview',
     challenges: 'Engineering challenges', outcome: 'What the code shows', verification: 'What still needs verification', next: 'Next steps', stack: 'Technologies used',
@@ -31,7 +31,7 @@ export const labels = {
   he: {
     name: 'יותם פרידמן', work: 'עבודות', about: 'עליי', contact: 'יצירת קשר', allWork: 'כל הפרויקטים',
     skip: 'דילוג לתוכן הראשי', nav: 'ניווט ראשי', language: 'English', caseStudy: 'למקרה הבוחן',
-    selected: 'עבודות נבחרות', lab: 'מעבדה אינטראקטיבית', illustrative: 'הדגמה', illustrativeOverview: 'תהליך להמחשה',
+    selected: 'עבודות נבחרות', lab: 'מעבדה אינטראקטיבית', openLab: 'להדגמה האינטראקטיבית', illustrative: 'המחשה', illustrativeOverview: 'תהליך להמחשה',
     pending: 'מקרה הבוחן בהכנה', verified: 'המימוש נבדק בקוד המקור',
     problem: 'הבעיה', role: 'מוקד הפרויקט', solution: 'הגישה', architecture: 'סקירת המערכת',
     challenges: 'האתגרים ההנדסיים', outcome: 'מה מופיע בקוד המקור', verification: 'מה עוד צריך לאמת', next: 'השלבים הבאים', stack: 'טכנולוגיות בפרויקט',
