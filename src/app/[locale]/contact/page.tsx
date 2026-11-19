@@ -7,8 +7,8 @@ import { pageMetadata } from '@/lib/metadata'
 
 type Props = { params: Promise<{ locale: string }> }
 const description = {
-  en: 'Tell me what you’re working on, what you need, or what you would like to discuss.',
-  he: 'ספרו לי על מה אתם עובדים, מה דרוש לכם או על מה תרצו לדבר.',
+  en: 'Get in touch about a job opportunity, a project, or a question about my work.',
+  he: 'אפשר לפנות אליי לגבי הצעת עבודה, פרויקט משותף או שאלה על אחת העבודות שלי.',
 }
 
 export async function generateMetadata({ params }: Props) {

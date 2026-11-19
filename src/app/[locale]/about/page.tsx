@@ -5,8 +5,8 @@ import { pageMetadata } from '@/lib/metadata'
 
 type Props = { params: Promise<{ locale: string }> }
 const bio = {
-  en: 'I’m Yotam Friedman. My work spans applied AI, full-stack software, and data. I’m interested in the points where an experimental idea becomes a workflow someone can use.',
-  he: 'אני יותם פרידמן. אני עוסק בבינה מלאכותית יישומית, בפיתוח מקצה לקצה ובנתונים. מעניין אותי להפוך רעיון ניסיוני לתהליך עבודה שאפשר להשתמש בו.',
+  en: 'I’m Yotam Friedman. I work on applied AI, full-stack applications, and data engineering. I’m interested in what it takes to turn an experiment into a tool people can use.',
+  he: 'אני יותם פרידמן. אני עוסק בבינה מלאכותית יישומית, בפיתוח תוכנה מקצה לקצה ובהנדסת נתונים. מעניין אותי מה נדרש כדי להפוך ניסוי לכלי שאפשר להשתמש בו בפועל.',
 }
 
 export async function generateMetadata({ params }: Props) {

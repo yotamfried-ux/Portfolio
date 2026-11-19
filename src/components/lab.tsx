@@ -14,14 +14,14 @@ function SportComparison({ locale }: { locale: Locale }) {
   const he = locale === 'he'
   return <div className="comparison">
     <div className="compare-frame" dir="ltr">
-      <Image src="/media/aerial-hero.webp" fill alt={he ? 'תמונת נוף רחבה להמחשה' : 'Illustrative wide aerial view'} sizes="(max-width: 760px) 100vw, 65vw" />
-      <Image src="/media/sportreel.webp" fill alt={he ? 'אותה תמונה בחיתוך ממוקד יותר' : 'A tighter crop of the same still'} sizes="(max-width: 760px) 100vw, 65vw"
+      <Image src="/media/aerial-hero.webp" fill alt={he ? 'מבט אווירי רחב על הכביש והיער' : 'Wide aerial view of the road and forest'} sizes="(max-width: 760px) 100vw, 65vw" />
+      <Image src="/media/sportreel.webp" fill alt={he ? 'אותה תמונה בחיתוך ממוקד יותר' : 'A closer crop of the same image'} sizes="(max-width: 760px) 100vw, 65vw"
         style={{ clipPath: `inset(0 0 0 ${split}%)` }} />
       <span className="compare-divider" style={{ left: `${split}%` }} aria-hidden="true"><i>↔</i></span>
-      <span className="compare-label compare-before" dir={he ? 'rtl' : 'ltr'}>{he ? 'פריים רחב' : 'Wide frame'}</span>
-      <span className="compare-label compare-after" dir={he ? 'rtl' : 'ltr'}>{he ? 'חיתוך לדוגמה' : 'Sample crop'}</span>
+      <span className="compare-label compare-before" dir={he ? 'rtl' : 'ltr'}>{he ? 'תמונה רחבה' : 'Wide view'}</span>
+      <span className="compare-label compare-after" dir={he ? 'rtl' : 'ltr'}>{he ? 'חיתוך לדוגמה' : 'Cropped view'}</span>
     </div>
-    <label className="range-label" htmlFor="split">{he ? 'השוואת מסגור' : 'Compare framing'}</label>
+    <label className="range-label" htmlFor="split">{he ? 'השוואת התמונה לפני ואחרי החיתוך' : 'Compare the wide and cropped views'}</label>
     <input id="split" type="range" min={0} max={100} value={split} dir="ltr" onChange={event => setSplit(event.target.valueAsNumber)} />
   </div>
 }
@@ -31,14 +31,14 @@ function ChurnDemo({ locale }: { locale: Locale }) {
   const he = locale === 'he'
   return <div className="churn-demo">
     <div className="chart-controls">
-      <label className="range-label" htmlFor="threshold">{he ? 'סף סימון' : 'Flagging threshold'} <output htmlFor="threshold">{threshold}</output></label>
+      <label className="range-label" htmlFor="threshold">{he ? 'סף סיכון לבדיקה' : 'Risk threshold'} <output htmlFor="threshold">{threshold}</output></label>
       <input id="threshold" type="range" min={0} max={100} value={threshold} onChange={event => setThreshold(event.target.valueAsNumber)} />
-      <p role="status">{he ? `${flaggedCount(threshold)} מתוך 5 חשבונות מסומנים` : `${flaggedCount(threshold)} of 5 sample accounts flagged`}</p>
+      <p role="status">{he ? `${flaggedCount(threshold)} מתוך 5 חשבונות מסומנים לבדיקה` : `${flaggedCount(threshold)} of 5 sample accounts flagged for review`}</p>
     </div>
-    <ul className="chart-bars" dir="ltr" aria-label={he ? 'ציונים סינתטיים לדוגמה' : 'Synthetic sample scores'}>
+    <ul className="chart-bars" dir="ltr" aria-label={he ? 'ציוני סיכון סינתטיים' : 'Synthetic risk scores'}>
       {sampleScores.map((score, index) => <li key={score} data-flagged={score >= threshold}>
         <span>{score}</span><i aria-hidden="true" style={{ height: `${score}%` }} /><small>A0{index + 1}</small>
-        <span className="sr-only">{score >= threshold ? (he ? 'מסומן' : 'Flagged') : (he ? 'מתחת לסף' : 'Below threshold')}</span>
+        <span className="sr-only">{score >= threshold ? (he ? 'מסומן לבדיקה' : 'Flagged for review') : (he ? 'מתחת לסף' : 'Below threshold')}</span>
       </li>)}
     </ul>
   </div>
@@ -50,22 +50,22 @@ function BookingDemo({ stage, time, setTime, locale }: {
   const he = locale === 'he'
   const service = he ? 'פגישת ייעוץ לדוגמה' : 'Sample consultation'
   return <div className="booking-demo">
-    <p className="eyebrow">{he ? 'הזמנה לדוגמה' : 'Sample booking'}</p>
+    <p className="eyebrow">{he ? 'קביעת תור לדוגמה' : 'Booking example'}</p>
     <h3>{service}</h3>
-    {stage === 0 && <p>{he ? 'משך הפגישה בדוגמה הוא 30 דקות.' : 'The sample appointment lasts 30 minutes.'}</p>}
-    {stage === 1 && <div className="sample-times" role="group" aria-label={he ? 'שעות לדוגמה' : 'Sample times'}>
+    {stage === 0 && <p>{he ? 'משך הפגישה: 30 דקות.' : 'Appointment length: 30 minutes.'}</p>}
+    {stage === 1 && <div className="sample-times" role="group" aria-label={he ? 'שעות פנויות לדוגמה' : 'Example time slots'}>
       {['09:30', '11:00', '14:30'].map(option => <button type="button" key={option} aria-pressed={option === time} onClick={() => setTime(option)}>{option}</button>)}
     </div>}
-    {stage === 2 && <p>{he ? 'שעת הפגישה לדוגמה' : 'Example appointment time'} <strong>{time}</strong></p>}
-    {stage === 3 && <p>{he ? 'תצוגת יומן ותזכורת להמחשה' : 'Illustrative calendar entry and reminder'} <strong>{time}</strong></p>}
+    {stage === 2 && <p>{he ? 'השעה שנבחרה' : 'Selected time'} <strong>{time}</strong></p>}
+    {stage === 3 && <p>{he ? 'שעת התור ביומן לדוגמה' : 'Appointment time in the sample calendar'} <strong>{time}</strong></p>}
   </div>
 }
 
 function EtlDemo({ stage, locale }: { stage: number; locale: Locale }) {
   const he = locale === 'he'
   return <table className="etl-table">
-    <caption className="sr-only">{he ? 'רשומות בדויות עבור השלב הנבחר' : 'Fictional records for the selected stage'}</caption>
-    <thead><tr><th scope="col">{he ? 'מזהה' : 'ID'}</th><th scope="col">{he ? 'ערך' : 'Value'}</th><th scope="col">{he ? 'מצב' : 'State'}</th></tr></thead>
+    <caption className="sr-only">{he ? 'רשומות לדוגמה בשלב הנבחר' : 'Sample records at the selected stage'}</caption>
+    <thead><tr><th scope="col">{he ? 'מזהה' : 'ID'}</th><th scope="col">{he ? 'ערך' : 'Value'}</th><th scope="col">{he ? 'מצב הרשומה' : 'Record status'}</th></tr></thead>
     <tbody>{etlRows[stage].map(row => <tr key={row.id}>
       <th scope="row">{row.id}</th><td><bdi>{row.value || '—'}</bdi></td>
       <td>{stage === 0 ? (he ? 'גולמי' : 'Raw') : !row.value ? (he ? 'נדחה' : 'Rejected') : stage === 1 ? (he ? 'תקין' : 'Valid') : (he ? 'נטען' : 'Loaded')}</td>

@@ -69,7 +69,7 @@ export function Video({ asset, poster, mode, locale }: {
       onError={() => setFailed(true)}>
       {asset.captions && <track kind="captions" src={asset.captions[locale]} srcLang={locale} label={he ? 'כתוביות' : 'Captions'} default />}
     </video>}
-    {failed ? <p className="media-control" role="status">{he ? 'לא ניתן לטעון את הסרטון.' : 'Video unavailable.'}</p>
+    {failed ? <p className="media-control" role="status">{he ? 'לא הצלחנו לטעון את הסרטון.' : 'The video couldn’t load.'}</p>
       : (preview || !mounted) && <button className="media-control" type="button" onClick={() => {
         if (preview) {
           setPreviewPreference(showPreview ? 'pause' : 'play')
@@ -77,7 +77,7 @@ export function Video({ asset, poster, mode, locale }: {
           setDemoRequested(true)
         }
       }}>
-        {showPreview ? (he ? 'השהיה' : 'Pause') : (he ? 'ניגון סרטון' : 'Play video')}
+        {showPreview ? (he ? 'השהיית הסרטון' : 'Pause video') : (he ? 'ניגון הסרטון' : 'Play video')}
       </button>}
   </div>
 }

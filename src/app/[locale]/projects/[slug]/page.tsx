@@ -44,11 +44,11 @@ export default async function CaseStudy({ params }: Props) {
       </div>
       <section className="case-lab"><h2>{t.lab}</h2><Lab project={{ slug: project.slug, steps: project.steps }} locale={locale} /></section>
       <section className="architecture">
-        <div className="section-head"><h2>{t.architecture}</h2><p className="project-status">{t.illustrative}</p></div>
+        <div className="section-head"><h2>{t.architecture}</h2><p className="project-status">{t.illustrativeOverview}</p></div>
         <ol>{project.steps.map(step => <li key={step.title.en}><h3>{step.title[locale]}</h3><p>{step.detail[locale]}</p></li>)}</ol>
       </section>
       <div className="case-details">
-        <section><h2>{project.status === 'verified' ? t.outcome : t.pending}</h2><p>{project.outcome[locale]}</p>
+        <section><h2>{project.status === 'verified' ? t.outcome : t.verification}</h2><p>{project.outcome[locale]}</p>
           {project.stack.length > 0 && <><h3 className="eyebrow stack-title">{t.stack}</h3><ul className="stack">{project.stack.map(item => <li key={item} lang="en" dir="ltr">{item}</li>)}</ul></>}
         </section>
         <section><h2>{t.next}</h2><p>{project.next[locale]}</p></section>

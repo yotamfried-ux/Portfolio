@@ -11,7 +11,7 @@ type Props = { params: Promise<{ locale: string }> }
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
-  return pageMetadata(locale, '', locale === 'he' ? 'יותם פרידמן | הנדסת מוצר ובינה מלאכותית' : 'Yotam Friedman | Applied AI & Product Engineering', homeDescription[locale])
+  return pageMetadata(locale, '', locale === 'he' ? 'יותם פרידמן | בינה מלאכותית יישומית ופיתוח תוכנה' : 'Yotam Friedman | Applied AI & Product Engineering', homeDescription[locale])
 }
 
 export default async function Home({ params }: Props) {
@@ -24,11 +24,11 @@ export default async function Home({ params }: Props) {
       <MediaFrame media={heroMedia} locale={locale} hero />
       <div className="wrap hero-inner">
         <p className="eyebrow hero-eyebrow"><i aria-hidden="true" />{he ? 'בינה מלאכותית יישומית והנדסת מוצר' : 'Applied AI & product engineering'}</p>
-        <h1>{he ? <>תוכנה לעולם<br /><em>שבתנועה.</em></> : <>Software for a<br /><em>world in motion.</em></>}</h1>
+        <h1>{he ? <>תוכנה לעולם <br /><em>בתנועה.</em></> : <>Software for a <br /><em>world in motion.</em></>}</h1>
         <p className="hero-summary">{he
-          ? 'אני יותם פרידמן. אני בונה מוצרי תוכנה עם בינה מלאכותית, ממשקים ותהליכי נתונים.'
-          : 'I’m Yotam Friedman. I build software across computer vision, full-stack products, and data.'}</p>
-        <div className="actions"><Action to={href(locale, '/projects')}>{he ? 'לפרויקטים' : 'Explore the work'}</Action>
+          ? 'אני יותם פרידמן. אני מפתח מוצרי תוכנה בתחומי הראייה הממוחשבת, מערכות הווב והנדסת הנתונים.'
+          : 'I’m Yotam Friedman. I build computer vision tools, full-stack applications, and data pipelines.'}</p>
+        <div className="actions"><Action to={href(locale, '/projects')}>{he ? 'לכל הפרויקטים' : 'Explore projects'}</Action>
           <Action to={href(locale, '/contact')} secondary>{t.contact}</Action></div>
       </div>
     </section>
@@ -40,7 +40,7 @@ export default async function Home({ params }: Props) {
       <Capabilities locale={locale} />
       <section className="about-short">
         <h2>{t.aboutHeading}</h2>
-        <div><p>{he ? 'אני בונה מערכות שהופכות תהליכים מורכבים לכלים שאפשר להשתמש בהם, לבדוק ולשפר.' : 'I build systems that turn complex workflows into tools people can use, test, and improve.'}</p>
+        <div><p>{he ? 'אני מפתח כלים שמקלים על עבודה מורכבת, כמו עריכת צילומי רחפן.' : 'I build tools that make complex work, such as editing drone footage, easier to manage.'}</p>
           <Link className="text-link" href={href(locale, '/about')}>{he ? 'עוד עליי' : 'More about me'}<Arrow diagonal /></Link></div>
       </section>
       <Certificate locale={locale} />

@@ -16,31 +16,31 @@ export type Media = {
 
 export const heroMedia: Media = {
   poster: '/media/aerial-hero.webp',
-  alt: { en: 'A winding alpine road through a misty forest', he: 'כביש הררי מתפתל בתוך יער ערפילי' },
-  attribution: { en: 'AI-generated concept still', he: 'תמונת המחשה שנוצרה בבינה מלאכותית' },
+  alt: { en: 'A winding mountain road through a misty forest', he: 'כביש הררי מתפתל בתוך יער ערפילי' },
+  attribution: { en: 'AI-generated illustration', he: 'תמונת המחשה שנוצרה בבינה מלאכותית' },
   isIllustration: true,
 }
 
 export const projectMedia = {
   sportreel: {
     poster: '/media/sportreel.webp', fallback: 'sport',
-    alt: { en: 'A cyclist on a forest road seen from above', he: 'רוכב אופניים בכביש ביער במבט מלמעלה' },
+    alt: { en: 'An overhead view of a cyclist on a forest road', he: 'מבט מלמעלה על רוכב אופניים בכביש שעובר ביער' },
     attribution: heroMedia.attribution, isIllustration: true,
   },
   tori: {
-    fallback: 'booking', alt: { en: 'Stylized calendar and booking slots', he: 'יומן ושעות פנויות באיור מסוגנן' },
-    attribution: { en: 'Booking workflow illustration', he: 'המחשה של תהליך הזמנת תור' }, isIllustration: true,
+    fallback: 'booking', alt: { en: 'An illustrated calendar with available booking times', he: 'איור של יומן עם שעות פנויות לקביעת תורים' },
+    attribution: { en: 'Booking flow illustration', he: 'המחשה של תהליך קביעת תור' }, isIllustration: true,
   },
   'ai-agent-system': {
-    fallback: 'agent', alt: { en: 'Connected agent workflow nodes', he: 'צמתים מחוברים בתהליך עבודה של סוכנים' },
-    attribution: { en: 'Agent workflow illustration', he: 'המחשה של תהליך העבודה של סוכנים' }, isIllustration: true,
+    fallback: 'agent', alt: { en: 'A diagram of connected steps in an agent workflow', he: 'תרשים של שלבים מחוברים בתהליך העבודה של הסוכנים' },
+    attribution: { en: 'Agent workflow illustration', he: 'המחשה של תהליך עבודה עם סוכנים' }, isIllustration: true,
   },
   'customer-churn-prediction': {
-    fallback: 'churn', alt: { en: 'Synthetic bars representing sample risk groups', he: 'עמודות סינתטיות המייצגות קבוצות סיכון לדוגמה' },
-    attribution: { en: 'Synthetic data illustration', he: 'המחשה המבוססת על נתונים סינתטיים' }, isIllustration: true,
+    fallback: 'churn', alt: { en: 'A bar chart illustrating changes in sample risk scores', he: 'תרשים עמודות שממחיש הבדלים בין ציוני סיכון לדוגמה' },
+    attribution: { en: 'Illustration using synthetic data', he: 'המחשה המבוססת על נתונים סינתטיים' }, isIllustration: true,
   },
   'etl-pipeline': {
-    fallback: 'etl', alt: { en: 'A schematic connecting three pipeline stages', he: 'תרשים המחבר שלושה שלבים בתהליך עיבוד נתונים' },
+    fallback: 'etl', alt: { en: 'A diagram linking data extraction, transformation, and loading', he: 'תרשים של שלבי החילוץ, העיבוד והטעינה של נתונים' },
     attribution: { en: 'Data pipeline illustration', he: 'המחשה של תהליך עיבוד נתונים' }, isIllustration: true,
   },
 } satisfies Record<string, Media>

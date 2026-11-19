@@ -65,13 +65,13 @@ export function ProjectGrid({ locale, standalone = false }: { locale: Locale; st
 export function Capabilities({ locale }: { locale: Locale }) {
   const he = locale === 'he'
   const capabilities = he ? [
-    ['בינה מלאכותית וראייה ממוחשבת', 'מעקב אחר מצולמים, מסגור וידאו ותהליכי עבודה עם סוכנים.'],
-    ['פיתוח מוצרים מקצה לקצה', 'ממשקים, תהליכי הזמנה וכלי ניהול לעסקים.'],
-    ['נתונים ואוטומציה', 'ניתוח נתונים, הערכת מודלים ותהליכי עיבוד נתונים.'],
+    ['בינה מלאכותית וראייה ממוחשבת', 'מעקב אחר מצולמים, מסגור וידאו ותיאום עבודה בין סוכני בינה מלאכותית.'],
+    ['פיתוח מוצרים מקצה לקצה', 'ממשקי משתמש, מערכות לקביעת תורים וכלי ניהול לעסקים.'],
+    ['נתונים ואוטומציה', 'ניתוח נתונים, הערכת מודלים ותהליכים לעיבוד נתונים.'],
   ] : [
-    ['AI & computer vision', 'Subject tracking, video framing, and agent workflows.'],
-    ['Full-stack products', 'Interfaces, booking flows, and tools for business operators.'],
-    ['Data & automation', 'Data analysis, model evaluation, and processing workflows.'],
+    ['AI & computer vision', 'Subject tracking, video framing, and workflows that coordinate AI agents.'],
+    ['Full-stack products', 'User interfaces, appointment booking, and tools for managing bookings.'],
+    ['Data & automation', 'Data analysis, model evaluation, and data pipelines.'],
   ]
   return <section className="capabilities" aria-label={labels[locale].capabilities}>
     <h2>{labels[locale].capabilities}</h2>
@@ -103,7 +103,7 @@ export function Certificate({ locale }: { locale: Locale }) {
 export function ContactBand({ locale }: { locale: Locale }) {
   return <section className="contact-band">
     <div><h2>{labels[locale].contactHeading}</h2>
-      <p>{locale === 'he' ? 'יש לכם פרויקט, תפקיד או שאלה על אחת העבודות?' : 'Have a project, a role, or a question about the work?'}</p>
+      <p>{locale === 'he' ? 'יש לכם הצעת עבודה, רעיון לפרויקט או שאלה על העבודות שלי?' : 'Have a job opportunity, a project idea, or a question about my work?'}</p>
     </div>
     <Action to={href(locale, '/contact')}>{labels[locale].contact}</Action>
   </section>
