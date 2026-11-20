@@ -8,7 +8,8 @@ import type { CalculateMetadataFunction } from 'remotion';
 type Point = [number, number];
 type Crop = [number, number, number, number];
 type Shot = {id:string; role:string; label:string; frames:number; width:number; height:number;
-  crop:Crop; focus:Point; zoom:number; phone?:boolean};
+  crop:Crop; focus:Point; zoom:number; phone?:boolean;
+  visual_event?:{time:number;box:[number,number,number,number]};};
 export type Recipe = {
   width:number; height:number; fps:number; theme:'action'|'cinema';
   brand:{name:string; accent:string; backdrop:string; mark?:string};
@@ -39,6 +40,12 @@ function Footage({shot, accent, cinema, clip}: {shot:Shot; accent:string; cinema
   const targetY=mix(cy+ch/2,shot.focus[1],move);
   const x=Math.min(0,Math.max(w-shot.width*camera,w/2-targetX*camera));
   const y=Math.min(0,Math.max(h-shot.height*camera,h/2-targetY*camera));
+  const event=shot.visual_event;
+  const actionFrame=event ? Math.round(event.time*view.fps) : -1;
+  const age=f-actionFrame;
+  const ringOpacity=event && age>=0 && age<=10
+    ? .88*Math.sin(Math.PI*(age/10)) : 0;
+  const ringScale=age>=0 && age<=10 ? 1+.09*(age/10) : 1;
   return <div style={{
     position:'absolute',width:w,height:h,
     left:centerX-w/2+(1-entrance)*70*direction*u,
@@ -53,6 +60,17 @@ function Footage({shot, accent, cinema, clip}: {shot:Shot; accent:string; cinema
       position:'absolute',left:x,top:y,width:shot.width,height:shot.height,
       transformOrigin:'top left',transform:`scale(${camera})`,objectFit:'contain'
     }}/>
+    {event && ringOpacity>0 && <div aria-hidden="true" style={{
+      position:'absolute',
+      left:x+event.box[0]*camera-7*u,
+      top:y+event.box[1]*camera-7*u,
+      width:event.box[2]*camera+14*u,
+      height:event.box[3]*camera+14*u,
+      borderRadius:13*u,border:`${2.8*u}px solid #1bdbab`,
+      boxShadow:`0 0 ${20*u}px #12dca989,inset 0 0 ${10*u}px #12dca930`,
+      opacity:ringOpacity,transform:`scale(${ringScale})`,
+      pointerEvents:'none'
+    }}/>}
   </div>;
 }
 
