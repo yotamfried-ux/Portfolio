@@ -114,7 +114,16 @@
       "cinema_score": 10,
       "label": "Booking",
       "caption": "The customer selects an available appointment time.",
-      "evidence": "Loaded grid is visible from the start. 09:00 becomes green. The cut ends before the customer form."
+      "evidence": "Loaded grid is visible from the start. 09:00 becomes green. The cut ends before the customer form.",
+      "visual_event": {
+        "time": 0.28,
+        "box": [
+          944.406,
+          397,
+          119.594,
+          46
+        ]
+      }
     },
     {
       "id": "confirmed",
@@ -210,7 +219,16 @@
       "cinema_score": 10,
       "label": "Availability",
       "caption": "The owner changes Sunday’s closing time to noon.",
-      "evidence": "The displayed 18:00 setting becomes 12:00. The affected interval bar stays visible."
+      "evidence": "The displayed 18:00 setting becomes 12:00. The affected interval bar stays visible.",
+      "visual_event": {
+        "time": 0.454,
+        "box": [
+          317,
+          336.594,
+          88,
+          44
+        ]
+      }
     },
     {
       "id": "saved-hours",
@@ -283,7 +301,16 @@
       "cinema_score": 10,
       "label": "Also on mobile",
       "caption": "A separate mobile session shows appointment selection.",
-      "evidence": "Independent fixture shows the responsive grid and a green selection before contact details open."
+      "evidence": "Independent fixture shows the responsive grid and a green selection before contact details open.",
+      "visual_event": {
+        "time": 0.642,
+        "box": [
+          261.344,
+          397,
+          112.656,
+          46
+        ]
+      }
     }
   ]
 }
