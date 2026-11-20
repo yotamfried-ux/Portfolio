@@ -33,7 +33,10 @@ def main():
             burst.append((at(args.video,i/fps,640),f'{i/fps:.2f}s / cut {cut/fps:.2f}s'))
     sheet(burst,args.output/(name+'-seams.jpg'),cols=6,width=200,height=113)
     hero=next(shot for shot in recipe['shots'] if shot['role']=='pick')
-    poster_time=hero['timeline_in']+(hero['timeline_out']-hero['timeline_in'])*.80
+    poster_time=(
+        (frames-8)/fps if int(recipe.get('outroFrames',0))>0
+        else hero['timeline_in']+(hero['timeline_out']-hero['timeline_in'])*.80
+    )
     poster=args.output/(name+'-poster.webp')
     at(args.video,poster_time,recipe['width']).save(poster,quality=87,method=6)
     report.update(poster_seconds=poster_time,poster_sha256=digest(poster))
