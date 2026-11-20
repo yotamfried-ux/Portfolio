@@ -218,10 +218,7 @@ export function ProductShowcase({recipe}: Props) {
     {recipe.shots.map((shot,index)=>{
       const start=cursor;
       cursor+=shot.frames;
-      const previous=recipe.shots[index-1];
       return <React.Fragment key={shot.role}>
-        {cinema && previous && !previous.phone && !shot.phone &&
-          <Sequence from={start-7} durationInFrames={7} layout="none"><Wipe shot={shot} accent={brand.accent}/></Sequence>}
         <Sequence from={start} durationInFrames={shot.frames} layout="none">
           <Footage shot={shot} accent={brand.accent} cinema={cinema}/>
           {shot.phone && <MobileDetail shot={shot} accent={brand.accent}/>}
