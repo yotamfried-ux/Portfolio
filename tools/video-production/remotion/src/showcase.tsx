@@ -143,9 +143,10 @@ function Closing({brand,frames,finalShot}: {
   const f=useCurrentFrame(),v=useVideoConfig(),u=v.height/720;
   const t=smooth(f,0,15);
   const out=smooth(f,Math.max(18,frames-7),frames);
+  const reveal=smooth(f,0,8);
   return <AbsoluteFill style={{
     background:`radial-gradient(ellipse at 76% 46%,${brand.accent}55,transparent 52%),#071615`,
-    overflow:'hidden',color:'#effff8'
+    opacity:reveal,overflow:'hidden',color:'#effff8'
   }}>
     <div style={{
       position:'absolute',left:125*u,top:132*u,
@@ -211,8 +212,8 @@ export function ProductShowcase({recipe}: Props) {
       </React.Fragment>;
     })}
     {recipe.outroFrames && recipe.outroFrames>0 && recipe.shots.length>0 &&
-      <Sequence from={cursor} durationInFrames={recipe.outroFrames}>
-        <Closing brand={brand} frames={recipe.outroFrames} finalShot={recipe.shots[recipe.shots.length-1]}/>
+      <Sequence from={cursor-8} durationInFrames={recipe.outroFrames+8}>
+        <Closing brand={brand} frames={recipe.outroFrames+8} finalShot={recipe.shots[recipe.shots.length-1]}/>
       </Sequence>}
   </AbsoluteFill>;
 }
