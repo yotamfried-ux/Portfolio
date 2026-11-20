@@ -7,6 +7,7 @@ import sys
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT.parent))
 from studio import at, digest, encode_to, ff, inventory, load, probe, save, sheet, timestamp
+from pacing import realtime_hold_frames
 
 
 def ingest(takes, spec, destination, evidence):
@@ -81,7 +82,8 @@ def directed(selections, sources, project, variant, output):
                       'alternatives':[c['id'] for c in ranked if c['id'] != candidate['id']]})
         previous = end
     recipe = {'brand':project['brand'],'fps':fps,'width':project['width'],
-              'height':project['height'],'theme':variant,'shots':shots}
+              'height':project['height'],'theme':variant,'shots':shots,
+              'outroFrames':int(spec.get('outro_frames',0))}
     save(output/('recipe-'+variant+'.json'),recipe)
     tracks = ['WEBVTT']
     start = 0
@@ -98,10 +100,18 @@ def stage(recipe, folder):
     stage_dir.mkdir(parents=True,exist_ok=True)
     for shot in recipe['shots']:
         length = float(probe(folder/shot['file'])['format']['duration'])
-        speed = shot['frames'] / recipe['fps'] / length
-        norm = f"setpts={speed:.10f}*(PTS-STARTPTS),fps={recipe['fps']},setsar=1,tpad=stop_mode=clone:stop_duration=1"
+        # Preserve the genuine speed of browser interactions. The former
+        # setpts=target/source multiplier slowed 0.64s of UI action to 2–4s.
+        fps = recipe['fps']
+        target_frames = shot['frames']
+        linger_frames = realtime_hold_frames(length, target_frames, fps)
+        max_linger_frames = round(0.24 * fps)
+        norm = (
+            f"fps={fps},setsar=1,"
+            f"tpad=stop_mode=clone:stop_duration={max_linger_frames/fps:.3f}"
+        )
         encode_to(stage_dir/(shot['id']+'.mp4'), '-i', folder/shot['file'], '-vf', norm,
-                  '-frames:v',str(shot['frames']))
+                  '-frames:v', str(target_frames))
     if recipe['brand'].get('mark') == 'tori-mark.svg':
         (ROOT/'public'/'tori-mark.svg').write_bytes((ROOT.parent/'tori-mark.svg').read_bytes())
 
