@@ -27,13 +27,13 @@ function Footage({shot, accent, cinema, clip}: {shot:Shot; accent:string; cinema
   const [cx,cy,cw,ch]=shot.crop;
   const move=smooth(f, cinema ? 1 : 0, Math.max(10, Math.round(shot.frames * (cinema ? .72 : .43))));
   const maxW=(shot.phone?600:cinema?1160:1240)*u;
-  const maxH=(shot.phone?616:cinema?636:638)*u;
+  const maxH=(shot.phone?596:cinema?590:590)*u;
   const fit=Math.min(maxW/cw,maxH/ch);
   const w=cw*fit,h=ch*fit;
   const centerX=view.width*(shot.phone?.265:.5);
-  const centerY=view.height*.472;
+  const centerY=view.height*.452;
   const camera = fit*mix(1,shot.zoom,move);
-  const entrance=smooth(f,0,9);
+  const entrance=smooth(f,0,5);
   const direction=shot.role==='calendar'||shot.role==='settings'?1:-1;
   const targetX=mix(cx+cw/2,shot.focus[0],move);
   const targetY=mix(cy+ch/2,shot.focus[1],move);
@@ -85,21 +85,21 @@ function Identity({brand, role, frames, index}: {
     easing:Easing.bezier(.25,.7,.25,1)
   });
   return <div style={{
-    position:'absolute',bottom:9*u,left:34*u,right:34*u,height:45*u,
+    position:'absolute',bottom:13*u,left:34*u,right:34*u,height:71*u,
     color:'#effbf6',fontFamily:'Arial, sans-serif',
     display:'flex',alignItems:'center',gap:12*u,
     opacity:visibility,transform:`translateY(${reveal*u}px)`,
     pointerEvents:'none'
   }}>
     {brand.mark && <img src={staticFile(brand.mark)} alt="" style={{
-      width:25*u,height:25*u
+      width:29*u,height:29*u
     }}/>}
-    <span style={{fontSize:17*u,fontWeight:800,letterSpacing:.4*u}}>{brand.name}</span>
+    <span style={{fontSize:24*u,fontWeight:800,letterSpacing:.4*u}}>{brand.name}</span>
     <span style={{width:1*u,height:19*u,background:'#63877e'}}/>
-    <span style={{fontSize:21*u,fontWeight:700,letterSpacing:.3*u}}>
+    <span style={{fontSize:47*u,fontWeight:800,letterSpacing:.3*u}}>
       {headlines[role] ?? role.toUpperCase()}
     </span>
-    <span style={{marginLeft:'auto',fontSize:14*u,color:'#9abfb3',fontVariantNumeric:'tabular-nums'}}>
+    <span style={{marginLeft:'auto',fontSize:18*u,color:'#9abfb3',fontVariantNumeric:'tabular-nums'}}>
       {String(index+1).padStart(2,'0')}
     </span>
     <div style={{
