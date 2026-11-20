@@ -1,0 +1,71 @@
+name: Tori Creative Qualification (review only)
+on:
+  push:
+    branches:
+      - fix/tori-realtime-motion-20261120
+    paths:
+      - .github/workflows/tori-creative-qualification.yml
+      - tools/video-production/remotion/**
+      - tools/video-production/studio.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+          persist-credentials: true
+      - name: Verify original video assets
+        run: |
+          git lfs pull
+          git lfs fsck
+          file assets/source/tori-remotion/time-selection.mp4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify render host
+        run: |
+          ffmpeg -version | head -1
+          which chromium || true
+          which google-chrome || true
+          python -m unittest discover -v -s tools/video-production/remotion -p 'test_realtime_pacing.py'
+      - name: Install isolated editing dependencies
+        working-directory: tools/video-production/remotion
+        run: |
+          npm ci --ignore-scripts
+          python -m pip install --require-hashes -r ../requirements.lock
+          ./node_modules/.bin/tsc --noEmit
+      - name: Build and render two review-only variants
+        working-directory: tools/video-production/remotion
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/creative"
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium || true)"
+          echo "Using browser $CHROMIUM_PATH"
+          src="$(realpath ../../../assets/source/tori-remotion)"
+          for variant in action cinema; do
+            python director.py stage --config tori-production.json --sources "$src" --output "$RUNNER_TEMP/creative" --variant "$variant"
+            npm run render -- "$RUNNER_TEMP/creative/$variant.mp4" "$RUNNER_TEMP/creative/recipe-$variant.json"
+            python review.py "$RUNNER_TEMP/creative/$variant.mp4" "$RUNNER_TEMP/creative/recipe-$variant.json" "$RUNNER_TEMP/creative"
+          done
+          cp ../../../assets/source/tori-remotion/manifest.json "$RUNNER_TEMP/creative/sources-manifest.json"
+      - name: Upload ephemeral review outputs and source media
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tori-creative-review-${{ github.run_number }}
+          path: |
+            ${{ runner.temp }}/creative
+            assets/source/tori-remotion/*.mp4
+          if-no-files-found: warn
+          retention-days: 4
