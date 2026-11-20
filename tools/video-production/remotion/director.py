@@ -7,6 +7,7 @@ import sys
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT.parent))
 from studio import at, digest, encode_to, ff, inventory, load, probe, save, sheet, timestamp
+from pacing import realtime_hold_frames
 
 
 def ingest(takes, spec, destination, evidence):
@@ -91,20 +92,6 @@ def directed(selections, sources, project, variant, output):
         start = end
     (output/('captions-'+variant+'.vtt')).write_text('\n\n'.join(tracks)+'\n')
     return recipe
-
-
-def realtime_hold_frames(source_seconds, target_frames, fps, max_hold_seconds=0.24):
-    """Reject fake slow motion; only a short final-frame editorial hold is allowed."""
-    if fps <= 0 or source_seconds <= 0 or target_frames <= 0:
-        raise ValueError("Positive source duration, frame budget and fps required")
-    original_frames = round(source_seconds * fps)
-    hold = max(0, target_frames - original_frames)
-    if hold > round(max_hold_seconds * fps):
-        raise ValueError(
-            f"Shot would extend {source_seconds:.2f}s of true-time action "
-            f"to {target_frames/fps:.2f}s. Recapture or reduce duration."
-        )
-    return hold
 
 
 def stage(recipe, folder):
