@@ -67,13 +67,13 @@ function Identity({brand, role, frames, index}: {
   const f=useCurrentFrame();
   const u=useVideoConfig().height/720;
   const headlines:Record<string,string>={
-    pick:'CHOOSE A TIME',
-    confirm:'BOOKING CONFIRMED',
-    calendar:'THE BUSINESS CALENDAR',
-    settings:'SET YOUR HOURS',
-    slots:'AVAILABILITY UPDATED',
-    service:'CHOOSE A SERVICE',
-    mobile:'BOOK ON MOBILE'
+    pick:'09:00. SELECTED.',
+    confirm:'BOOKED. IN SECONDS.',
+    calendar:'ON YOUR CALENDAR.',
+    settings:'18:00 → 12:00',
+    slots:'AVAILABILITY. UPDATED.',
+    service:'CHOOSE YOUR SERVICE.',
+    mobile:'AND ON MOBILE.'
   };
   const enter=interpolate(f,[0,5],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
   const exit=interpolate(f,[Math.max(5,frames-5),frames],[1,0],{
