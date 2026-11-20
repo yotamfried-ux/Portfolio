@@ -15,7 +15,7 @@ def main():
     args=p.parse_args()
     recipe=load(args.recipe)
     fps=recipe['fps']
-    frames=sum(shot['frames'] for shot in recipe['shots'])
+    frames=sum(shot['frames'] for shot in recipe['shots'])+int(recipe.get('outroFrames',0))
     args.output.mkdir(parents=True,exist_ok=True)
     name=args.video.stem
     report=verify(args.video,{'resolution':[recipe['width'],recipe['height']]},{'fps':fps,'frames':frames})
@@ -24,6 +24,8 @@ def main():
     sheet([(at(args.video,t,800),f'{t:.2f}s') for t in samples],args.output/(name+'-overview.jpg'),
           cols=4,width=320,height=180)
     seams=[round(shot['timeline_in']*fps) for shot in recipe['shots'][1:]]
+    if int(recipe.get('outroFrames',0))>0:
+        seams.append(sum(shot['frames'] for shot in recipe['shots']))
     burst=[]
     for cut in seams:
         for offset in (-7,-5,-3,-1,0,2):
