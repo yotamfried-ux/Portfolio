@@ -85,7 +85,9 @@ function Identity({brand, role, frames, index}: {
     easing:Easing.bezier(.25,.7,.25,1)
   });
   return <div style={{
-    position:'absolute',bottom:13*u,left:34*u,right:34*u,height:71*u,
+    position:'absolute',bottom:81*u,left:34*u,right:34*u,height:57*u,
+    paddingLeft:14*u,paddingRight:14*u,borderRadius:9*u,
+    background:'linear-gradient(90deg,#051a17ed 0%,#061a17c9 65%,#061a1700 100%)',
     color:'#effbf6',fontFamily:'Arial, sans-serif',
     display:'flex',alignItems:'center',gap:12*u,
     opacity:visibility,transform:`translateY(${reveal*u}px)`,
@@ -96,7 +98,7 @@ function Identity({brand, role, frames, index}: {
     }}/>}
     <span style={{fontSize:24*u,fontWeight:800,letterSpacing:.4*u}}>{brand.name}</span>
     <span style={{width:1*u,height:19*u,background:'#63877e'}}/>
-    <span style={{fontSize:47*u,fontWeight:800,letterSpacing:.3*u}}>
+    <span style={{fontSize:43*u,fontWeight:800,letterSpacing:.3*u}}>
       {headlines[role] ?? role.toUpperCase()}
     </span>
     <span style={{marginLeft:'auto',fontSize:18*u,color:'#9abfb3',fontVariantNumeric:'tabular-nums'}}>
