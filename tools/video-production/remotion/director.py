@@ -82,7 +82,8 @@ def directed(selections, sources, project, variant, output):
                       'alternatives':[c['id'] for c in ranked if c['id'] != candidate['id']]})
         previous = end
     recipe = {'brand':project['brand'],'fps':fps,'width':project['width'],
-              'height':project['height'],'theme':variant,'shots':shots}
+              'height':project['height'],'theme':variant,'shots':shots,
+              'outroFrames':int(spec.get('outro_frames',0))}
     save(output/('recipe-'+variant+'.json'),recipe)
     tracks = ['WEBVTT']
     start = 0
