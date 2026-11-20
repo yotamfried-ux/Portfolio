@@ -98,10 +98,25 @@ def stage(recipe, folder):
     stage_dir.mkdir(parents=True,exist_ok=True)
     for shot in recipe['shots']:
         length = float(probe(folder/shot['file'])['format']['duration'])
-        speed = shot['frames'] / recipe['fps'] / length
-        norm = f"setpts={speed:.10f}*(PTS-STARTPTS),fps={recipe['fps']},setsar=1,tpad=stop_mode=clone:stop_duration=1"
+        # Preserve the genuine speed of browser interactions. The former
+        # setpts=target/source multiplier slowed 0.64s of UI action to 2–4s.
+        fps = recipe['fps']
+        source_frames = round(length * fps)
+        target_frames = shot['frames']
+        linger_frames = max(0, target_frames - source_frames)
+        max_linger_frames = round(0.24 * fps)
+        if linger_frames > max_linger_frames:
+            raise ValueError(
+                f"Shot {shot['id']} requests {target_frames/fps:.2f}s for "
+                f"only {length:.2f}s of footage. Recapture longer footage "
+                "or shorten the edit; never slow the interaction."
+            )
+        norm = (
+            f"fps={fps},setsar=1,"
+            f"tpad=stop_mode=clone:stop_duration={max_linger_frames/fps:.3f}"
+        )
         encode_to(stage_dir/(shot['id']+'.mp4'), '-i', folder/shot['file'], '-vf', norm,
-                  '-frames:v',str(shot['frames']))
+                  '-frames:v', str(target_frames))
     if recipe['brand'].get('mark') == 'tori-mark.svg':
         (ROOT/'public'/'tori-mark.svg').write_bytes((ROOT.parent/'tori-mark.svg').read_bytes())
 
