@@ -35,6 +35,10 @@ function Footage({shot, accent, cinema, clip}: {shot:Shot; accent:string; cinema
   const centerY=view.height*.452;
   const camera = fit*mix(1,shot.zoom,move);
   const entrance=smooth(f,0,5);
+  // An authentic availability screen gently retracts as the responsive mobile
+  // view enters. Distribute the contrast change instead of flashing white.
+  const departure=cinema && shot.role==='slots'
+    ? smooth(f,Math.max(0,shot.frames-8),Math.max(1,shot.frames-1)) : 0;
   const direction=shot.role==='calendar'||shot.role==='settings'?1:-1;
   const targetX=mix(cx+cw/2,shot.focus[0],move);
   const targetY=mix(cy+ch/2,shot.focus[1],move);
@@ -50,7 +54,8 @@ function Footage({shot, accent, cinema, clip}: {shot:Shot; accent:string; cinema
     position:'absolute',width:w,height:h,
     left:centerX-w/2+(1-entrance)*70*direction*u,
     top:centerY-h/2+(1-entrance)*21*u,
-    transform:`perspective(${1300*u}px) rotateY(${direction*(1-entrance)*-5}deg) scale(${.965+.035*entrance})`,
+    transform:`perspective(${1300*u}px) rotateY(${direction*(1-entrance)*-5}deg) scale(${(.965+.035*entrance)*(1-.17*departure)})`,
+    opacity:1-.74*departure,
     overflow:'hidden',
     borderRadius:(shot.phone?29:16)*u,background:'#e7eeea',
     clipPath:clip === undefined ? undefined : `inset(0 0 0 ${(1-clip)*100}% round ${16*u}px)`,
