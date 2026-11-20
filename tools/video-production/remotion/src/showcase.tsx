@@ -27,11 +27,11 @@ function Footage({shot, accent, cinema, clip}: {shot:Shot; accent:string; cinema
   const [cx,cy,cw,ch]=shot.crop;
   const move=smooth(f, cinema ? 1 : 0, Math.max(10, Math.round(shot.frames * (cinema ? .72 : .43))));
   const maxW=(shot.phone?583:cinema?1132:1224)*u;
-  const maxH=(shot.phone?636:cinema?626:664)*u;
+  const maxH=(shot.phone?610:cinema?628:636)*u;
   const fit=Math.min(maxW/cw,maxH/ch);
   const w=cw*fit,h=ch*fit;
   const centerX=view.width*(shot.phone?(cinema?.67:.59):.5);
-  const centerY=view.height*(cinema?.514:.5);
+  const centerY=view.height*.467;
   const camera = fit*mix(1,shot.zoom,move);
   const targetX=mix(cx+cw/2,shot.focus[0],move);
   const targetY=mix(cy+ch/2,shot.focus[1],move);
@@ -55,15 +55,52 @@ function Wipe({shot,accent}: {shot:Shot;accent:string}) {
   return <Freeze frame={0}><Footage shot={shot} accent={accent} cinema clip={reveal}/></Freeze>;
 }
 
-function Identity({brand,label,phone,cinema}: {brand:Recipe['brand'];label:string;phone?:boolean;cinema:boolean}) {
+function Identity({brand, role, frames, index}: {
+  brand:Recipe['brand']; role:string; frames:number; index:number
+}) {
+  const f=useCurrentFrame();
   const u=useVideoConfig().height/720;
-  return <div lang="en" style={{
-    position:'absolute',left:(phone?144:30)*u,top:(phone?295:(cinema?16:9))*u,display:'flex',
-    alignItems:'center',gap:8*u,color:'#e7f3ee',fontFamily:'Arial, sans-serif',fontWeight:600,
-    fontSize:(phone?41:cinema?15:13)*u,lineHeight:1,
+  const headlines:Record<string,string>={
+    pick:'CHOOSE A TIME',
+    confirm:'BOOKING CONFIRMED',
+    calendar:'THE BUSINESS CALENDAR',
+    settings:'SET YOUR HOURS',
+    slots:'AVAILABILITY UPDATED',
+    service:'CHOOSE A SERVICE',
+    mobile:'BOOK ON MOBILE'
+  };
+  const enter=interpolate(f,[0,5],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
+  const exit=interpolate(f,[Math.max(5,frames-5),frames],[1,0],{
+    extrapolateLeft:'clamp',extrapolateRight:'clamp'
+  });
+  const visibility=Math.min(enter,exit);
+  const reveal=interpolate(f,[0,7],[16,0],{
+    extrapolateLeft:'clamp',extrapolateRight:'clamp',
+    easing:Easing.bezier(.25,.7,.25,1)
+  });
+  return <div style={{
+    position:'absolute',bottom:9*u,left:34*u,right:34*u,height:45*u,
+    color:'#effbf6',fontFamily:'Arial, sans-serif',
+    display:'flex',alignItems:'center',gap:12*u,
+    opacity:visibility,transform:`translateY(${reveal*u}px)`,
+    pointerEvents:'none'
   }}>
-    {brand.mark && <img src={staticFile(brand.mark)} style={{width:(phone?39:19)*u,height:(phone?39:19)*u}} alt=""/>}
-    <div>{brand.name}{phone && cinema && <span style={{display:'block',marginTop:10*u,color:'#b6d8ce',fontSize:15*u}}>{label}</span>}</div>
+    {brand.mark && <img src={staticFile(brand.mark)} alt="" style={{
+      width:25*u,height:25*u
+    }}/>}
+    <span style={{fontSize:17*u,fontWeight:800,letterSpacing:.4*u}}>{brand.name}</span>
+    <span style={{width:1*u,height:19*u,background:'#63877e'}}/>
+    <span style={{fontSize:21*u,fontWeight:700,letterSpacing:.3*u}}>
+      {headlines[role] ?? role.toUpperCase()}
+    </span>
+    <span style={{marginLeft:'auto',fontSize:14*u,color:'#9abfb3',fontVariantNumeric:'tabular-nums'}}>
+      {String(index+1).padStart(2,'0')}
+    </span>
+    <div style={{
+      position:'absolute',bottom:0,left:0,
+      width:`${Math.min(100,(f+1)/Math.max(1,frames)*100)}%`,
+      height:2*u,background:brand.accent
+    }}/>
   </div>;
 }
 
@@ -83,7 +120,7 @@ export function ProductShowcase({recipe}: Props) {
           <Sequence from={start-7} durationInFrames={7} layout="none"><Wipe shot={shot} accent={brand.accent}/></Sequence>}
         <Sequence from={start} durationInFrames={shot.frames} layout="none">
           <Footage shot={shot} accent={brand.accent} cinema={cinema}/>
-          <Identity brand={brand} label={shot.label} phone={shot.phone} cinema={cinema}/>
+          <Identity brand={brand} role={shot.role} frames={shot.frames} index={index}/>
         </Sequence>
       </React.Fragment>;
     })}
