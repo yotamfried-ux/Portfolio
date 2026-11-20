@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: tori-creative-review-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   render-review:
     runs-on: ubuntu-latest
@@ -59,7 +63,11 @@ jobs:
           src="$(realpath ../../../assets/source/tori-remotion)"
           for variant in action cinema; do
             python director.py stage --config tori-production.json --sources "$src" --output "$RUNNER_TEMP/creative" --variant "$variant"
-            npm run render -- "$RUNNER_TEMP/creative/$variant.mp4" "$RUNNER_TEMP/creative/recipe-$variant.json"
+            npm run render -- "$RUNNER_TEMP/creative/$variant.mp4" "$RUNNER_TEMP/creative/recipe-$variant.json" || {
+              echo "Render failed on cold Chromium launch; one bounded retry after cleanup"
+              sleep 5
+              npm run render -- "$RUNNER_TEMP/creative/$variant.mp4" "$RUNNER_TEMP/creative/recipe-$variant.json"
+            }
             python review.py "$RUNNER_TEMP/creative/$variant.mp4" "$RUNNER_TEMP/creative/recipe-$variant.json" "$RUNNER_TEMP/creative"
           done
           cp ../../../assets/source/tori-remotion/manifest.json "$RUNNER_TEMP/creative/sources-manifest.json"
