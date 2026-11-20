@@ -93,6 +93,20 @@ def directed(selections, sources, project, variant, output):
     return recipe
 
 
+def realtime_hold_frames(source_seconds, target_frames, fps, max_hold_seconds=0.24):
+    """Reject fake slow motion; only a short final-frame editorial hold is allowed."""
+    if fps <= 0 or source_seconds <= 0 or target_frames <= 0:
+        raise ValueError("Positive source duration, frame budget and fps required")
+    original_frames = round(source_seconds * fps)
+    hold = max(0, target_frames - original_frames)
+    if hold > round(max_hold_seconds * fps):
+        raise ValueError(
+            f"Shot would extend {source_seconds:.2f}s of true-time action "
+            f"to {target_frames/fps:.2f}s. Recapture or reduce duration."
+        )
+    return hold
+
+
 def stage(recipe, folder):
     stage_dir = ROOT/'public'/'takes'
     stage_dir.mkdir(parents=True,exist_ok=True)
@@ -101,16 +115,9 @@ def stage(recipe, folder):
         # Preserve the genuine speed of browser interactions. The former
         # setpts=target/source multiplier slowed 0.64s of UI action to 2–4s.
         fps = recipe['fps']
-        source_frames = round(length * fps)
         target_frames = shot['frames']
-        linger_frames = max(0, target_frames - source_frames)
+        linger_frames = realtime_hold_frames(length, target_frames, fps)
         max_linger_frames = round(0.24 * fps)
-        if linger_frames > max_linger_frames:
-            raise ValueError(
-                f"Shot {shot['id']} requests {target_frames/fps:.2f}s for "
-                f"only {length:.2f}s of footage. Recapture longer footage "
-                "or shorten the edit; never slow the interaction."
-            )
         norm = (
             f"fps={fps},setsar=1,"
             f"tpad=stop_mode=clone:stop_duration={max_linger_frames/fps:.3f}"
