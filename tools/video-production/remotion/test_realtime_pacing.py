@@ -1,6 +1,6 @@
 """Regression tests: the director must not slow browser interactions to fill slots."""
 import unittest
-from director import realtime_hold_frames
+from pacing import realtime_hold_frames
 
 
 class RealtimePacingTest(unittest.TestCase):
