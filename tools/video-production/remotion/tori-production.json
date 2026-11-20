@@ -37,12 +37,8 @@
       "outro_frames": 0
     },
     "cinema": {
-      "seconds": 6.56,
+      "seconds": 5.68,
       "roles": [
-        {
-          "id": "service",
-          "weight": 0.88
-        },
         {
           "id": "pick",
           "weight": 0.8
@@ -68,7 +64,7 @@
           "weight": 0.84
         }
       ],
-      "outro_frames": 32
+      "outro_frames": 40
     }
   },
   "observations": [
