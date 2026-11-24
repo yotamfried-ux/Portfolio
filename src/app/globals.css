@@ -117,6 +117,7 @@ p { color: var(--muted); }
 .project-card .media-caption { position: absolute; bottom: 10px; inset-inline-start: 10px; background: #0b1018e8; color: var(--text); padding: 3px 8px; border-radius: 4px; }
 .project-card .media-frame { position: relative; }
 .project-card .media-surface { --media-ratio: 2.15; border: none; border-radius: 0; }
+.project-card:not(.project-lead) .media-surface:has(.video-layer) { --media-ratio: 16 / 9; }
 .project-lead .media-surface { --media-ratio: 1.95; height: 100%; min-height: 335px; }
 .project-lead img { object-position: center 61%; }
 .project-copy { padding: clamp(22px, 3vw, 43px); align-self: center; }

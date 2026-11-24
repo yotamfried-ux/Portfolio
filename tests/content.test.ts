@@ -22,13 +22,18 @@ test('approved projects appear once, in order, with bilingual content', () => {
   assert.equal(projectBySlug('unknown'), undefined)
 })
 
-test('Phase 1 media has posters or CSS art with no video request', () => {
+test('media has posters or CSS art, and only declared previews request video', () => {
   for (const media of [heroMedia, ...projects.map(project => project.media)]) {
     assert.ok(media.poster || media.fallback)
     assert.equal(media.isIllustration, true)
     if (media.poster) assert.ok(existsSync(`public${media.poster}`))
     for (const mode of ['preview', 'demo'] as const) {
-      assert.equal(videoFor(media, mode), undefined)
+      const declared = videoFor(media, mode)
+      if (declared) {
+        assert.ok(existsSync(`public${declared.src}`))
+        assert.equal(declared.isIllustration, true)
+        continue
+      }
       const html = renderToStaticMarkup(createElement(MediaFrame, { media, locale: 'he', mode }))
       assert.match(html, /<figcaption/)
       assert.ok(html.includes(media.attribution.he))
