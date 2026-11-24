@@ -28,8 +28,14 @@ export const projectMedia = {
     attribution: heroMedia.attribution, isIllustration: true,
   },
   tori: {
-    fallback: 'booking', alt: { en: 'An illustrated calendar with available booking times', he: 'איור של יומן עם שעות פנויות לקביעת תורים' },
+    poster: '/media/tori.webp', fallback: 'booking',
+    alt: { en: 'The Tori business calendar on a desktop monitor beside the booking confirmation on a phone', he: 'יומן העסק של תורי על מסך מחשב, לצד אישור קביעת התור בטלפון' },
     attribution: { en: 'Booking flow illustration', he: 'המחשה של תהליך קביעת תור' }, isIllustration: true,
+    previewVideo: {
+      src: '/media/tori-preview.mp4',
+      attribution: { en: 'Motion promo composed from Tori screens', he: 'סרטון תדמית שנבנה ממסכי תורי' },
+      isIllustration: true,
+    },
   },
   'ai-agent-system': {
     fallback: 'agent', alt: { en: 'A diagram of connected steps in an agent workflow', he: 'תרשים של שלבים מחוברים בתהליך העבודה של הסוכנים' },
