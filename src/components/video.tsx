@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { Locale } from '@/lib/locale'
-import type { Media } from '@/lib/media'
+import { videoSrc, type Media } from '@/lib/media'
 
 type VideoAsset = NonNullable<Media['previewVideo']>
 type PreviewPreference = 'automatic' | 'play' | 'pause'
@@ -61,7 +61,7 @@ export function Video({ asset, poster, mode, locale }: {
 
   return <div ref={root} className="video-layer">
     {mounted && <video ref={video} className={preview ? 'video-preview' : undefined}
-      src={asset.src} muted={preview} loop={preview} playsInline autoPlay={!preview} controls={!preview}
+      src={videoSrc(asset, locale)} muted={preview} loop={preview} playsInline autoPlay={!preview} controls={!preview}
       aria-label={he ? 'סרטון הפרויקט' : 'Project video'} preload="none" poster={poster}
       onPlaying={event => { event.currentTarget.dataset.playing = 'true' }}
       onPause={event => { delete event.currentTarget.dataset.playing }}
