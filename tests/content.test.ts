@@ -7,7 +7,7 @@ import { MediaFrame } from '../src/components/media'
 import { draftEmail, publicEmail } from '../src/lib/contact'
 import { flaggedCount, etlRows } from '../src/lib/demo'
 import { href } from '../src/lib/locale'
-import { heroMedia, videoFor } from '../src/lib/media'
+import { heroMedia, videoFor, videoSrc } from '../src/lib/media'
 import { projectBySlug, projects } from '../src/lib/projects'
 
 test('approved projects appear once, in order, with bilingual content', () => {
@@ -30,7 +30,7 @@ test('media has posters or CSS art, and only declared previews request video', (
     for (const mode of ['preview', 'demo'] as const) {
       const declared = videoFor(media, mode)
       if (declared) {
-        assert.ok(existsSync(`public${declared.src}`))
+        for (const locale of ['en', 'he'] as const) assert.ok(existsSync(`public${videoSrc(declared, locale)}`))
         assert.equal(declared.isIllustration, true)
         continue
       }

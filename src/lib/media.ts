@@ -1,7 +1,7 @@
 import type { Bilingual } from './locale'
 
 type Illustration = 'sport' | 'booking' | 'agent' | 'churn' | 'etl'
-type Video = { src: string; captions?: Bilingual; transcript?: Bilingual; attribution: Bilingual; isIllustration: boolean }
+type Video = { src: string | Bilingual; captions?: Bilingual; transcript?: Bilingual; attribution: Bilingual; isIllustration: boolean }
 
 export type Media = {
   poster?: string
@@ -32,7 +32,7 @@ export const projectMedia = {
     alt: { en: 'The Tori business calendar on a desktop monitor beside the booking confirmation on a phone', he: 'יומן העסק של תורי על מסך מחשב, לצד אישור קביעת התור בטלפון' },
     attribution: { en: 'Booking flow illustration', he: 'המחשה של תהליך קביעת תור' }, isIllustration: true,
     previewVideo: {
-      src: '/media/tori-preview.mp4',
+      src: { en: '/media/tori-preview-en.mp4', he: '/media/tori-preview-he.mp4' },
       attribution: { en: 'Motion promo composed from Tori screens', he: 'סרטון תדמית שנבנה ממסכי תורי' },
       isIllustration: true,
     },
@@ -50,6 +50,10 @@ export const projectMedia = {
     attribution: { en: 'Data pipeline illustration', he: 'המחשה של תהליך עיבוד נתונים' }, isIllustration: true,
   },
 } satisfies Record<string, Media>
+
+export function videoSrc(video: { src: string | Bilingual }, locale: 'en' | 'he') {
+  return typeof video.src === 'string' ? video.src : video.src[locale]
+}
 
 export function videoFor(media: Media, mode: 'preview' | 'demo') {
   return mode === 'preview' ? media.previewVideo : media.demoVideo
