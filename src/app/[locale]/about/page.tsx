@@ -28,6 +28,10 @@ const stack = {
   en: [['Full-stack', 'TypeScript, Next.js, PostgreSQL'], ['AI & video', 'Python, computer vision, FFmpeg, AI agent workflows'], ['Data', 'Python, scikit-learn, MongoDB, SQL']],
   he: [['פיתוח מקצה לקצה', 'TypeScript, Next.js, PostgreSQL'], ['בינה מלאכותית ווידאו', 'Python, ראייה ממוחשבת, FFmpeg, תהליכי עבודה עם סוכני בינה מלאכותית'], ['נתונים', 'Python, scikit-learn, MongoDB, SQL']],
 }
+const codeNote = {
+  en: 'My product codebases are proprietary, so they are not public. Each project page includes a short, non-sensitive excerpt, and I’m happy to walk through the full code live in technical interviews.',
+  he: 'קוד המקור של המוצרים שלי סגור ולכן לא מפורסם. בכל עמוד פרויקט יש קטע קצר שאינו רגיש, ואשמח לעבור על הקוד המלא בהדגמה חיה בראיונות טכניים.',
+}
 const titles = { en: { how: 'How I work', stack: 'Core stack', links: 'Profiles' }, he: { how: 'איך אני עובד', stack: 'טכנולוגיות עיקריות', links: 'פרופילים' } }
 
 export async function generateMetadata({ params }: Props) {
@@ -49,6 +53,9 @@ export default async function About({ params }: Props) {
     <section className="core-stack" aria-label={t.stack}>
       <h2>{t.stack}</h2>
       <dl>{stack[locale].map(([group, items]) => <div key={group}><dt>{group}</dt><dd lang="en" dir="ltr">{items}</dd></div>)}</dl>
+    </section>
+    <section className="code-policy" aria-label={locale === 'he' ? 'על קוד המקור' : 'About the source code'}>
+      <h2>{locale === 'he' ? 'על קוד המקור' : 'About the source code'}</h2><p>{codeNote[locale]}</p>
     </section>
     <Certificate locale={locale} /><ContactBand locale={locale} />
   </div></Site>

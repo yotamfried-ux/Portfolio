@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Lab } from '@/components/lab'
 import { MediaFrame } from '@/components/media'
+import { snippets } from '@/lib/snippets'
 import { Arrow, Site } from '@/components/site'
 import { href, isLocale, labels } from '@/lib/locale'
 import { pageMetadata } from '@/lib/metadata'
@@ -55,6 +56,14 @@ export default async function CaseStudy({ params }: Props) {
         </section>
         <section><h2>{t.next}</h2><p>{project.next[locale]}</p></section>
       </div>
+      {snippets[project.slug] && <section className="code-sample" aria-label={t.codeSample}>
+        <h2>{t.codeSample}</h2>
+        <p className="code-note">{t.codeNote}</p>
+        <figure>
+          <figcaption><span lang="en" dir="ltr">{snippets[project.slug].file}</span><span>{snippets[project.slug].caption[locale]}</span></figcaption>
+          <pre tabIndex={0} dir="ltr" lang="en"><code>{snippets[project.slug].code}</code></pre>
+        </figure>
+      </section>}
       <Link className="text-link project-cta" href={href(locale, '/contact')}>{t.projectCta}<Arrow diagonal /></Link>
       <Link className="next-project" href={href(locale, next ? `/projects/${next.slug}` : '/projects')}>
         <span>{next ? <><span className="eyebrow">{t.nextProject}</span>{next.title[locale]}</> : t.allWork}</span><Arrow diagonal />
