@@ -66,7 +66,7 @@ export const projectMedia = {
   },
   'customer-churn-prediction': {
     poster: '/media/customer-churn-prediction.webp', fallback: 'churn', alt: { en: 'The distribution of risk scores the churn model gave to customers who stayed and customers who left', he: 'התפלגות ציוני הסיכון שהמודל נתן ללקוחות שנשארו וללקוחות שעזבו' },
-    attribution: { en: 'Illustration using synthetic data', he: 'המחשה המבוססת על נתונים סינתטיים' }, isIllustration: true,
+    attribution: { en: 'Chart from the model’s real test-set results', he: 'גרף מתוצאות הבדיקה האמיתיות של המודל' }, isIllustration: true,
     previewVideo: {
       src: { en: '/media/customer-churn-prediction-preview-en.mp4', he: '/media/customer-churn-prediction-preview-he.mp4' },
       attribution: { en: 'Motion walkthrough built from the project’s real test-set results', he: 'סרטון הדגמה שנבנה מתוצאות הבדיקה האמיתיות של הפרויקט' },

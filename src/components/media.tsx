@@ -17,11 +17,7 @@ export function MediaFrame({ media, locale, mode = 'preview', hero = false, capt
         : <div className="media-artwork" role="img" aria-label={media.alt[locale]}><Artwork kind={media.fallback} /></div>}
       {video && <Video key={videoSrc(video, locale)} asset={video} poster={media.poster} mode={mode} locale={locale} />}
     </div>
-    {caption && <figcaption className="media-caption">
-      {video
-        ? <>{media.attribution[locale]} · {video.isIllustration ? (he ? 'סרטון להמחשה' : 'Illustrative video') : (he ? 'תיעוד מצולם של הפרויקט' : 'Project footage')} · {video.attribution[locale]}</>
-        : media.attribution[locale]}
-    </figcaption>}
+    {caption && !video && <figcaption className="media-caption">{media.attribution[locale]}</figcaption>}
     {mode === 'demo' && video?.transcript && <details className="transcript"><summary>{he ? 'תמלול הסרטון' : 'Video transcript'}</summary><p>{video.transcript[locale]}</p></details>}
   </figure>
 }

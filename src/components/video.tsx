@@ -60,6 +60,18 @@ export function Video({ asset, poster, mode, locale }: {
     player.pause()
   }, [mounted, shouldPlay])
 
+  // Browsers (power saving, a background tab) can pause a muted clip on their own. That is not the
+  // visitor's choice: resume when the tab is visible again instead of staying paused.
+  useEffect(() => {
+    if (!mounted || !shouldPlay) return
+    const resume = () => {
+      const player = video.current
+      if (!document.hidden && player?.paused) void player.play().catch(() => undefined)
+    }
+    document.addEventListener('visibilitychange', resume)
+    return () => document.removeEventListener('visibilitychange', resume)
+  }, [mounted, shouldPlay])
+
   return <div ref={root} className="video-layer">
     {mounted && <video ref={video} className={preview ? 'video-preview' : undefined}
       src={videoSrc(asset, locale)} muted loop={preview} playsInline controls={!preview}
@@ -69,6 +81,7 @@ export function Video({ asset, poster, mode, locale }: {
       onPlay={() => { pausedByScroll.current = false; if (preference === 'pause') setPreference('play') }}
       onPause={() => {
         if (pausedByScroll.current) { pausedByScroll.current = false; return }
+        if (document.hidden) return
         setPreference('pause')
       }}
       onError={() => setFailed(true)}>
