@@ -34,7 +34,7 @@ export function Footer({ locale }: { locale: Locale }) {
   const t = labels[locale]
   return <footer className="site-footer"><div className="wrap footer-inner">
     <Link href={href(locale)} className="wordmark"><span className="monogram" aria-hidden="true">YF</span>{t.name}</Link>
-    <span>{t.footer}</span><span className="footer-links"><a href={publicProfiles().github} rel="noopener noreferrer" target="_blank">{t.github}<Arrow diagonal /></a><Link href={href(locale, '/contact')}>{t.contact} <Arrow diagonal /></Link></span>
+    <span>{t.footer}</span><span className="footer-links"><Link href={href(locale, '/contact')}>{t.contact} <Arrow diagonal /></Link></span>
   </div></footer>
 }
 
@@ -127,11 +127,11 @@ export function ContactBand({ locale }: { locale: Locale }) {
 
 export function ProfileLinks({ locale }: { locale: Locale }) {
   const t = labels[locale]
-  const { github, linkedin, cv } = publicProfiles()
+  const { linkedin, cv } = publicProfiles()
   const link = (url: string, text: string) => <a key={url} className="button button-secondary" href={url} rel="noopener noreferrer" target="_blank">{text}<Arrow diagonal /></a>
+  if (!cv && !linkedin) return null
   return <div className="profile-links">
     {cv && link(cv, locale === 'he' ? 'קורות חיים (PDF)' : 'CV (PDF)')}
-    {link(github, t.github)}
     {linkedin && link(linkedin, 'LinkedIn')}
   </div>
 }

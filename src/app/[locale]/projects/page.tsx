@@ -5,8 +5,8 @@ import { pageMetadata } from '@/lib/metadata'
 
 type Props = { params: Promise<{ locale: string }> }
 const description = {
-  en: 'Selected work in computer vision, AI agents, machine learning, data engineering, and booking software.',
-  he: 'עבודות נבחרות בראייה ממוחשבת, סוכני בינה מלאכותית, למידת מכונה, הנדסת נתונים ותוכנות לקביעת תורים.',
+  en: 'Selected work in computer vision, AI agents, machine learning, and booking software.',
+  he: 'עבודות נבחרות בראייה ממוחשבת, סוכני בינה מלאכותית, למידת מכונה ותוכנות לקביעת תורים.',
 }
 
 export async function generateMetadata({ params }: Props) {

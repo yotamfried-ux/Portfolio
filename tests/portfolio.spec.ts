@@ -19,7 +19,7 @@ test('home, project list, and about show the four published projects and trainin
   ])
   await page.getByRole('link', { name: 'About', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Technion Certified Big Data Analyst' })).toBeVisible()
-  await expect(page.locator('a[href="https://github.com/yotamfried-ux"]').first()).toBeVisible()
+  await expect(page.locator('a[href*="github.com"]')).toHaveCount(0)
   await expect(page.locator('body')).not.toContainText('still need verification')
   expect(errors).toEqual([])
 })
