@@ -95,17 +95,18 @@ test('Hebrew keeps the case study route, direction, and localized interactive la
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr')
 })
 
-test('contact validates locally and prepares a draft without leaking entries into the URL', async ({ page }) => {
+test('contact validates locally, shows the public address and keeps entries out of the URL', async ({ page }) => {
   await page.goto('/contact')
+  await expect(page.getByRole('link', { name: 'yotam.fried@gmail.com' })).toBeVisible()
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Sample Visitor')
   await page.getByRole('textbox', { name: 'Your email address' }).fill('not-an-email')
   await page.getByRole('textbox', { name: 'Message', exact: true }).fill('Project enquiry')
-  await page.getByRole('button', { name: 'Prepare draft' }).click()
-  await expect(page.getByRole('textbox', { name: 'Message draft' })).toHaveCount(0)
-  await page.getByRole('textbox', { name: 'Your email address' }).fill('visitor@example.com')
-  await page.getByRole('button', { name: 'Prepare draft' }).click()
-  await expect(page.getByRole('textbox', { name: 'Message draft' })).toHaveValue('Project enquiry\n\nSample Visitor\nvisitor@example.com')
+  await page.getByRole('button', { name: 'Open draft in email app' }).click()
   await expect(page).toHaveURL(/\/contact$/)
+  await page.getByRole('textbox', { name: 'Your email address' }).fill('visitor@example.com')
+  await page.getByRole('button', { name: 'Open draft in email app' }).click()
+  await expect(page).toHaveURL(/\/contact$/)
+  expect(page.url()).not.toContain('visitor')
 })
 
 test('critical English and Hebrew pages pass automated WCAG checks', async ({ page }) => {
