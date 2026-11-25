@@ -150,3 +150,14 @@ test('project page video starts by itself without a click', async ({ page }) => 
   await expect(demo).toHaveJSProperty('controls', false)
   await expect(demo).toHaveJSProperty('loop', true)
 })
+
+test('only Tori shows a live-site link, in both languages', async ({ page }) => {
+  await page.goto('/projects/tori')
+  const live = page.getByRole('link', { name: 'Open the live site' })
+  await expect(live).toHaveAttribute('href', 'https://turim.d2ryf.com')
+  await expect(live).toHaveAttribute('target', '_blank')
+  await page.goto('/he/projects/tori')
+  await expect(page.getByRole('link', { name: 'פתיחת האתר החי' })).toHaveAttribute('href', 'https://turim.d2ryf.com')
+  await page.goto('/projects/sportreel')
+  await expect(page.getByRole('link', { name: 'Open the live site' })).toHaveCount(0)
+})

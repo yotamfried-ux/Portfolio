@@ -216,6 +216,7 @@ p { color: var(--muted); }
 .case-details h2 { font-size: clamp(22px,2.75vw,34px); letter-spacing: -.04em; margin-block-end: 11px; }
 .case-details p { max-width: 52ch; }
 .case-demo-link { margin-block-start: 11px; }
+.case-live-link { margin-block-start: 4px; display: flex; width: fit-content; }
 .case-lab { scroll-margin-block-start: 20px; }
 .case-lab h2 { margin-block-end: 21px; }
 .architecture { margin-block-start: var(--section-space); }
