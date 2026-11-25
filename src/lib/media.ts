@@ -26,6 +26,20 @@ export const projectMedia = {
     poster: '/media/sportreel.webp', fallback: 'sport',
     alt: { en: 'An overhead view of a cyclist on a forest road', he: 'מבט מלמעלה על רוכב אופניים בכביש שעובר ביער' },
     attribution: heroMedia.attribution, isIllustration: true,
+    previewVideo: {
+      src: { en: '/media/sportreel-preview-en.mp4', he: '/media/sportreel-preview-he.mp4' },
+      attribution: { en: 'Motion walkthrough built from drone footage', he: 'סרטון הדגמה שנבנה מצילומי רחפן' },
+      isIllustration: true,
+    },
+    demoVideo: {
+      src: { en: '/media/sportreel-demo-en.mp4', he: '/media/sportreel-demo-he.mp4' },
+      attribution: { en: 'Motion walkthrough built from drone footage', he: 'סרטון הדגמה שנבנה מצילומי רחפן' },
+      transcript: {
+        en: 'Drone footage in. Personal reels out. Lots of clips, many athletes: who is who? SportReel finds every athlete and follows each one. It links the same athlete across different clips, without face recognition. It picks the full ride and frames it for phones, vertical and ready to post: a personal reel for every athlete.',
+        he: 'צילומי רחפן נכנסים. ריל אישי יוצא. המון קליפים והמון ספורטאים: מי זה מי? SportReel מזהה כל ספורטאי ועוקב אחרי כל אחד. הוא מקשר את אותו ספורטאי בין קליפים שונים, בלי זיהוי פנים. הוא בוחר את הרכיבה המלאה וממסגר אותה לטלפון, אנכי ומוכן לפרסום: ריל אישי לכל ספורטאי.',
+      },
+      isIllustration: true,
+    },
   },
   tori: {
     poster: '/media/tori.webp', fallback: 'booking',
