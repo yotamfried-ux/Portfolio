@@ -7,7 +7,7 @@ export type Media = {
   poster?: string
   fallback?: Illustration
   previewVideo?: Video
-  demoVideo?: Video & { captions: Bilingual; transcript: Bilingual }
+  demoVideo?: Video & { captions?: Bilingual; transcript: Bilingual }
   alt: Bilingual
   attribution: Bilingual
   isIllustration: boolean
@@ -34,6 +34,15 @@ export const projectMedia = {
     previewVideo: {
       src: { en: '/media/tori-preview-en.mp4', he: '/media/tori-preview-he.mp4' },
       attribution: { en: 'Motion promo composed from Tori screens', he: 'סרטון תדמית שנבנה ממסכי תורי' },
+      isIllustration: true,
+    },
+    demoVideo: {
+      src: { en: '/media/tori-demo-en.mp4', he: '/media/tori-demo-he.mp4' },
+      attribution: { en: 'Motion walkthrough composed from Tori screens; reports use demo data', he: 'סרטון הדגמה שנבנה ממסכי תורי; נתוני הדוחות הם נתוני דמו' },
+      transcript: {
+        en: 'Fewer messages. More bookings. A customer picks a service and a day, sees only the free slots and gets instant confirmation. On the business side, the appointment is already in the calendar. Reminders and a smart waitlist work automatically, and you set the rules. Clear reports show how the business is doing. Report figures are demo data.',
+        he: 'פחות הודעות. יותר תורים. הלקוח בוחר שירות ויום, רואה רק שעות פנויות ומקבל אישור מיידי. בצד העסק, התור כבר ביומן. תזכורות ורשימת המתנה פועלות אוטומטית, ואתם קובעים את הכללים. דוחות ברורים מראים מה קורה בעסק. הנתונים בדוחות הם נתוני דמו.',
+      },
       isIllustration: true,
     },
   },
