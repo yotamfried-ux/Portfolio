@@ -26,7 +26,7 @@ export const labels = {
     certImage: 'Technion professional training certificate issued to Yotam Friedman',
     certView: 'View full-size certificate',
     capabilities: 'Capabilities', aboutHeading: 'About me', contactHeading: 'Let’s talk.',
-    footer: 'Personal portfolio', generated: 'AI-generated illustration',
+    footer: 'Personal portfolio', generated: 'Illustration',
   },
   he: {
     name: 'יותם פרידמן', work: 'עבודות', about: 'עליי', contact: 'יצירת קשר', allWork: 'כל הפרויקטים',
@@ -43,6 +43,6 @@ export const labels = {
     certImage: 'תעודת ההכשרה המקצועית שהנפיק הטכניון ליותם פרידמן',
     certView: 'הצגת התעודה בגודל מלא',
     capabilities: 'תחומי עיסוק', aboutHeading: 'קצת עליי', contactHeading: 'בואו נדבר.',
-    footer: 'תיק עבודות אישי', generated: 'תמונת המחשה שנוצרה בבינה מלאכותית',
+    footer: 'תיק עבודות אישי', generated: 'תמונת המחשה',
   },
 } as const
