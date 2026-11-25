@@ -397,3 +397,13 @@ input[type="range"] { display: block; width: 100%; min-height: 44px; accent-colo
 .form-status-ok { color: var(--accent); font-weight: 750; }
 .form-status-ok::before { content: '\2713\00a0'; }
 .contact-form input, .contact-form textarea { scroll-margin-block-start: 130px; }
+
+/* Code sample and source-code policy */
+.code-sample, .code-policy { margin-block: clamp(28px, 4vw, 52px); }
+.code-sample h2, .code-policy h2 { font-size: clamp(22px, 2.6vw, 30px); margin-block-end: 8px; }
+.code-note, .code-policy p { color: var(--muted); max-width: 66ch; }
+.code-sample figure { margin: 16px 0 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+.code-sample figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; padding: 11px 16px; border-block-end: 1px solid var(--border); font-size: 13.5px; color: var(--muted); }
+.code-sample figcaption span:first-child { font-family: var(--mono-code, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace); color: var(--accent); }
+.code-sample pre { margin: 0; padding: 16px; overflow-x: auto; font: 500 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--text); tab-size: 2; }
+.code-sample pre:focus-visible { outline-offset: -3px; }

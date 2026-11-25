@@ -25,7 +25,8 @@ test('approved projects appear once, in order, with bilingual content', () => {
 test('media has posters or CSS art, and only declared previews request video', () => {
   for (const media of [heroMedia, ...projects.map(project => project.media)]) {
     assert.ok(media.poster || media.fallback)
-    assert.equal(media.isIllustration, true)
+    // Only the SportReel poster is a real frame (taken from the drone footage); everything else is an illustration.
+    assert.equal(media.isIllustration, media.poster !== '/media/sportreel.webp')
     if (media.poster) assert.ok(existsSync(`public${media.poster}`))
     for (const mode of ['preview', 'demo'] as const) {
       const declared = videoFor(media, mode)

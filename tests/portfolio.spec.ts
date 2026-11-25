@@ -184,3 +184,21 @@ test('navigation marks the current page and keeps Contact as a call to action', 
   await page.goto('/contact')
   await expect(page.locator('.site-nav a.nav-cta')).toHaveAttribute('aria-current', 'page')
 })
+
+test('project pages show a code sample with the proprietary-code note, and Tori has no stale walkthrough item', async ({ page }) => {
+  for (const slug of ['tori', 'sportreel', 'customer-churn-prediction']) {
+    await page.goto(`/projects/${slug}`)
+    await expect(page.locator('.code-sample pre code')).not.toBeEmpty()
+    await expect(page.locator('.code-note')).toContainText('Proprietary product codebase')
+  }
+  await page.goto('/projects/tori')
+  await expect(page.locator('body')).not.toContainText('Record a walkthrough')
+  await page.goto('/about')
+  await expect(page.locator('.code-policy')).toContainText('proprietary')
+})
+
+test('favicon formats exist for browsers that ignore SVG icons', async ({ request }) => {
+  expect((await request.get('/favicon.ico')).status()).toBe(200)
+  const links = await (await request.get('/')).text()
+  expect(links).toContain('apple-touch-icon')
+})

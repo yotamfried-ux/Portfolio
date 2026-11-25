@@ -24,8 +24,8 @@ export const heroMedia: Media = {
 export const projectMedia = {
   sportreel: {
     poster: '/media/sportreel.webp', fallback: 'sport',
-    alt: { en: 'An overhead view of a cyclist on a forest road', he: 'מבט מלמעלה על רוכב אופניים בכביש שעובר ביער' },
-    attribution: heroMedia.attribution, isIllustration: true,
+    alt: { en: 'A surfer riding a wave, seen from a drone high above the water', he: 'גולש רוכב על גל, מבט מרחפן שמעל המים' },
+    attribution: { en: 'Frame from the original drone footage', he: 'פריים מצילומי הרחפן המקוריים' }, isIllustration: false,
     previewVideo: {
       src: { en: '/media/sportreel-preview-en.mp4', he: '/media/sportreel-preview-he.mp4' },
       attribution: { en: 'Motion walkthrough built from drone footage', he: 'סרטון הדגמה שנבנה מצילומי רחפן' },

@@ -15,3 +15,6 @@ Reviewed the private Engineering-OS repository at `477a27d` as a design referenc
 The catalog entry at `external-skills/ui-ux-pro-max/README.md` was reviewed. The referenced upstream repository reports MIT licensing, and the CLI was absent from this environment. No installation or execution of the skill was needed for this approved design.
 
 The UI candidates in `docs/product-experience/ui-library-candidates-2026.md` informed the adoption decision. Native buttons, ranges, and CSS handled the work with a smaller dependency footprint. Animate UI, Uiverse, Vengeance UI, Forge UI, and UI Lora were not installed or copied. No license authorization was inferred from the catalog. The two self-hosted variable fonts, Manrope and Heebo, are distributed under the SIL Open Font License through the locked Fontsource packages.
+
+## Update 2026-11-25: UI/UX skill installed
+`ui-ux-pro-max` was installed on the working host with `python3 tools/eos_capabilities.py ensure --tool ui-ux-pro-max` (Claude plugin, v2.15.0). Its Forms & Feedback rules (inline validation, error placement with aria-describedby, required markers, submit feedback) were applied to the contact form; see the contact UX change.

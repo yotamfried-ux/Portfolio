@@ -62,7 +62,7 @@ const allProjects: Project[] = [
     solution: b('The booking page shows times based on the business’s availability rules. The business manages appointments in its calendar. A separate job handles customer reminders.', 'עמוד קביעת התורים מציג שעות לפי כללי הזמינות של העסק. העסק מנהל את התורים ביומן, ותהליך נפרד מטפל בתזכורות ללקוחות.'),
     challenges: b('Offer only valid start times and keep an appointment’s status independent of reminder delivery.', 'להציע רק שעות התחלה שעומדות בכללי הזמינות ולשמור על מצב התור גם אם התזכורת לא נמסרה.'),
     outcome: b('The code includes public booking routes, availability rules, calendar views for business owners, and reminder jobs. Tests cover booking and availability.', 'קוד המקור כולל נקודות קצה לקביעת תורים, כללי זמינות, תצוגות יומן לבעלי עסקים ותהליכי תזכורת. הבדיקות מכסות קביעת תורים ובדיקת זמינות.'),
-    next: b('Record a walkthrough with an example business and approved demo data.', 'להקליט הדגמה של המערכת עם עסק לדוגמה ונתונים שאושרו לשימוש בהדגמה.'),
+    next: b('Add payments and invoicing, which exist today only as a code skeleton and are not part of the live product.', 'להוסיף תשלומים והפקת חשבוניות, שקיימים כיום רק כשלד קוד ואינם חלק מהמוצר החי.'),
     stack: ['Next.js', 'TypeScript', 'PostgreSQL'], media: projectMedia.tori,
     steps: [
       step('Choose a service', 'בחירת שירות', 'Choose the service to book.', 'בוחרים את השירות שעבורו רוצים לקבוע תור.'),
