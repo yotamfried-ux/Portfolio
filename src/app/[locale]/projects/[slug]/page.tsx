@@ -33,7 +33,7 @@ export default async function CaseStudy({ params }: Props) {
         <p className="eyebrow case-category">{project.category[locale]}</p>
         <h1>{project.title[locale]}</h1>
         <p>{project.summary[locale]}</p>
-        <p className="project-status">{t[project.status]}</p>
+        <p className="project-status">{project.badge[locale]}</p>
         <a href="#interactive-demo" className="text-link case-demo-link">{t.openLab}<Arrow diagonal /></a>
       </div>
       <MediaFrame media={project.media} locale={locale} mode="demo" />
@@ -54,6 +54,7 @@ export default async function CaseStudy({ params }: Props) {
         </section>
         <section><h2>{t.next}</h2><p>{project.next[locale]}</p></section>
       </div>
+      <Link className="text-link project-cta" href={href(locale, '/contact')}>{t.projectCta}<Arrow diagonal /></Link>
       <Link className="next-project" href={href(locale, next ? `/projects/${next.slug}` : '/projects')}>
         <span>{next ? <><span className="eyebrow">{t.nextProject}</span>{next.title[locale]}</> : t.allWork}</span><Arrow diagonal />
       </Link>

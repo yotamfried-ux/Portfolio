@@ -9,6 +9,8 @@ type Project = {
   discipline: 'ai' | 'full-stack' | 'data'
   summary: Bilingual
   status: 'verified' | 'pending'
+  hidden?: boolean
+  badge: Bilingual
   demoStatus: 'illustrative'
   problem: Bilingual
   role: Bilingual
@@ -26,11 +28,12 @@ const step = (en: string, he: string, detailEn: string, detailHe: string): Step 
   title: b(en, he), detail: b(detailEn, detailHe),
 })
 
-export const projects: Project[] = [
+const allProjects: Project[] = [
   {
     slug: 'sportreel', title: b('SportReel', 'SportReel'), category: b('Computer vision · Video', 'ראייה ממוחשבת · וידאו'),
     discipline: 'ai',
     summary: b('Turn wide drone footage into sports clips that keep the athlete in focus.', 'מצילומי רחפן רחבים לקליפים שבהם הספורטאי במרכז.'),
+    badge: b('Computer vision pipeline', 'צינור עיבוד לראייה ממוחשבת'),
     status: 'verified', demoStatus: 'illustrative',
     problem: b('In wide drone shots, the athlete can be hard to spot. A focused highlight reel needs to keep the athlete in frame and capture the right moments.', 'בצילומי רחפן רחבים לפעמים קשה להבחין בספורטאי. כדי ליצור סרטון רגעי שיא צריך להבליט אותו בפריים ולבחור את הרגעים המתאימים.'),
     role: b('Computer vision and video processing, from analyzing the source footage to preparing and exporting clips.', 'ראייה ממוחשבת ועיבוד וידאו, מניתוח צילומי המקור ועד להכנת קליפים ולייצואם.'),
@@ -51,6 +54,7 @@ export const projects: Project[] = [
     slug: 'tori', title: b('Tori', 'תורי'), category: b('Full stack · Scheduling', 'פיתוח מקצה לקצה · תורים'),
     discipline: 'full-stack',
     summary: b('Customers book available appointments. Businesses manage those bookings in a calendar.', 'לקוחות קובעים תורים בשעות פנויות ובעלי עסקים מנהלים את התורים ביומן.'),
+    badge: b('Full-stack product', 'מוצר מקצה לקצה'),
     status: 'verified', demoStatus: 'illustrative',
     problem: b('Customers need to see which times are available. Businesses need an up-to-date view of the appointments customers have booked.', 'לקוחות צריכים לדעת אילו שעות פנויות, ובעלי עסקים צריכים יומן שמשקף את התורים שנקבעו בפועל.'),
     role: b('Full-stack development of the booking flow, availability rules, and tools for managing appointments.', 'פיתוח מקצה לקצה של תהליך קביעת התורים, כללי הזמינות וכלי ניהול התורים לעסק.'),
@@ -70,13 +74,14 @@ export const projects: Project[] = [
     slug: 'ai-agent-system', title: b('AI Agent System', 'מערכת סוכני בינה מלאכותית'), category: b('AI · Orchestration', 'בינה מלאכותית · תזמור'),
     discipline: 'ai',
     summary: b('Experiments in assigning software tasks to AI agents, checking their work, and reviewing the results.', 'ניסויים בחלוקת משימות תוכנה בין סוכני בינה מלאכותית, בבדיקת עבודתם ובסקירת התוצאות.'),
+    badge: b('AI workflow experiments', 'ניסויים בתהליכי עבודה עם בינה מלאכותית'),
     status: 'verified', demoStatus: 'illustrative',
     problem: b('When agents work in stages, each needs to know what it receives, what it hands off, and when the result is ready for review.', 'כשסוכנים עובדים בשלבים, צריך להגדיר מה כל סוכן מקבל, מה הוא מעביר הלאה ומתי התוצאה מוכנה לבדיקה.'),
     role: b('Designing and evaluating experimental workflows for software engineering tasks.', 'תכנון והערכה של תהליכי עבודה ניסיוניים למשימות פיתוח תוכנה.'),
     solution: b('The experiments assign roles, validate workflow definitions before execution, and define how to record evidence for review.', 'הניסויים מגדירים תפקידים, בודקים את הגדרות התהליך לפני ההרצה וקובעים איך לתעד ממצאים שאפשר לבדוק בהמשך.'),
     challenges: b('Surface failures, make handoffs easy to review, and identify which steps ran automatically.', 'להציג כשלים, לאפשר בדיקה של מה שעבר בין הסוכנים ולהבהיר אילו שלבים רצו אוטומטית.'),
     outcome: b('The repositories include agents for specific tasks, workflow validation tests, and schemas for recording evidence.', 'המאגרים כוללים סוכנים למשימות מוגדרות, בדיקות לתהליכי העבודה וסכמות לתיעוד ממצאים.'),
-    next: b('Share a run log with sensitive details removed, showing where approval was needed and what actually ran. n8n integration and fully autonomous execution still need verification.', 'לפרסם תיעוד הרצה לאחר הסרת פרטים רגישים, ולהראות באילו שלבים נדרש אישור ומה רץ בפועל. החיבור ל־n8n והרצה אוטונומית מלאה עדיין טעונים אימות.'),
+    next: b('Publish a run log with sensitive details removed, showing where approval was needed and what actually ran.', 'לפרסם תיעוד הרצה לאחר הסרת פרטים רגישים, ולהראות באילו שלבים נדרש אישור ומה רץ בפועל.'),
     stack: ['Python', 'TypeScript'], media: projectMedia['ai-agent-system'],
     steps: [
       step('Plan', 'תכנון', 'Define the task and what a reviewer needs to check.', 'מגדירים את המשימה ואת מה שצריך לבדוק בתוצאה.'),
@@ -89,15 +94,16 @@ export const projects: Project[] = [
     slug: 'customer-churn-prediction', title: b('Customer Churn Prediction', 'חיזוי נטישת לקוחות'),
     discipline: 'data',
     category: b('Machine learning', 'למידת מכונה'),
-    summary: b('Explore how a risk threshold changes which customer accounts are flagged for review.', 'הדגמה של השפעת סף הסיכון על בחירת חשבונות הלקוחות לבדיקה.'),
-    status: 'pending', demoStatus: 'illustrative',
+    summary: b('A churn model for telecom customers that reached 80.2% accuracy on customers it had not seen, and a scoring flow that runs on a MongoDB database.', 'מודל לחיזוי נטישה של לקוחות חברת תקשורת שהגיע ל־80.2% דיוק על לקוחות שלא נראו, ותהליך מתן ציונים שרץ על מסד נתונים MongoDB.'),
+    badge: b('Machine learning project', 'פרויקט למידת מכונה'),
+    status: 'verified', demoStatus: 'illustrative',
     problem: b('How can a team identify customers who may stop using a service and decide which accounts to review first?', 'איך אפשר לזהות לקוחות שעשויים להפסיק להשתמש בשירות ולהחליט אילו חשבונות כדאי לבדוק קודם?'),
-    role: b('Project scope and individual contributions still need verification.', 'היקף הפרויקט והתרומה האישית עדיין טעונים אימות.'),
-    solution: b('The demo assigns synthetic risk scores to sample accounts. Moving the threshold changes which accounts qualify for review.', 'ההדגמה מציגה ציוני סיכון סינתטיים לחשבונות לדוגמה. שינוי הסף קובע אילו חשבונות יסומנו לבדיקה.'),
+    role: b('Final project in the Big Data Analyst course at the Technion, built on a public telecom churn dataset.', 'פרויקט גמר בקורס אנליסט ביג דאטה בטכניון, על מערך נתונים ציבורי של לקוחות חברת תקשורת.'),
+    solution: b('The data was cleaned and encoded, and 61 configurations across three model families were compared. A random forest of 200 trees performed best. The interactive demo below uses synthetic scores to show how a decision threshold changes which accounts are flagged.', 'הנתונים נוקו וקודדו, ו־61 הגדרות בשלוש משפחות מודלים הושוו. יער אקראי של 200 עצים השיג את התוצאה הטובה ביותר. ההדגמה האינטראקטיבית למטה משתמשת בציונים סינתטיים כדי להראות איך סף ההחלטה משנה אילו חשבונות מסומנים.'),
     challenges: b('Define what counts as churn, decide which data to hold out for evaluation, and explain how the threshold is chosen.', 'להגדיר מה נחשב לנטישה, לבחור אילו נתונים יישמרו להערכה ולהסביר איך נקבע סף ההחלטה.'),
-    outcome: b('The source repository, dataset, model, and evaluation results still need verification.', 'מאגר הקוד, מערך הנתונים, המודל ותוצאות ההערכה עדיין טעונים אימות.'),
-    next: b('Confirm the source repository and review the dataset summary, evaluation metrics, and demo material before publication.', 'לאמת את מאגר הקוד ולבדוק את תקציר הנתונים, מדדי ההערכה וחומרי ההדגמה לפני הפרסום.'),
-    stack: [], media: projectMedia['customer-churn-prediction'],
+    outcome: b('On 1,409 held-out customers a random forest reached 80.2% accuracy (73.5% without a model), found 193 of 374 churners and raised 98 false alarms (AUC 0.84). The source repository is private and not linked.', 'על 1,409 לקוחות מקבוצת הבדיקה יער אקראי הגיע לדיוק של 80.2% (73.5% ללא מודל), זיהה 193 מתוך 374 נוטשים והעלה 98 התראות שווא (AUC 0.84). מאגר הקוד פרטי ואינו מקושר.'),
+    next: b('Let visitors explore the decision threshold on the real test-set scores instead of synthetic ones.', 'לאפשר לבחון את סף ההחלטה על ציוני קבוצת הבדיקה האמיתיים במקום על ציונים סינתטיים.'),
+    stack: ['Python', 'scikit-learn', 'MongoDB'], media: projectMedia['customer-churn-prediction'],
     steps: [
       step('Sample scores', 'ציונים לדוגמה', 'Each sample account has a synthetic risk score.', 'לכל חשבון בדוגמה יש ציון סיכון סינתטי.'),
       step('Threshold', 'סף החלטה', 'Move the threshold to see which accounts are flagged.', 'מזיזים את הסף ורואים אילו חשבונות מסומנים.'),
@@ -105,9 +111,10 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'etl-pipeline', title: b('ETL Pipeline', 'תהליך ETL'), category: b('Data engineering', 'הנדסת נתונים'),
+    hidden: true, slug: 'etl-pipeline', title: b('ETL Pipeline', 'תהליך ETL'), category: b('Data engineering', 'הנדסת נתונים'),
     discipline: 'data',
     summary: b('An interactive example of extracting, cleaning, and loading data.', 'דוגמה אינטראקטיבית לחילוץ נתונים, ניקוי שלהם וטעינתם ליעד.'),
+    badge: b('Data pipeline example', 'דוגמה לתהליך עיבוד נתונים'),
     status: 'pending', demoStatus: 'illustrative',
     problem: b('Raw records can arrive in different formats or with missing values. They need to be checked and standardized before other teams can use them.', 'רשומות גולמיות עלולות להגיע בפורמטים שונים או עם ערכים חסרים. צריך לבדוק אותן ולהאחיד את הפורמט לפני שצוותים אחרים יוכלו להשתמש בהן.'),
     role: b('Project scope and individual contributions still need verification.', 'היקף הפרויקט והתרומה האישית עדיין טעונים אימות.'),
@@ -123,6 +130,8 @@ export const projects: Project[] = [
     ],
   },
 ]
+
+export const projects: Project[] = allProjects.filter(project => !project.hidden)
 
 export function projectBySlug(slug: string) {
   return projects.find(project => project.slug === slug)

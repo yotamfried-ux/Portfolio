@@ -65,8 +65,22 @@ export const projectMedia = {
     attribution: { en: 'Agent workflow illustration', he: 'המחשה של תהליך עבודה עם סוכנים' }, isIllustration: true,
   },
   'customer-churn-prediction': {
-    fallback: 'churn', alt: { en: 'A bar chart illustrating changes in sample risk scores', he: 'תרשים עמודות שממחיש הבדלים בין ציוני סיכון לדוגמה' },
+    poster: '/media/customer-churn-prediction.webp', fallback: 'churn', alt: { en: 'The distribution of risk scores the churn model gave to customers who stayed and customers who left', he: 'התפלגות ציוני הסיכון שהמודל נתן ללקוחות שנשארו וללקוחות שעזבו' },
     attribution: { en: 'Illustration using synthetic data', he: 'המחשה המבוססת על נתונים סינתטיים' }, isIllustration: true,
+    previewVideo: {
+      src: { en: '/media/customer-churn-prediction-preview-en.mp4', he: '/media/customer-churn-prediction-preview-he.mp4' },
+      attribution: { en: 'Motion walkthrough built from the project’s real test-set results', he: 'סרטון הדגמה שנבנה מתוצאות הבדיקה האמיתיות של הפרויקט' },
+      isIllustration: true,
+    },
+    demoVideo: {
+      src: { en: '/media/customer-churn-prediction-demo-en.mp4', he: '/media/customer-churn-prediction-demo-he.mp4' },
+      attribution: { en: 'Motion walkthrough built from the project’s real test-set results', he: 'סרטון הדגמה שנבנה מתוצאות הבדיקה האמיתיות של הפרויקט' },
+      transcript: {
+        en: 'Customer churn prediction, the final project of the Big Data Analyst course at the Technion. The goal: spot a customer about to leave, before they leave. The data covers 7,043 telecom customers with 19 features, and 26.5% of them churned. Contract type, tenure and payment method separate churners from stayers. The data was cleaned and encoded, and 61 configurations across three model families were compared with scikit-learn. A random forest of 200 trees won, with 80.2% accuracy on customers it never saw, against 73.5% for guessing without a model. It found 193 of 374 churners, raised 98 false alarms, and reached an AUC of 0.84. In part B the model runs on a database: 25,000 records in MongoDB, a schema field fixed, 24,218 complete records scored and exported to CSV. Know who is about to leave, before they do.',
+        he: 'חיזוי נטישת לקוחות, פרויקט הגמר בקורס אנליסט ביג דאטה בטכניון. המטרה: לזהות לקוח שעומד לעזוב, לפני שהוא עוזב. הנתונים כוללים 7,043 לקוחות של חברת תקשורת עם 19 מאפיינים, ו-26.5% מהם נטשו. סוג החוזה, הוותק ושיטת התשלום מבדילים בין נוטשים לנשארים. הנתונים נוקו וקודדו, ו-61 הגדרות בשלוש משפחות מודלים הושוו בעזרת scikit-learn. יער אקראי של 200 עצים ניצח, עם דיוק של 80.2% על לקוחות שלא נראו, מול 73.5% בניחוש ללא מודל. הוא זיהה 193 מתוך 374 נוטשים, העלה 98 התראות שווא והגיע ל-AUC של 0.84. בשלב ב׳ המודל רץ על מסד נתונים: 25,000 רשומות ב-MongoDB, תיקון שדה בסכמה, ו-24,218 רשומות שלמות שקיבלו ציון וייוצאו ל-CSV. לדעת מי עומד לעזוב, לפני שהוא עוזב.',
+      },
+      isIllustration: true,
+    },
   },
   'etl-pipeline': {
     fallback: 'etl', alt: { en: 'A diagram linking data extraction, transformation, and loading', he: 'תרשים של שלבי החילוץ, העיבוד והטעינה של נתונים' },
