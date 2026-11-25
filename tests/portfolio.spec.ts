@@ -57,7 +57,7 @@ test('all four interactive case studies work', async ({ page }) => {
   await comparison.focus()
   await page.keyboard.press('End')
   await expect(comparison).toHaveValue('100')
-  await expect(page.locator('.compare-divider')).toHaveCSS('left', /px/)
+  await expect(page.locator('.compare-zoom')).toHaveCSS('transform', /matrix\(2\.2/)
   await page.getByRole('link', { name: 'Next project Tori' }).click()
   await page.getByRole('button', { name: 'Check availability' }).click()
   await page.getByRole('button', { name: '11:00' }).click()

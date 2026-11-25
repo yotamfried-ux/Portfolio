@@ -234,7 +234,8 @@ p { color: var(--muted); }
 .lab-heading p { font-size: 13px; }
 .lab-heading .eyebrow { display: flex; align-items: center; gap: 9px; }
 .compare-frame { position: relative; aspect-ratio: 2.3; overflow: clip; border-radius: 9px; }
-.compare-frame img { object-fit: cover; object-position: 60% 72%; }
+.compare-frame img { object-fit: cover; object-position: 50% 90%; }
+.compare-zoom { position: absolute; inset: 0; transform-origin: 79% 68.5%; will-change: transform; }
 .compare-divider { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--accent); display: grid; align-items: center; }
 .compare-divider i { font-style: normal; display: grid; place-items: center; margin-inline-start: -17px; width: 34px; aspect-ratio: 1; background: var(--accent); color: var(--background); border-radius: 50%; }
 .compare-label { position: absolute; top: 12px; background: #0b1018e8; color: var(--text); font-size: 12px; padding: 4px 8px; border-radius: 4px; }
