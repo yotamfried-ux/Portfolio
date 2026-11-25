@@ -3,8 +3,8 @@ import { href, labels, type Locale } from './locale'
 
 export const siteUrl = new URL(process.env.SITE_URL || 'https://portfolio.d2ryf.com')
 export const homeDescription = {
-  en: 'Selected projects by Yotam Friedman in applied AI, software development, and data engineering.',
-  he: 'פרויקטים נבחרים של יותם פרידמן בבינה מלאכותית יישומית, בפיתוח תוכנה ובהנדסת נתונים.',
+  en: 'Selected projects by Yotam Friedman in applied AI, machine learning, and software development.',
+  he: 'פרויקטים נבחרים של יותם פרידמן בבינה מלאכותית יישומית, בלמידת מכונה ובפיתוח תוכנה.',
 }
 
 export function pageMetadata(locale: Locale, path: string, title: string, description: string): Metadata {
