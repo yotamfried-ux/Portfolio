@@ -11,19 +11,22 @@ type Project = NonNullable<ReturnType<typeof projectBySlug>>
 type LabProject = Pick<Project, 'slug' | 'steps'>
 
 function SportComparison({ locale }: { locale: Locale }) {
-  const [split, setSplit] = useState(46)
+  const [zoom, setZoom] = useState(0)
   const he = locale === 'he'
+  const t = zoom / 100
+  const scale = 1 + 1.2 * t
+  // The zoom is anchored on the cyclist; the right edge stays pinned so the frame never shows blank space.
+  const transform = `translate(${-21 * (scale - 1)}%, ${-18.5 * t}%) scale(${scale})`
   return <div className="comparison">
     <div className="compare-frame" dir="ltr">
-      <Image src="/media/aerial-hero.webp" fill alt={he ? 'מבט אווירי רחב על הכביש והיער' : 'Wide aerial view of the road and forest'} sizes="(max-width: 760px) 100vw, 65vw" />
-      <Image src="/media/sportreel.webp" fill alt={he ? 'אותה תמונה בחיתוך ממוקד יותר' : 'A closer crop of the same image'} sizes="(max-width: 760px) 100vw, 65vw"
-        style={{ clipPath: `inset(0 0 0 ${split}%)` }} />
-      <span className="compare-divider" style={{ left: `${split}%` }} aria-hidden="true"><i>↔</i></span>
+      <div className="compare-zoom" style={{ transform }}>
+        <Image src="/media/aerial-hero.webp" fill alt={he ? 'מבט אווירי על כביש ויער עם רוכב אופניים, בחיתוך שמשתנה לפי הסליידר' : 'Aerial view of a forest road with a cyclist, cropped in as the slider moves'} sizes="(max-width: 760px) 100vw, 65vw" />
+      </div>
       <span className="compare-label compare-before" dir={he ? 'rtl' : 'ltr'}>{he ? 'תמונה רחבה' : 'Wide view'}</span>
       <span className="compare-label compare-after" dir={he ? 'rtl' : 'ltr'}>{he ? 'חיתוך לדוגמה' : 'Cropped view'}</span>
     </div>
     <label className="range-label" htmlFor="split">{he ? 'השוואת התמונה לפני ואחרי החיתוך' : 'Compare the wide and cropped views'}</label>
-    <input id="split" type="range" min={0} max={100} value={split} dir="ltr" onChange={event => setSplit(event.target.valueAsNumber)} />
+    <input id="split" type="range" min={0} max={100} value={zoom} dir="ltr" onChange={event => setZoom(event.target.valueAsNumber)} />
   </div>
 }
 
