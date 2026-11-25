@@ -28,7 +28,7 @@ The Vercel project `portfolio` is linked to this private GitHub repository under
 
 The Namecheap `portfolio` CNAME resolves to `cname.vercel-dns.com.` Vercel's domain configuration check reported no conflict and recommended that same value. Vercel can assign `portfolio.d2ryf.com` to the review branch for a stable preview URL. Verify the domain and TLS in the project. Switch the domain to the production branch after owner approval. Preview responses and robots settings discourage indexing.
 
-`SITE_URL` sets the canonical root, which defaults to `https://portfolio.d2ryf.com`. Set `PUBLIC_CONTACT_EMAIL` only after the owner approves a public address. Rebuild after changing either value. The visitor composes a draft in the browser and sends from their email app. The website stores no submissions and exposes no mail-sending endpoint. Without an approved address, the draft can be copied locally.
+`SITE_URL` sets the canonical root, which defaults to `https://portfolio.d2ryf.com`. Set `PUBLIC_CONTACT_EMAIL` only after the owner approves a public address. Rebuild after changing either value. The visitor composes a draft in the browser and sends from their email app. The website stores no submissions and exposes no mail-sending endpoint. Without an approved address, the draft can be copied locally. With one, the contact page also shows it with a copy button. `PUBLIC_LINKEDIN_URL` and `PUBLIC_CV_URL` (https only) add LinkedIn and CV links to About and Contact; they are hidden when unset. The ETL example is kept in the data but hidden (`hidden: true` in `src/lib/projects.ts`) until it is ready.
 
 ## Phase 2 media
 
