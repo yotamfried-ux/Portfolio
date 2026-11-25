@@ -45,7 +45,7 @@ const allProjects: Project[] = [
     steps: [
       step('Source frame', 'תמונת מקור', 'Begin with a wide shot of the athlete and the surrounding terrain.', 'מתחילים בתמונה רחבה שבה רואים את הספורטאי ואת השטח שסביבו.'),
       step('Detection and tracking', 'זיהוי ומעקב', 'Locate the athlete in successive frames and follow their movement.', 'מזהים את הספורטאי בתמונות עוקבות ועוקבים אחר תנועתו.'),
-      step('Subject framing', 'מסגור הספורטאי', 'Crop the frame around the cyclist. This comparison uses an AI-generated image.', 'חותכים את התמונה כדי להבליט את רוכב האופניים. תמונת ההשוואה נוצרה בבינה מלאכותית.'),
+      step('Subject framing', 'מסגור הספורטאי', 'Crop the frame around the cyclist. This comparison uses an illustrative image.', 'חותכים את התמונה כדי להבליט את רוכב האופניים. תמונת ההשוואה היא תמונת המחשה.'),
       step('Clip selection', 'בחירת קליפים', 'Choose the start and end of each clip around a key moment.', 'בוחרים נקודת התחלה וסיום לכל קליפ לפי הרגע שרוצים להציג.'),
       step('Reel export', 'ייצוא הסרטון', 'Put the clips in sequence and record the edit decisions.', 'מסדרים את הקליפים ברצף ומתעדים את החלטות העריכה.'),
     ],

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { ContactForm } from '@/components/contact-form'
 import { CopyEmail } from '@/components/copy-email'
 import { Arrow, Site } from '@/components/site'
-import { publicEmail } from '@/lib/contact'
+import { defaultPublicEmail, publicEmail } from '@/lib/contact'
 import { isLocale, labels } from '@/lib/locale'
 import { pageMetadata } from '@/lib/metadata'
 import { publicProfiles } from '@/lib/profiles'
@@ -23,7 +23,7 @@ export default async function Contact({ params }: Props) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   const t = labels[locale]
-  const email = publicEmail(process.env.PUBLIC_CONTACT_EMAIL)
+  const email = publicEmail(process.env.PUBLIC_CONTACT_EMAIL ?? defaultPublicEmail)
   const { github, linkedin, cv } = publicProfiles()
   const links = [[github, t.github], ...(linkedin ? [[linkedin, 'LinkedIn']] : []), ...(cv ? [[cv, locale === 'he' ? 'קורות חיים (PDF)' : 'CV (PDF)']] : [])]
   return <Site locale={locale} path="/contact"><div className="wrap contact-page">

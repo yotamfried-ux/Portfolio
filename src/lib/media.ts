@@ -17,7 +17,7 @@ export type Media = {
 export const heroMedia: Media = {
   poster: '/media/aerial-hero.webp',
   alt: { en: 'A winding mountain road through a misty forest', he: 'כביש הררי מתפתל בתוך יער ערפילי' },
-  attribution: { en: 'AI-generated illustration', he: 'תמונת המחשה שנוצרה בבינה מלאכותית' },
+  attribution: { en: 'Illustration', he: 'תמונת המחשה' },
   isIllustration: true,
 }
 
