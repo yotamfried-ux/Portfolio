@@ -14,70 +14,71 @@ export function Video({ asset, poster, mode, locale }: {
 }) {
   const root = useRef<HTMLDivElement>(null)
   const video = useRef<HTMLVideoElement>(null)
+  const pausedByScroll = useRef(false)
   const [visible, setVisible] = useState(false)
   const [reduced, setReduced] = useState(true)
-  const [previewPreference, setPreviewPreference] = useState<PreviewPreference>('automatic')
-  const [demoRequested, setDemoRequested] = useState(false)
+  const [preference, setPreference] = useState<PreviewPreference>('automatic')
+  const [started, setStarted] = useState(false)
   const [failed, setFailed] = useState(false)
   const preview = mode === 'preview'
   const he = locale === 'he'
 
   useEffect(() => {
-    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const sync = () => setReduced(preference.matches)
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const sync = () => setReduced(motion.matches)
     sync()
-    preference.addEventListener('change', sync)
+    motion.addEventListener('change', sync)
     const observer = new IntersectionObserver(([entry]) => {
       setVisible(entry.intersectionRatio >= minimumVisibleRatio)
     }, { threshold: minimumVisibleRatio })
     if (root.current) observer.observe(root.current)
     return () => {
-      preference.removeEventListener('change', sync)
+      motion.removeEventListener('change', sync)
       observer.disconnect()
     }
   }, [])
 
-  const wantsPreview = previewPreference === 'play' || (previewPreference === 'automatic' && !reduced)
-  const showPreview = preview && visible && wantsPreview
-  const mounted = !failed && (preview ? showPreview : demoRequested)
+  // Both modes autoplay (muted, silent clips) unless the visitor pauses or prefers reduced motion.
+  const wantsPlay = preference === 'play' || (preference === 'automatic' && !reduced)
+  const shouldPlay = visible && wantsPlay
+  // The video mounts the first time it should play and then stays: scrolling away only pauses it,
+  // so the last frame remains on screen instead of falling back to the poster.
+  if (shouldPlay && !started) setStarted(true)
+  const mounted = !failed && started
 
   useEffect(() => {
     const player = video.current
-    if (!preview || !showPreview || !player) return
-    let cancelled = false
-    void player.play().catch(() => {
-      if (!cancelled) setPreviewPreference('pause')
-    })
-    return () => { cancelled = true }
-  }, [preview, showPreview, mounted])
-
-  useEffect(() => {
-    if (!preview && mounted) video.current?.focus()
-  }, [preview, mounted])
-
-  useEffect(() => {
-    if (!preview && !visible) video.current?.pause()
-  }, [preview, visible])
+    if (!mounted || !player) return
+    if (shouldPlay) {
+      let cancelled = false
+      void player.play().catch(() => {
+        if (!cancelled) setPreference('pause')
+      })
+      return () => { cancelled = true }
+    }
+    pausedByScroll.current = true
+    player.pause()
+  }, [mounted, shouldPlay])
 
   return <div ref={root} className="video-layer">
     {mounted && <video ref={video} className={preview ? 'video-preview' : undefined}
-      src={videoSrc(asset, locale)} muted={preview} loop={preview} playsInline autoPlay={!preview} controls={!preview}
-      aria-label={he ? 'סרטון הפרויקט' : 'Project video'} preload="none" poster={poster}
-      onPlaying={event => { event.currentTarget.dataset.playing = 'true' }}
-      onPause={event => { delete event.currentTarget.dataset.playing }}
-      onWaiting={event => { delete event.currentTarget.dataset.playing }}
+      src={videoSrc(asset, locale)} muted loop={preview} playsInline controls={!preview}
+      aria-label={he ? 'סרטון הפרויקט' : 'Project video'} preload="metadata" poster={poster}
+      onLoadedData={event => { event.currentTarget.dataset.ready = 'true' }}
+      onPlaying={event => { event.currentTarget.dataset.ready = 'true' }}
+      onPlay={() => { pausedByScroll.current = false; if (preference === 'pause') setPreference('play') }}
+      onPause={() => {
+        if (pausedByScroll.current) { pausedByScroll.current = false; return }
+        setPreference('pause')
+      }}
       onError={() => setFailed(true)}>
       {asset.captions && <track kind="captions" src={asset.captions[locale]} srcLang={locale} label={he ? 'כתוביות' : 'Captions'} default />}
     </video>}
     {failed ? <p className="media-control" role="status">{he ? 'לא הצלחנו לטעון את הסרטון.' : 'The video couldn’t load.'}</p>
       : (preview || !mounted) && <button className="media-control" type="button" onClick={() => {
-        if (preview) {
-          setPreviewPreference(showPreview ? 'pause' : 'play')
-        } else {
-          setDemoRequested(true)
-        }
+        setPreference(shouldPlay ? 'pause' : 'play')
       }}>
-        {showPreview ? (he ? 'השהיית הסרטון' : 'Pause video') : (he ? 'ניגון הסרטון' : 'Play video')}
+        {mounted && wantsPlay ? (he ? 'השהיית הסרטון' : 'Pause video') : (he ? 'ניגון הסרטון' : 'Play video')}
       </button>}
   </div>
 }
