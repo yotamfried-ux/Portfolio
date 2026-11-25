@@ -22,9 +22,9 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
       <nav aria-label={t.nav} className="site-nav">
         <Link href={href(locale, '/projects')} aria-current={path.startsWith('/projects') ? 'page' : undefined}>{t.work}</Link>
         <Link href={href(locale, '/about')} aria-current={path === '/about' ? 'page' : undefined}>{t.about}</Link>
-        <Link href={href(locale, '/contact')} aria-current={path === '/contact' ? 'page' : undefined}>{t.contact}</Link>
+        <Link className="nav-cta" href={href(locale, '/contact')} aria-current={path === '/contact' ? 'page' : undefined}>{t.contact}</Link>
       </nav>
-      <Link className="language" href={href(alternate, path)} hrefLang={alternate} lang={alternate} dir={alternate === 'he' ? 'rtl' : 'ltr'}>{t.language}<Arrow diagonal /></Link>
+      <Link className="language" href={href(alternate, path)} hrefLang={alternate} lang={alternate} dir={alternate === 'he' ? 'rtl' : 'ltr'}>{t.language}</Link>
     </div>
   </header>
 }

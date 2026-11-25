@@ -92,10 +92,10 @@ export const projects: Project[] = [
     summary: b('Explore how a risk threshold changes which customer accounts are flagged for review.', 'הדגמה של השפעת סף הסיכון על בחירת חשבונות הלקוחות לבדיקה.'),
     status: 'pending', demoStatus: 'illustrative',
     problem: b('How can a team identify customers who may stop using a service and decide which accounts to review first?', 'איך אפשר לזהות לקוחות שעשויים להפסיק להשתמש בשירות ולהחליט אילו חשבונות כדאי לבדוק קודם?'),
-    role: b('Project scope and individual contributions still need verification.', 'היקף הפרויקט והתרומה האישית עדיין טעונים אימות.'),
+    role: b('Final project in the Big Data Analyst course at the Technion, built on a public telecom churn dataset.', 'פרויקט גמר בקורס אנליסט ביג דאטה בטכניון, על מערך נתונים ציבורי של לקוחות חברת תקשורת.'),
     solution: b('The demo assigns synthetic risk scores to sample accounts. Moving the threshold changes which accounts qualify for review.', 'ההדגמה מציגה ציוני סיכון סינתטיים לחשבונות לדוגמה. שינוי הסף קובע אילו חשבונות יסומנו לבדיקה.'),
     challenges: b('Define what counts as churn, decide which data to hold out for evaluation, and explain how the threshold is chosen.', 'להגדיר מה נחשב לנטישה, לבחור אילו נתונים יישמרו להערכה ולהסביר איך נקבע סף ההחלטה.'),
-    outcome: b('The source repository, dataset, model, and evaluation results still need verification.', 'מאגר הקוד, מערך הנתונים, המודל ותוצאות ההערכה עדיין טעונים אימות.'),
+    outcome: b('On 1,409 held-out customers a random forest reached 80.2% accuracy (73.5% without a model), found 193 of 374 churners and raised 98 false alarms (AUC 0.84). The source repository is private and not linked.', 'על 1,409 לקוחות מקבוצת הבדיקה יער אקראי הגיע לדיוק של 80.2% (73.5% ללא מודל), זיהה 193 מתוך 374 נוטשים והעלה 98 התראות שווא (AUC 0.84). מאגר הקוד פרטי ואינו מקושר.'),
     next: b('Confirm the source repository and review the dataset summary, evaluation metrics, and demo material before publication.', 'לאמת את מאגר הקוד ולבדוק את תקציר הנתונים, מדדי ההערכה וחומרי ההדגמה לפני הפרסום.'),
     stack: [], media: projectMedia['customer-churn-prediction'],
     steps: [
