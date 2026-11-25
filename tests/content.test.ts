@@ -11,7 +11,7 @@ import { heroMedia, videoFor, videoSrc } from '../src/lib/media'
 import { projectBySlug, projects } from '../src/lib/projects'
 
 test('approved projects appear once, in order, with bilingual content', () => {
-  assert.deepEqual(projects.map(project => project.slug), ['sportreel', 'tori', 'ai-agent-system', 'customer-churn-prediction', 'etl-pipeline'])
+  assert.deepEqual(projects.map(project => project.slug), ['sportreel', 'tori', 'ai-agent-system', 'customer-churn-prediction'])
   for (const project of projects) {
     assert.equal(projectBySlug(project.slug), project)
     assert.ok(project.title.he && project.summary.he && project.next.he)

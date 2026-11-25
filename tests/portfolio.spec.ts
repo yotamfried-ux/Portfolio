@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
-test('home, project list, and about show the five approved projects and training', async ({ page }) => {
+test('home, project list, and about show the four published projects and training', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', error => errors.push(error.message))
   await page.goto('/')
@@ -15,11 +15,12 @@ test('home, project list, and about show the five approved projects and training
   await page.getByRole('link', { name: 'Explore projects' }).click()
   await expect(page).toHaveURL(/\/projects$/)
   await expect(page.getByRole('heading', { level: 2 }).allTextContents()).resolves.toEqual([
-    'SportReel', 'Tori', 'AI Agent System', 'Customer Churn Prediction', 'ETL Pipeline', 'Let’s talk.',
+    'SportReel', 'Tori', 'AI Agent System', 'Customer Churn Prediction', 'Let’s talk.',
   ])
   await page.getByRole('link', { name: 'About', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Technion Certified Big Data Analyst' })).toBeVisible()
-  await expect(page.locator('body')).not.toContainText('github.com')
+  await expect(page.locator('a[href="https://github.com/yotamfried-ux"]').first()).toBeVisible()
+  await expect(page.locator('body')).not.toContainText('still need verification')
   expect(errors).toEqual([])
 })
 
@@ -47,10 +48,10 @@ test('Technion certificate is readable and can be opened full size', async ({ pa
   const fullSize = section.getByRole('link', { name: 'הצגת התעודה בגודל מלא' })
   await fullSize.click()
   await expect(page).toHaveURL(/\/credentials\/technion-big-data-analyst\.webp$/)
-  await expect.poll(() => page.locator('img').evaluate((image: HTMLImageElement) => image.naturalHeight)).toBe(1800)
+  await expect.poll(() => page.locator('img').evaluate((image: HTMLImageElement) => image.naturalHeight)).toBe(1660)
 })
 
-test('all five interactive case studies work', async ({ page }) => {
+test('all four interactive case studies work', async ({ page }) => {
   await page.goto('/projects/sportreel')
   const comparison = page.getByRole('slider', { name: 'Compare the wide and cropped views' })
   await comparison.focus()
@@ -76,13 +77,6 @@ test('all five interactive case studies work', async ({ page }) => {
   await threshold.focus()
   await page.keyboard.press('Home')
   await expect(page.getByRole('status').filter({ hasText: '5 of 5 sample accounts flagged for review' })).toBeVisible()
-  await page.getByRole('link', { name: 'Next project ETL Pipeline' }).click()
-  await page.getByRole('button', { name: 'Transform' }).click()
-  await expect(page.getByRole('list', { name: 'ETL pipeline stages' }).getByRole('button', { name: 'Transform' })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.getByRole('cell', { name: 'Rejected' })).toBeVisible()
-  await page.getByRole('button', { name: 'Load' }).click()
-  await expect(page.getByRole('cell', { name: 'Rejected' })).toHaveCount(0)
-  await expect(page.getByRole('cell', { name: 'Loaded' })).toHaveCount(2)
 })
 
 test('Hebrew keeps the case study route, direction, and localized interactive labels', async ({ page }) => {
@@ -128,7 +122,9 @@ test('canonical metadata, sitemap, image, and localized missing route resolve', 
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://portfolio.d2ryf.com/projects/sportreel')
   await expect(page.locator('link[hreflang="he"]')).toHaveAttribute('href', 'https://portfolio.d2ryf.com/he/projects/sportreel')
   expect((await request.get('/media/social-he.jpg')).ok()).toBe(true)
-  expect(await (await request.get('/sitemap.xml')).text()).toContain('/he/projects/etl-pipeline')
+  const sitemap = await (await request.get('/sitemap.xml')).text()
+  expect(sitemap).toContain('/he/projects/customer-churn-prediction')
+  expect(sitemap).not.toContain('etl-pipeline')
   expect((await page.goto('/he/projects/unknown'))?.status()).toBe(404)
   await expect(page.getByRole('heading', { name: 'העמוד לא נמצא.' })).toBeVisible()
 })
