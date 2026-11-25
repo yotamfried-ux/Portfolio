@@ -45,6 +45,9 @@ export function Video({ asset, poster, mode, locale }: {
   // so the last frame remains on screen instead of falling back to the poster.
   if (shouldPlay && !started) setStarted(true)
   const mounted = !failed && started
+  // No on-screen controls while the clip can play by itself. A play button appears only when it cannot:
+  // the visitor prefers reduced motion, or the browser refused to autoplay.
+  const needsPlayButton = !wantsPlay
 
   useEffect(() => {
     const player = video.current
@@ -73,8 +76,8 @@ export function Video({ asset, poster, mode, locale }: {
   }, [mounted, shouldPlay])
 
   return <div ref={root} className="video-layer">
-    {mounted && <video ref={video} className={preview ? 'video-preview' : undefined}
-      src={videoSrc(asset, locale)} muted loop={preview} playsInline controls={!preview}
+    {mounted && <video ref={video} className="video-preview"
+      src={videoSrc(asset, locale)} muted loop playsInline disablePictureInPicture controlsList="nodownload noplaybackrate noremoteplayback"
       aria-label={he ? 'סרטון הפרויקט' : 'Project video'} preload="metadata" poster={poster}
       onLoadedData={event => { event.currentTarget.dataset.ready = 'true' }}
       onPlaying={event => { event.currentTarget.dataset.ready = 'true' }}
@@ -88,10 +91,8 @@ export function Video({ asset, poster, mode, locale }: {
       {asset.captions && <track kind="captions" src={asset.captions[locale]} srcLang={locale} label={he ? 'כתוביות' : 'Captions'} default />}
     </video>}
     {failed ? <p className="media-control" role="status">{he ? 'לא הצלחנו לטעון את הסרטון.' : 'The video couldn’t load.'}</p>
-      : (preview || !mounted) && <button className="media-control" type="button" onClick={() => {
-        setPreference(shouldPlay ? 'pause' : 'play')
-      }}>
-        {mounted && wantsPlay ? (he ? 'השהיית הסרטון' : 'Pause video') : (he ? 'ניגון הסרטון' : 'Play video')}
+      : needsPlayButton && <button className="media-control" type="button" onClick={() => setPreference('play')}>
+        {he ? 'ניגון הסרטון' : 'Play video'}
       </button>}
   </div>
 }
