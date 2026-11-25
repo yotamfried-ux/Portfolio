@@ -10,6 +10,7 @@ type Project = {
   summary: Bilingual
   status: 'verified' | 'pending'
   hidden?: boolean
+  liveUrl?: string
   badge: Bilingual
   demoStatus: 'illustrative'
   problem: Bilingual
@@ -51,7 +52,7 @@ const allProjects: Project[] = [
     ],
   },
   {
-    slug: 'tori', title: b('Tori', 'תורי'), category: b('Full stack · Scheduling', 'פיתוח מקצה לקצה · תורים'),
+    liveUrl: 'https://turim.d2ryf.com', slug: 'tori', title: b('Tori', 'תורי'), category: b('Full stack · Scheduling', 'פיתוח מקצה לקצה · תורים'),
     discipline: 'full-stack',
     summary: b('Customers book available appointments. Businesses manage those bookings in a calendar.', 'לקוחות קובעים תורים בשעות פנויות ובעלי עסקים מנהלים את התורים ביומן.'),
     badge: b('Full-stack product', 'מוצר מקצה לקצה'),
