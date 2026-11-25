@@ -146,5 +146,7 @@ test('project page video starts by itself without a click', async ({ page }) => 
   await page.goto('/projects/tori')
   const demo = page.locator('video').first()
   await expect(demo).toHaveJSProperty('paused', false, { timeout: 15000 })
-  await expect(page.getByRole('button', { name: 'Play video' })).toHaveCount(0)
+  await expect(page.getByRole('button', { name: /(Play|Pause) video/ })).toHaveCount(0)
+  await expect(demo).toHaveJSProperty('controls', false)
+  await expect(demo).toHaveJSProperty('loop', true)
 })
