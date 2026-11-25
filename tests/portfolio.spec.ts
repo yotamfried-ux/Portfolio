@@ -132,3 +132,22 @@ test('canonical metadata, sitemap, image, and localized missing route resolve', 
   expect((await page.goto('/he/projects/unknown'))?.status()).toBe(404)
   await expect(page.getByRole('heading', { name: 'העמוד לא נמצא.' })).toBeVisible()
 })
+
+test('project videos autoplay when visible and stay on screen, paused, after scrolling away', async ({ page }) => {
+  await page.goto('/projects')
+  const card = page.locator('video.video-preview').first()
+  await expect(card).toHaveJSProperty('paused', false, { timeout: 15000 })
+  await expect(card).toHaveAttribute('data-ready', 'true')
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  await expect(card).toHaveJSProperty('paused', true)
+  await expect(card).toHaveCount(1)
+  await expect(card).toHaveAttribute('data-ready', 'true')
+  await expect(card).toHaveCSS('opacity', '1')
+})
+
+test('project page video starts by itself without a click', async ({ page }) => {
+  await page.goto('/projects/tori')
+  const demo = page.locator('video').first()
+  await expect(demo).toHaveJSProperty('paused', false, { timeout: 15000 })
+  await expect(page.getByRole('button', { name: 'Play video' })).toHaveCount(0)
+})
